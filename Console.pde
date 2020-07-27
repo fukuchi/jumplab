@@ -63,13 +63,13 @@ class Console {
     widgets.put("showTrail", ctlr.addToggle("Show trail")
       .setPosition(x + 20, y + 120)
       .setValue(settings.showTrail));
-    widgets.put("camVerticalEasing", ctlr.addToggle("Camera easing")
+    widgets.put("showCenterMarker", ctlr.addToggle("Center marker")
       .setPosition(x + 150, y + 120)
       .setValue(settings.showTrail));
     widgets.put("parallaxScrolling", ctlr.addToggle("Parallax scrolling")
       .setPosition(x + 20, y + 150)
       .setValue(settings.showTrail));
-    widgets.put("showCenterMarker", ctlr.addToggle("Center marker")
+    widgets.put("camVerticalEasing", ctlr.addToggle("Camera easing")
       .setPosition(x + 150, y + 150)
       .setValue(settings.showTrail));
     widgets.put("allowAerialJump", ctlr.addToggle("Allow aerial jump")
