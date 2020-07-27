@@ -1,24 +1,24 @@
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-class Settings {
-  static final float MaxVx = 8; //X方向の最大速度
-  static final float MaxVy = 30;
-  static final float JumpPower = 13; //ジャンプ時の初速度(Y軸)
-  static final float Gravity = 0.5; //重力
-  static final float GravityFalling = 1.2; //重力(落下時)
-  static final float AxNormal = 0.2; //X方向加速度
-  static final float AxBreak = 1.0; //ブレーキ時加速度
-  static final float AxJumping = 0.1; //ジャンプ中のX方向加速度
-  static final float CamEasingNormal = 0.1;
-  static final float CamEasingGrounding = 0.3;
-  static final float JumpAnticipationFrames = 3;
-  static final boolean ShowTrail = false;
-  static final boolean CamVerticalEasing = true;
-  static final boolean ParallaxScrolling = true;
-  static final boolean ShowCenterMarker = false;
-  static final boolean AllowAerialJump = true;
-  static final boolean AllowAerialWalk = true;
+static class Settings {
+  static final float MaxVx = 8; // Maximum horizontal velocity of the jumper.
+  static final float MaxVy = 30; // Maximum vertical velocity of the jumper.
+  static final float JumpPower = 13; // Initial vertical velocity of a jump motion.
+  static final float Gravity = 0.5; // gravity when rising.
+  static final float GravityFalling = 1.2; // gravity when falling.
+  static final float AxNormal = 0.2; // Horizontal acceleration in normal state.
+  static final float AxBreak = 1.0; // Horizontal acceleration when breaking.
+  static final float AxJumping = 0.1; // Horizontal acceleration when jumping.
+  static final float CamEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
+  static final float CamEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
+  static final float JumpAnticipationFrames = 3; // Duration of the anticipation of jump motion in frames.
+  static final boolean ShowTrail = false; // Show the trail or not.
+  static final boolean CamVerticalEasing = true; // Ease the vertical camera motion or not.
+  static final boolean ParallaxScrolling = true; // Parallax scrolling or not.
+  static final boolean ShowCenterMarker = false; // Show the center marker or not.
+  static final boolean AllowAerialJump = true; // Allow aerial jump or not.
+  static final boolean AllowAerialWalk = true; // Allow aerial walk or not.
 
   float maxVx, maxVy;
   float jumpPower;
