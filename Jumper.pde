@@ -1,16 +1,18 @@
+import java.util.Vector;
+
 class Jumper {
   float x, y;
-  float px, py; //1フレーム前の位置
-  float vx, vy; //加速度
-  int dir; //キャラクターの向き
-  int lastDir; //最後のキャラクターの向き
-  int jumpDir; //ジャンプした瞬間の lastDir
-  boolean jumping; //ジャンプ中か否か
-  boolean onObstacle; //ブロックに乗っているか
+  float px, py;
+  float vx, vy;
+  int dir;
+  int lastDir;
+  int jumpDir;
+  boolean jumping;
+  boolean onObstacle;
   float verticalAcc;
-  int jumpMotion; //ジャンプ入力してからジャンプするまでのフレーム数
+  int jumpMotion;
   int jumpMotionMax;
-  float pattern; //アニメーションのフレーム番号
+  float pattern;
   Settings settings;
 
   Vector<PImage> images_running_r;
@@ -277,6 +279,7 @@ class Jumper {
       }
     } else if (key == ' ') {
       jumpCanceled();
+      return true;
     }
     return false;
   }
