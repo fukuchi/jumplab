@@ -1,5 +1,3 @@
-import java.util.Vector;
-
 Settings settings;
 Jumper masao;
 Level level;
