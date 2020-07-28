@@ -29,6 +29,7 @@ void draw() {
   camera.update();
   console.statusUpdate(masao);
   camera.draw();
+  console.drawStatus(masao);
 }
 
 void keyPressed() {

@@ -7,9 +7,11 @@ class Console {
   ControlP5 ctlr;
   HashMap<String, Controller> widgets;
   HashMap<Integer, String> id2parameter;
+  HashMap<String, int[]> indicators;
   Settings settings;
   int lastWidget_y;
   static final int widgetMargin_y = 10;
+  NumIndicator numIndicator;
 
   Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
     this.x = x;
@@ -21,36 +23,31 @@ class Console {
     ctlr = new ControlP5(parent);
     widgets = new HashMap<String, Controller>();
     id2parameter = new HashMap<Integer, String>();
+    indicators = new HashMap<String, int[]>();
 
     ctlr.addTextlabel("JumperXY")
       .setPosition(x + 10, y + 10)
       .setText("Jumper X,Y");
-    widgets.put("JumperXYvalue", ctlr.addTextlabel("JumperXYvalue")
-      .setPosition(x + 80, y + 10)
-      .setText("0000,0000"));
+    indicators.put("JumperXYvalue", new int[] {x + 80, y + 10});
     ctlr.addTextlabel("JumperVXY")
       .setPosition(x + 10, y + 30)
       .setText("Jumper VX,VY");
-    widgets.put("JumperVXYvalue", ctlr.addTextlabel("JumperVXYvalue")
-      .setPosition(x + 80, y + 30)
-      .setText("0000,0000"));
+    indicators.put("JumperVXYvalue", new int[] {x + 80, y + 30});
     ctlr.addTextlabel("VerticalAcc")
-      .setPosition(x + 10, y + 60)
+      .setPosition(x + 10, y + 50)
       .setText("Vertical Acc");
-    widgets.put("VerticalAccValue", ctlr.addTextlabel("VerticalAccValue")
-      .setPosition(x + 80, y + 60)
-      .setText("0000.00"));
+    indicators.put("VerticalAccValue", new int[] {x + 80, y + 50});
     ctlr.addTextlabel("Jumping")
-      .setPosition(x + 160, y + 10)
+      .setPosition(x + 200, y + 10)
       .setText("Jumping: ");
     widgets.put("JumpingValue", ctlr.addTextlabel("JumpingValue")
-      .setPosition(x + 220, y + 10)
+      .setPosition(x + 260, y + 10)
       .setText("false"));
     ctlr.addTextlabel("OnObstacle")
-      .setPosition(x + 160, y + 30)
+      .setPosition(x + 200, y + 30)
       .setText("On obstacle: ");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
-      .setPosition(x + 220, y + 30)
+      .setPosition(x + 260, y + 30)
       .setText("false"));
     ctlr.addButton("reset")
       .setValue(1)
@@ -140,6 +137,9 @@ class Console {
       }
     }
     );
+
+    numIndicator = new NumIndicator();
+    println(indicators);
   }
 
   void appendFullwidthWidget(String name, Controller widget) {
@@ -149,12 +149,19 @@ class Console {
   }
 
   void statusUpdate(Jumper jumper) {
-    ((Textlabel)widgets.get("JumperXYvalue")).setText(String.format("%4.2f,%4.2f", jumper.x, jumper.y));
-    ((Textlabel)widgets.get("JumperVXYvalue")).setText(String.format("%-2.2f,%-2.2f", jumper.vx, jumper.vy));
-    ((Textlabel)widgets.get("VerticalAccValue")).setText(String.format("%-2.2f", jumper.verticalAcc));
+    ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"TRUE":"FALSE");
+    ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
+  }
 
-    ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"true":"false");
-    ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"true":"false");
+  void drawStatus(Jumper jumper) {
+    drawNumIndicator("JumperXYvalue", String.format("%7.2f,%7.2f", jumper.x, jumper.y));
+    drawNumIndicator("JumperVXYvalue", String.format("% 7.2f,% 7.2f", jumper.vx, jumper.vy));
+    drawNumIndicator("VerticalAccValue", String.format("% 7.2f", jumper.verticalAcc));
+  }
+
+  void drawNumIndicator(String name, String str) {
+    int[] pos = indicators.get(name);
+    numIndicator.text(str, pos[0], pos[1]);
   }
 
   void setValues() {
