@@ -95,7 +95,7 @@ class Console {
       .setSize(150, 20)
       .setRange(1, 10)
       .setNumberOfTickMarks(10));
-    widgets.put("gravity", ctlr.addSlider("Gravity")
+    widgets.put("gravity", ctlr.addSlider("Gravity (rising)")
       .setPosition(x + 10, y + 320)
       .setSize(150, 20)
       .setRange(0, 3));

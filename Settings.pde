@@ -3,7 +3,7 @@ import java.lang.reflect.Modifier;
 
 static class Settings {
   static final float MaxVx = 8; // Maximum horizontal velocity of the jumper.
-  static final float MaxVy = 30; // Maximum vertical velocity of the jumper.
+  static final float MaxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
   static final float JumpPower = 13; // Initial vertical velocity of a jump motion.
   static final float Gravity = 0.5; // gravity when rising.
   static final float GravityFalling = 1.2; // gravity when falling.

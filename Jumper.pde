@@ -167,7 +167,7 @@ class Jumper {
       }
     }
     if (!onObstacle) {
-      if(!settings.allowAerialJump && jumping && jumpMotion > 0) {
+      if (!settings.allowAerialJump && jumping && jumpMotion > 0) {
         jumping = false;
         jumpMotion = 0;
       }
