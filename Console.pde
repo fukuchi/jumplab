@@ -9,6 +9,7 @@ class Console {
   HashMap<Integer, String> id2parameter;
   Settings settings;
   int lastWidget_y;
+  static final int widgetMargin_y = 10;
 
   Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
     this.x = x;
@@ -87,7 +88,7 @@ class Console {
       .setPosition(x + 140, y + 230)
       .setSize(80, 20)
       .setRange(1, 80));
-    lastWidget_y = y + 230;
+    lastWidget_y = y + 260;
     appendFullwidthWidget("jumpPower", ctlr.addSlider("Jump Velocity")
       .setSize(150, 20)
       .setRange(1, 30));
@@ -142,9 +143,9 @@ class Console {
   }
 
   void appendFullwidthWidget(String name, Controller widget) {
-    lastWidget_y += 30;
     widget.setPosition(x + 10, lastWidget_y);
     widgets.put(name, widget);
+    lastWidget_y += widget.getHeight() + widgetMargin_y;
   }
 
   void statusUpdate(Jumper jumper) {
