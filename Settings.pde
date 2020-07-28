@@ -12,7 +12,7 @@ static class Settings {
   static final float AxJumping = 0.1; // Horizontal acceleration when jumping.
   static final float CamEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
   static final float CamEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
-  static final float JumpAnticipationFrames = 3; // Duration of the anticipation of jump motion in frames.
+  static final float JumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
   static final boolean ShowTrail = false; // Show the trail or not.
   static final boolean CamVerticalEasing = true; // Ease the vertical camera motion or not.
   static final boolean ParallaxScrolling = true; // Parallax scrolling or not.

@@ -93,7 +93,7 @@ class Console {
       .setRange(1, 30));
     appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
       .setSize(150, 20)
-      .setRange(1, 10)
+      .setRange(0, 9)
       .setNumberOfTickMarks(10)
       .showTickMarks(false));
     appendFullwidthWidget("gravity", ctlr.addSlider("Gravity (rising)")

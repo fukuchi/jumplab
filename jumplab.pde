@@ -10,10 +10,10 @@ static final int console_w = 300;
 
 void settings() {
   size(gameScreen_w + console_w, gameScreen_h, P2D);
+  noSmooth();
 }
 
 void setup() {
-  noSmooth();
   settings = new Settings();
   masao = new Jumper(settings, 48, 950);
   level = new Level("level1.csv", "block.png", "bg.png");

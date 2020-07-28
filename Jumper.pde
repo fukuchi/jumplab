@@ -221,7 +221,7 @@ class Jumper {
       if (onObstacle) {
         jumping = true;
         jumpDir = lastDir;
-        jumpMotion = (int)settings.jumpAnticipationFrames;
+        jumpMotion = (int)settings.jumpAnticipationFrames + 1;
         verticalAcc = settings.gravity;
       }
     }
@@ -235,16 +235,16 @@ class Jumper {
 
   void draw(float dx, float dy) {
     PImage img;
-    int p = (int)pattern;
 
     if (jumping) {
-      p = min(jumpMotion, jumpMotionMax - 1);
+      int p = jumpMotion==0?0:(int)(jumpMotion * (jumpMotionMax - 1) / (settings.jumpAnticipationFrames + 1) + 1);
       if (jumpDir < 0) {
         img = images_jumping_l.get(p);
       } else {
         img = images_jumping_r.get(p);
       }
     } else {
+      int p = (int)pattern;
       if (lastDir < 0) {
         img = images_running_l.get(p);
       } else {
