@@ -8,6 +8,7 @@ class Console {
   HashMap<String, Controller> widgets;
   HashMap<Integer, String> id2parameter;
   Settings settings;
+  int lastWidget_y;
 
   Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
     this.x = x;
@@ -86,41 +87,34 @@ class Console {
       .setPosition(x + 140, y + 230)
       .setSize(80, 20)
       .setRange(1, 80));
-    widgets.put("jumpPower", ctlr.addSlider("Jump Velocity")
-      .setPosition(x + 10, y + 260)
+    lastWidget_y = y + 230;
+    appendFullwidthWidget("jumpPower", ctlr.addSlider("Jump Velocity")
       .setSize(150, 20)
       .setRange(1, 30));
-    widgets.put("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
-      .setPosition(x + 10, y + 290)
+    appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
       .setSize(150, 20)
       .setRange(1, 10)
-      .setNumberOfTickMarks(10));
-    widgets.put("gravity", ctlr.addSlider("Gravity (rising)")
-      .setPosition(x + 10, y + 320)
+      .setNumberOfTickMarks(10)
+      .showTickMarks(false));
+    appendFullwidthWidget("gravity", ctlr.addSlider("Gravity (rising)")
       .setSize(150, 20)
       .setRange(0, 3));
-    widgets.put("gravityFalling", ctlr.addSlider("Gravity (falling)")
-      .setPosition(x + 10, y + 350)
+    appendFullwidthWidget("gravityFalling", ctlr.addSlider("Gravity (falling)")
       .setSize(150, 20)
       .setRange(0.01, 3));
-    widgets.put("axNormal", ctlr.addSlider("X Accel (normal)")
-      .setPosition(x + 10, y + 380)
+    appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")
       .setSize(150, 20)
       .setRange(0, 3));
-    widgets.put("axBreak", ctlr.addSlider("X Accel (breaking)")
-      .setPosition(x + 10, y + 410)
+    appendFullwidthWidget("axBreak", ctlr.addSlider("X Accel (breaking)")
       .setSize(150, 20)
       .setRange(0, 3));
-    widgets.put("axJumping", ctlr.addSlider("X Accel (jumping)")
-      .setPosition(x + 10, y + 440)
+    appendFullwidthWidget("axJumping", ctlr.addSlider("X Accel (jumping)")
       .setSize(150, 20)
       .setRange(0, 3));
-    widgets.put("camEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
-      .setPosition(x + 10, y + 470)
+    appendFullwidthWidget("camEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
-    widgets.put("camEasingGrounding", ctlr.addSlider("Camera Easing Coef (grounding)")
-      .setPosition(x + 10, y + 500)
+    appendFullwidthWidget("camEasingGrounding", ctlr.addSlider("Camera Easing Coef (grounding)")
       .setSize(150, 20)
       .setRange(0, 1));
 
@@ -145,6 +139,12 @@ class Console {
       }
     }
     );
+  }
+
+  void appendFullwidthWidget(String name, Controller widget) {
+    lastWidget_y += 30;
+    widget.setPosition(x + 10, lastWidget_y);
+    widgets.put(name, widget);
   }
 
   void statusUpdate(Jumper jumper) {

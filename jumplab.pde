@@ -4,15 +4,22 @@ Level level;
 Camera camera;
 Console console;
 
-void setup() {
-  size(1100, 600, P2D);
+static final int gameScreen_w = 800;
+static final int gameScreen_h = 600;
+static final int console_w = 300;
 
+void settings() {
+  size(gameScreen_w + console_w, gameScreen_h, P2D);
+}
+
+void setup() {
+  noSmooth();
   settings = new Settings();
   masao = new Jumper(settings, 48, 950);
   level = new Level("level1.csv", "block.png", "bg.png");
-  camera = new Camera(masao, level, 800, 600);
+  camera = new Camera(masao, level, gameScreen_w, gameScreen_h);
   camera.reset(masao.x, masao.y);
-  console = new Console(this, camera.window_w, 0, width - camera.window_w, camera.window_h, settings);
+  console = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, settings);
   frameRate(60);
   background(128);
 }
