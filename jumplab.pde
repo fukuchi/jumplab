@@ -5,7 +5,7 @@ Camera camera;
 Console console;
 
 void setup() {
-  size(1100, 600);
+  size(1100, 600, P2D);
 
   settings = new Settings();
   masao = new Jumper(settings, 48, 950);
