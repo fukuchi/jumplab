@@ -187,7 +187,7 @@ class Console {
   void parameterChange(CallbackEvent event) {
     Controller widget = event.getController();
     if (widget instanceof Toggle) {
-      if (event.getAction() == ControlP5.ACTION_CLICK) {
+      if (event.getAction() == ControlP5.ACTION_PRESS) {
         String name = id2parameter.get(event.getController().getId());
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
