@@ -15,8 +15,8 @@ void settings() {
 
 void setup() {
   settings = new Settings();
-  masao = new Jumper(settings, 48, 950);
   level = new Level("level1.csv", "block.png", "bg.png");
+  masao = new Jumper(settings, level.sx, level.sy);
   camera = new Camera(masao, level, gameScreen_w, gameScreen_h);
   camera.reset(masao.x, masao.y);
   console = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, settings);

@@ -2,11 +2,13 @@ class Level {
   int w, h; // level size in pixel
   int cw, ch; // level size in character
   int bw, bh; // block size
+  int sx, sy; // initial position of the player character
   int[][] map;
   PImage bgImg;
   PImage blockImg;
 
   Level(String mapFile, String blockImgFile, String bgFile) {
+    sx = sy = 1;
     Table mapdata = loadTable(mapFile);
     cw = mapdata.getColumnCount();
     ch = mapdata.getRowCount();
@@ -14,7 +16,13 @@ class Level {
     for (int y=0; y<ch; y++) {
       TableRow row = mapdata.getRow(y);
       for (int x=0; x<cw; x++) {
-        map[y][x] = row.getInt(x);
+        int v = row.getInt(x);
+        if (v == 9) {
+          sx = x;
+          sy = y;
+        } else {
+          map[y][x] = v;
+        }
       }
     }
 
@@ -26,6 +34,9 @@ class Level {
 
     w = bw * cw;
     h = bh * ch;
+
+    sx = sx * bw;
+    sy = sy * bh;
   }
 
   boolean isThereObstacle(int x, int y) {
