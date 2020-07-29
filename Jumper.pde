@@ -149,7 +149,7 @@ class Jumper {
     if (jumping || (!onObstacle && !settings.allowAerialWalk)) {
       ax = settings.axJumping;
     } else if (Math.signum(vx) != dir) {
-      ax = settings.axBreak;
+      ax = settings.axBrake;
     } else {
       ax = settings.axNormal;
     }
@@ -169,10 +169,11 @@ class Jumper {
       jumpMotion--;
       if (jumpMotion == 0) {
         vy = -settings.jumpPower;
+        vx *= (1.0 - settings.brakingAtTakeoff);
         onObstacle = false;
         if (settings.constantRising) {
           propelling = true;
-          propellingRemainingFrames = (int)settings.maxPropellingFrames;
+          propellingRemainingFrames = round(settings.maxPropellingFrames);
         }
       }
     }

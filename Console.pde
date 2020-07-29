@@ -103,6 +103,9 @@ class Console {
       .setRange(0, 9)
       .setNumberOfTickMarks(10)
       .showTickMarks(false));
+    appendFullwidthWidget("brakingAtTakeoff", ctlr.addSlider("Braking at takeoff")
+      .setSize(150, 20)
+      .setRange(0, 1.0));
     appendFullwidthWidget("maxPropellingFrames", ctlr.addSlider("Maximum Propelling Duration")
       .setSize(150, 20)
       .setRange(1, 100)
@@ -117,7 +120,7 @@ class Console {
     appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")
       .setSize(150, 20)
       .setRange(0, 3));
-    appendFullwidthWidget("axBreak", ctlr.addSlider("X Accel (breaking)")
+    appendFullwidthWidget("axBrake", ctlr.addSlider("X Accel (braking)")
       .setSize(150, 20)
       .setRange(0, 3));
     appendFullwidthWidget("axJumping", ctlr.addSlider("X Accel (jumping)")
