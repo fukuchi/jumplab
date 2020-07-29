@@ -65,29 +65,16 @@ class Console {
     ctlr.addButton("reset")
       .setValue(1)
       .setPosition(x + 80, y + 90)
-      .setSize(150, 20)
-      .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        resetButton(event);
-      }
-    }
-    );
+      .setSize(150, 20);
 
     nextWidgetPosition_y = y + 120;
-    appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail")
-      .setValue(settings.showTrail));
-    appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker")
-      .setValue(settings.showCenterMarker));
-    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling")
-      .setValue(settings.parallaxScrolling));
-    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing")
-      .setValue(settings.camVerticalEasing));
-    appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump")
-      .setValue(settings.allowAerialJump));
-    appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk")
-      .setValue(settings.allowAerialWalk));
-    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising")
-      .setValue(settings.constantRising));
+    appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
+    appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker"));
+    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
+    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing"));
+    appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
+    appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
+    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
     appendHalfwidthWidget();
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setSize(80, 20)
@@ -139,7 +126,6 @@ class Console {
     for (String name : settings.booleanValues) {
       Controller widget = widgets.get(name);
       widget.getCaptionLabel().align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
-      widget.setValueLabel(name);
     }
     int id = 100;
     for (String name : widgets.keySet()) {
@@ -252,7 +238,7 @@ class Console {
           println("Failed to set " + name + ".");
         }
       }
-    } else if (event.getController() instanceof Slider) {
+    } else if (widget instanceof Slider) {
       int action = event.getAction();
       if (action == ControlP5.ACTION_MOVE || action == ControlP5.ACTION_RELEASE || action == ControlP5.ACTION_RELEASE_OUTSIDE) {
         String name = id2parameter.get(event.getController().getId());
@@ -262,6 +248,13 @@ class Console {
         } 
         catch (ReflectiveOperationException e) {
           println("Failed to set " + name + ".");
+        }
+      }
+    } else if (widget instanceof Button) {
+      if (event.getAction() == ControlP5.ACTION_CLICK) {
+        String name = event.getController().getLabel();
+        if (name == "reset") {
+          resetButton(event);
         }
       }
     }
