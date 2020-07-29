@@ -8,10 +8,12 @@ class Jumper {
   int lastDir;
   int jumpDir;
   boolean jumping;
+  boolean propelling;
   boolean onObstacle;
   float verticalAcc;
   int jumpMotion;
   int jumpMotionMax;
+  int propellingRemainingFrames;
   float pattern;
   Settings settings;
 
@@ -33,6 +35,7 @@ class Jumper {
     vx = 0;
     vy = 0;
     jumping = false;
+    propelling = false;
     onObstacle = false;
     jumpMotion = 0;
     dir = 0;
@@ -98,6 +101,7 @@ class Jumper {
     if (hitUL() && hitUR()) {
       y += level.obstaclePenaltyU(y);
       vy = 0;
+      propelling = false;
     }
 
     hUL = hitUL();
@@ -108,6 +112,7 @@ class Jumper {
         if (vy < 0 && penalty >= 6) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
+          propelling = false;
         } else {
           x += penalty ;
           if (vx < 0) vx = 0;
@@ -127,6 +132,7 @@ class Jumper {
         if (vy < 0 && penalty >= 6 && ny < py) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
+          propelling = false;
         } else {
           x -= penalty;
           if (vx > 0) vx = 0;
@@ -164,19 +170,34 @@ class Jumper {
       if (jumpMotion == 0) {
         vy = -settings.jumpPower;
         onObstacle = false;
+        if (settings.constantRising) {
+          propelling = true;
+          propellingRemainingFrames = (int)settings.maxPropellingFrames;
+        }
       }
     }
     if (!onObstacle) {
       if (!settings.allowAerialJump && jumping && jumpMotion > 0) {
         jumping = false;
         jumpMotion = 0;
+        propelling = false;
       }
       if (vy > 0) {
         verticalAcc = settings.gravityFalling;
       }
-      vy += verticalAcc;
-      if (vy > settings.maxVy) {
-        vy = settings.maxVy;
+      if (!settings.constantRising || !propelling) {
+        vy += verticalAcc;
+        if (vy > settings.maxVy) {
+          vy = settings.maxVy;
+        }
+      }
+      if (settings.constantRising) {
+        if (propelling) {
+          propellingRemainingFrames--;
+          if (propellingRemainingFrames <= 0) {
+            propelling = false;
+          }
+        }
       }
     }
   }
@@ -230,6 +251,7 @@ class Jumper {
   void jumpCanceled() {
     if (jumping) {
       verticalAcc = settings.gravityFalling;
+      propelling = false;
     }
   }
 

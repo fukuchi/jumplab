@@ -13,12 +13,14 @@ static class Settings {
   static final float CamEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
   static final float CamEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
   static final float JumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
+  static final float MaxPropellingFrames = 60; // Maximum duration of propelled jump.
   static final boolean ShowTrail = false; // Show the trail or not.
   static final boolean CamVerticalEasing = true; // Ease the vertical camera motion or not.
   static final boolean ParallaxScrolling = true; // Parallax scrolling or not.
   static final boolean ShowCenterMarker = false; // Show the center marker or not.
   static final boolean AllowAerialJump = true; // Allow aerial jump or not.
   static final boolean AllowAerialWalk = true; // Allow aerial walk or not.
+  static final boolean ConstantRising = false; // Keep constant vertical velocity when rising.
 
   float maxVx, maxVy;
   float jumpPower;
@@ -30,12 +32,14 @@ static class Settings {
   float camEasingNormal;
   float camEasingGrounding;
   float jumpAnticipationFrames;
+  float maxPropellingFrames;
   boolean showTrail;
   boolean camVerticalEasing;
   boolean parallaxScrolling;
   boolean showCenterMarker;
   boolean allowAerialJump;
   boolean allowAerialWalk;
+  boolean constantRising;
 
   ArrayList<String> booleanValues;
   ArrayList<String> floatValues;

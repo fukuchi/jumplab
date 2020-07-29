@@ -9,7 +9,9 @@ class Console {
   HashMap<Integer, String> id2parameter;
   HashMap<String, int[]> indicators;
   Settings settings;
-  int lastWidget_y;
+  boolean halfFilled = false;
+  Controller lastWidget;
+  int nextWidgetPosition_y;
   static final int widgetMargin_y = 10;
   NumIndicator numIndicator;
 
@@ -37,18 +39,29 @@ class Console {
       .setPosition(x + 10, y + 50)
       .setText("Vertical Acc");
     indicators.put("VerticalAccValue", new int[] {x + 80, y + 50});
+    ctlr.addTextlabel("PropellingRemainingFrames")
+      .setPosition(x + 10, y + 70)
+      .setText("Propelling Remainig");
+    indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 70});
     ctlr.addTextlabel("Jumping")
       .setPosition(x + 200, y + 10)
       .setText("Jumping: ");
     widgets.put("JumpingValue", ctlr.addTextlabel("JumpingValue")
       .setPosition(x + 260, y + 10)
-      .setText("false"));
-    ctlr.addTextlabel("OnObstacle")
+      .setText("FALSE"));
+    ctlr.addTextlabel("Propelling")
       .setPosition(x + 200, y + 30)
+      .setText("Propelling: ");
+    widgets.put("PropellingValue", ctlr.addTextlabel("PropellingValue")
+      .setPosition(x + 260, y + 30)
+      .setText("FALSE"));
+    ctlr.addTextlabel("OnObstacle")
+      .setPosition(x + 200, y + 50)
       .setText("On obstacle: ");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
-      .setPosition(x + 260, y + 30)
-      .setText("false"));
+      .setPosition(x + 260, y + 50)
+      .setText("FALSE"));
+
     ctlr.addButton("reset")
       .setValue(1)
       .setPosition(x + 80, y + 90)
@@ -59,33 +72,29 @@ class Console {
       }
     }
     );
-    widgets.put("showTrail", ctlr.addToggle("Show trail")
-      .setPosition(x + 20, y + 120)
+
+    nextWidgetPosition_y = y + 120;
+    appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail")
       .setValue(settings.showTrail));
-    widgets.put("showCenterMarker", ctlr.addToggle("Center marker")
-      .setPosition(x + 150, y + 120)
-      .setValue(settings.showTrail));
-    widgets.put("parallaxScrolling", ctlr.addToggle("Parallax scrolling")
-      .setPosition(x + 20, y + 150)
-      .setValue(settings.showTrail));
-    widgets.put("camVerticalEasing", ctlr.addToggle("Camera easing")
-      .setPosition(x + 150, y + 150)
-      .setValue(settings.showTrail));
-    widgets.put("allowAerialJump", ctlr.addToggle("Allow aerial jump")
-      .setPosition(x + 20, y + 180)
-      .setValue(settings.showTrail));
-    widgets.put("allowAerialWalk", ctlr.addToggle("Allow aerial walk")
-      .setPosition(x + 150, y + 180)
-      .setValue(settings.showTrail));
-    widgets.put("maxVx", ctlr.addSlider("Max Vx")
-      .setPosition(x + 10, y + 230)
+    appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker")
+      .setValue(settings.showCenterMarker));
+    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling")
+      .setValue(settings.parallaxScrolling));
+    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing")
+      .setValue(settings.camVerticalEasing));
+    appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump")
+      .setValue(settings.allowAerialJump));
+    appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk")
+      .setValue(settings.allowAerialWalk));
+    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising")
+      .setValue(settings.constantRising));
+    appendHalfwidthWidget();
+    appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setSize(80, 20)
       .setRange(1, 20));
-    widgets.put("maxVy", ctlr.addSlider("Max Vy")
-      .setPosition(x + 140, y + 230)
+    appendHalfwidthWidget("maxVy", ctlr.addSlider("Max Vy")
       .setSize(80, 20)
       .setRange(1, 80));
-    lastWidget_y = y + 260;
     appendFullwidthWidget("jumpPower", ctlr.addSlider("Jump Velocity")
       .setSize(150, 20)
       .setRange(1, 30));
@@ -93,6 +102,11 @@ class Console {
       .setSize(150, 20)
       .setRange(0, 9)
       .setNumberOfTickMarks(10)
+      .showTickMarks(false));
+    appendFullwidthWidget("maxPropellingFrames", ctlr.addSlider("Maximum Propelling Duration")
+      .setSize(150, 20)
+      .setRange(1, 100)
+      .setNumberOfTickMarks(100)
       .showTickMarks(false));
     appendFullwidthWidget("gravity", ctlr.addSlider("Gravity (rising)")
       .setSize(150, 20)
@@ -139,17 +153,44 @@ class Console {
     );
 
     numIndicator = new NumIndicator();
-    println(indicators);
   }
 
   void appendFullwidthWidget(String name, Controller widget) {
-    widget.setPosition(x + 10, lastWidget_y);
+    if (halfFilled) {
+      halfFilled = false;
+      if (lastWidget != null) {
+        nextWidgetPosition_y += lastWidget.getHeight() + widgetMargin_y;
+      }
+    }
+    widget.setPosition(x + 10, nextWidgetPosition_y);
     widgets.put(name, widget);
-    lastWidget_y += widget.getHeight() + widgetMargin_y;
+    nextWidgetPosition_y += widget.getHeight() + widgetMargin_y;
+    lastWidget = widget;
+  }
+
+  void appendHalfwidthWidget(String name, Controller widget) {
+    if (!halfFilled) {
+      widget.setPosition(x + 10, nextWidgetPosition_y);
+      halfFilled = true;
+    } else {
+      widget.setPosition(x + 150, nextWidgetPosition_y);
+      halfFilled = false;
+      nextWidgetPosition_y += max(widget.getHeight(), lastWidget.getHeight()) + widgetMargin_y;
+    }
+    widgets.put(name, widget);
+    lastWidget = widget;
+  }
+
+  void appendHalfwidthWidget() {
+    if (halfFilled) {
+      nextWidgetPosition_y += lastWidget.getHeight() + widgetMargin_y;
+      halfFilled = false;
+    }
   }
 
   void statusUpdate(Jumper jumper) {
     ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"TRUE":"FALSE");
+    ((Textlabel)widgets.get("PropellingValue")).setText(jumper.propelling?"TRUE":"FALSE");
     ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
   }
 
@@ -157,6 +198,7 @@ class Console {
     drawNumIndicator("JumperXYvalue", String.format("%7.2f,%7.2f", jumper.x, jumper.y));
     drawNumIndicator("JumperVXYvalue", String.format("% 7.2f,% 7.2f", jumper.vx, jumper.vy));
     drawNumIndicator("VerticalAccValue", String.format("% 7.2f", jumper.verticalAcc));
+    drawNumIndicator("PropellingRemainingFramesValue", String.format("%4d", jumper.propellingRemainingFrames));
   }
 
   void drawNumIndicator(String name, String str) {
