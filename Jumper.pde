@@ -128,11 +128,11 @@ class Jumper {
           y += level.obstaclePenaltyU(y);
           vy = 0;
         } else {
-          x -= penalty + 1;
+          x -= penalty;
           if (vx > 0) vx = 0;
         }
       } else {
-        x -= penalty + 1;
+        x -= penalty;
         if (vx > 0) vx = 0;
       }
     }
