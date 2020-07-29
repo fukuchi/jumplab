@@ -87,11 +87,13 @@ class Camera {
     if (settings.showTrail) {
       noStroke();
       fill(255, 0, 0);
+      clip(0, 0, window_w, window_h);
       for (int i=0; i<posbuflen; i++) {
         if (posbuf[i].x - cx < window_w) {
           ellipse(posbuf[i].x - cx, posbuf[i].y - cy, 5, 5);
         }
       }
+      noClip();
     }
     jumper.draw(jumper.x - cx, jumper.y - cy);
 
