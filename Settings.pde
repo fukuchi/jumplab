@@ -13,8 +13,9 @@ static class Settings {
   static final float CamEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
   static final float CamEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
   static final float JumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
-  static final float MaxPropellingFrames = 60; // Maximum duration of propelled jump.
+  static final float MaxPropellingFrames = 30; // Maximum duration of propelled jump.
   static final float BrakingAtTakeoff = 0.0; // Horizontal braking power at the takeoff.
+  static final float VerticalSpeedSustainLevel = 1.0; // Sustain level of the vertical speed when the button released.
   static final boolean ShowTrail = false; // Show the trail or not.
   static final boolean CamVerticalEasing = true; // Ease the vertical camera motion or not.
   static final boolean ParallaxScrolling = true; // Parallax scrolling or not.
@@ -35,6 +36,7 @@ static class Settings {
   float jumpAnticipationFrames;
   float maxPropellingFrames;
   float brakingAtTakeoff;
+  float verticalSpeedSustainLevel;
   boolean showTrail;
   boolean camVerticalEasing;
   boolean parallaxScrolling;

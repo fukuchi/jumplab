@@ -252,6 +252,7 @@ class Jumper {
   void jumpCanceled() {
     if (jumping) {
       verticalAcc = settings.gravityFalling;
+      if (vy < 0) vy *= settings.verticalSpeedSustainLevel;
       propelling = false;
     }
   }

@@ -12,7 +12,7 @@ class Console {
   boolean halfFilled = false;
   Controller lastWidget;
   int nextWidgetPosition_y;
-  static final int widgetMargin_y = 10;
+  static final int widgetMargin_y = 6;
   NumIndicator numIndicator;
 
   Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
@@ -117,6 +117,9 @@ class Console {
     appendFullwidthWidget("gravityFalling", ctlr.addSlider("Gravity (falling)")
       .setSize(150, 20)
       .setRange(0.01, 3));
+    appendFullwidthWidget("verticalSpeedSustainLevel", ctlr.addSlider("Jump speed sustain level")
+      .setSize(150, 20)
+      .setRange(0, 1));
     appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")
       .setSize(150, 20)
       .setRange(0, 3));
