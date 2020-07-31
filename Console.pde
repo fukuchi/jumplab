@@ -96,7 +96,7 @@ class Console {
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
     appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
-    appendHalfwidthWidget();
+    appendHalfwidthWidget("haltedAndFall", ctlr.addToggle("Halted and fall"));
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setSize(80, 20)
       .setRange(1, 20));

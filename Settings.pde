@@ -27,6 +27,7 @@ class Settings {
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
   boolean constantRising = false; // Keep constant vertical velocity when rising.
+  boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
 
   ArrayList<String> booleanValues;
   ArrayList<String> floatValues;
