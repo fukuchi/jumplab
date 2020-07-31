@@ -10,7 +10,9 @@ static final int console_w = 300;
 
 void settings() {
   println("Initializing...");
-  size(gameScreen_w + console_w, gameScreen_h, P2D);
+  // If you have any performance problem, try P2D render as follows.
+  size(gameScreen_w + console_w, gameScreen_h);
+  //  size(gameScreen_w + console_w, gameScreen_h, P2D);
   noSmooth();
 }
 
