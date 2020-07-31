@@ -96,6 +96,9 @@ class Jumper {
       }
     } else if (!hitBL() && !hitBR()) {
       onObstacle = false;
+      if (!jumping && settings.haltedAndFall) {
+        vx = 0;
+      }
     }
 
     if (hitUL() && hitUR()) {
@@ -109,7 +112,7 @@ class Jumper {
     if (hUL || hDL) {
       float penalty = level.obstaclePenaltyL(x);
       if (hUL && !hDL) {
-        if (vy < 0 && penalty >= 6) {
+        if (vy < 0 && penalty >= settings.collisionTolerance) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
           propelling = false;
@@ -129,7 +132,7 @@ class Jumper {
       float penalty = level.obstaclePenaltyR(x + w);
       if (hUR && !hDR) {
         float ny = y + level.obstaclePenaltyU(y);
-        if (vy < 0 && penalty >= 6 && ny < py) {
+        if (vy < 0 && penalty >= settings.collisionTolerance && ny < py) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
           propelling = false;
@@ -148,6 +151,8 @@ class Jumper {
     float ax;
     if (jumping || (!onObstacle && !settings.allowAerialWalk)) {
       ax = settings.axJumping;
+    } else if (!jumping && !onObstacle && settings.haltedAndFall) {
+      ax = 0;
     } else if (Math.signum(vx) != dir) {
       ax = settings.axBrake;
     } else {

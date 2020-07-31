@@ -20,6 +20,7 @@ class Settings {
   float maxPropellingFrames = 30; // Maximum duration of propelled jump.
   float brakingAtTakeoff = 0.0; // Horizontal braking power at the takeoff.
   float verticalSpeedSustainLevel = 1.0; // Sustain level of the vertical speed when the button released.
+  float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
   boolean showTrail = false; // Show the trail or not.
   boolean camVerticalEasing = true; // Ease the vertical camera motion or not.
   boolean parallaxScrolling = true; // Parallax scrolling or not.

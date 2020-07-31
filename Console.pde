@@ -137,6 +137,11 @@ class Console {
     appendFullwidthWidget("axJumping", ctlr.addSlider("X Accel (jumping)")
       .setSize(150, 20)
       .setRange(0, 3));
+    appendFullwidthWidget("collisionTolerance", ctlr.addSlider("Collision Tolerance")
+      .setSize(150, 20)
+      .setRange(0, 24)
+      .setNumberOfTickMarks(25)
+      .showTickMarks(false));
     appendFullwidthWidget("camEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
