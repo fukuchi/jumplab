@@ -58,7 +58,7 @@ class Jumper {
     images_running_r.add(loadImage("char-run-4.png"));
     for (int i = 0; i < images_running_r.size (); i++) {
       images_running_l.add(hflipImage(images_running_r.get(i)));
-    } 
+    }
     images_jumping_r.add(loadImage("char-jump.png"));
     images_jumping_r.add(loadImage("char-jump-pre3.png"));
     images_jumping_r.add(loadImage("char-jump-pre2.png"));
@@ -212,22 +212,22 @@ class Jumper {
     }
   }
 
-  boolean hitUL() { 
+  boolean hitUL() {
     return level.isThereObstacle((int)x, (int)y);
   }
-  boolean hitUR() { 
+  boolean hitUR() {
     return level.isThereObstacle(ceil(x + w - 1), (int)y);
   }
-  boolean hitDL() { 
+  boolean hitDL() {
     return level.isThereObstacle((int)x, ceil(y + h - 1));
   }
-  boolean hitDR() { 
+  boolean hitDR() {
     return level.isThereObstacle(ceil(x + w - 1), ceil(y + h - 1));
   }
-  boolean hitBL() { 
+  boolean hitBL() {
     return level.isThereObstacle((int)x, ceil(y + h));
   }
-  boolean hitBR() { 
+  boolean hitBR() {
     return level.isThereObstacle(ceil(x + w - 1), ceil(y + h));
   }
 

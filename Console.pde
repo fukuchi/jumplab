@@ -32,42 +32,63 @@ class Console {
       .setText("Jumper X,Y");
     indicators.put("JumperXYvalue", new int[] {x + 80, y + 10});
     ctlr.addTextlabel("JumperVXY")
-      .setPosition(x + 10, y + 30)
+      .setPosition(x + 10, y + 25)
       .setText("Jumper VX,VY");
-    indicators.put("JumperVXYvalue", new int[] {x + 80, y + 30});
+    indicators.put("JumperVXYvalue", new int[] {x + 80, y + 25});
     ctlr.addTextlabel("VerticalAcc")
-      .setPosition(x + 10, y + 50)
+      .setPosition(x + 10, y + 40)
       .setText("Vertical Acc");
-    indicators.put("VerticalAccValue", new int[] {x + 80, y + 50});
+    indicators.put("VerticalAccValue", new int[] {x + 80, y + 40});
     ctlr.addTextlabel("PropellingRemainingFrames")
-      .setPosition(x + 10, y + 70)
+      .setPosition(x + 10, y + 55)
       .setText("Propelling Remainig");
-    indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 70});
+    indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 55});
+    ctlr.addTextlabel("FPS")
+      .setPosition(x + 10, y + 70)
+      .setText("FPS");
+    ctlr.addFrameRate().setInterval(10).setPosition(x + 50, y + 70);
     ctlr.addTextlabel("Jumping")
       .setPosition(x + 200, y + 10)
-      .setText("Jumping: ");
+      .setText("Jumping");
     widgets.put("JumpingValue", ctlr.addTextlabel("JumpingValue")
-      .setPosition(x + 260, y + 10)
-      .setText("FALSE"));
+      .setPosition(x + 260, y + 10));
     ctlr.addTextlabel("Propelling")
-      .setPosition(x + 200, y + 30)
-      .setText("Propelling: ");
+      .setPosition(x + 200, y + 25)
+      .setText("Propelling");
     widgets.put("PropellingValue", ctlr.addTextlabel("PropellingValue")
-      .setPosition(x + 260, y + 30)
-      .setText("FALSE"));
+      .setPosition(x + 260, y + 25));
     ctlr.addTextlabel("OnObstacle")
-      .setPosition(x + 200, y + 50)
-      .setText("On obstacle: ");
+      .setPosition(x + 200, y + 40)
+      .setText("On obstacle");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
-      .setPosition(x + 260, y + 50)
+      .setPosition(x + 260, y + 40)
       .setText("FALSE"));
 
-    ctlr.addButton("reset")
-      .setValue(1)
-      .setPosition(x + 80, y + 90)
-      .setSize(150, 20);
+    ctlr.addTextlabel("Preset Label")
+      .setPosition(x + 10, y + 95)
+      .setText("PRESET STYLES");
+    ScrollableList slist = ctlr.addScrollableList("Preset Styles")
+      .setPosition(x + 90, y + 90)
+      .setSize(150, 100)
+      .setBarHeight(20)
+      .setItemHeight(15)
+      .setItems(settings.presetStylesKeys())
+      .plugTo(this, "presetChanged");
+    slist.getValueLabel().toUpperCase(false);
+    slist.getCaptionLabel().toUpperCase(false);
 
-    nextWidgetPosition_y = y + 120;
+    Textfield textfield = ctlr.addTextfield("style name")
+      .setPosition(x + 60, y + 120)
+      .setSize(150, 20);
+    textfield.getCaptionLabel().align(ControlP5.LEFT_OUTSIDE, ControlP5.CENTER);
+    textfield.getCaptionLabel().setPadding(5, 0);
+    slist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
+    slist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
+    ctlr.addButton("Save")
+      .setPosition(x + 220, y + 120)
+      .setSize(60, 20);
+
+    nextWidgetPosition_y = y + 150;
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
     appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker"));
     appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
@@ -124,9 +145,11 @@ class Console {
       .setRange(0, 1));
 
     for (String name : settings.booleanValues) {
-      Controller widget = widgets.get(name);
-      widget.getCaptionLabel().align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
+      Label caption = widgets.get(name).getCaptionLabel();
+      caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
+      caption.setPadding(5, 0);
     }
+
     int id = 100;
     for (String name : widgets.keySet()) {
       Controller widget = widgets.get(name);
@@ -135,6 +158,7 @@ class Console {
       id++;
     }
 
+    ctlr.get(ScrollableList.class, "Preset Styles").bringToFront().setValue(0);
     setValues();
 
     ctlr.addCallback(new CallbackListener() {
@@ -205,9 +229,9 @@ class Console {
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
           toggle.setValue((Boolean)(f.get(settings))?1:0);
-        } 
+        }
         catch (ReflectiveOperationException e) {
-          println("Failed to set " + name + ".");
+          System.err.println("Failed to set " + name + ".");
         }
       }
     }
@@ -217,9 +241,9 @@ class Console {
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
           slider.setValue((float)f.get(settings));
-        } 
+        }
         catch (ReflectiveOperationException e) {
-          println("Failed to set " + name + ".");
+          System.err.println("Failed to set " + name + ".");
         }
       }
     }
@@ -233,9 +257,9 @@ class Console {
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
           f.set(settings, widget.getValue() > 0);
-        } 
+        }
         catch (ReflectiveOperationException e) {
-          println("Failed to set " + name + ".");
+          System.err.println("Failed to set " + name + ".");
         }
       }
     } else if (widget instanceof Slider) {
@@ -245,25 +269,32 @@ class Console {
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
           f.set(settings, widget.getValue());
-        } 
+        }
         catch (ReflectiveOperationException e) {
-          println("Failed to set " + name + ".");
+          System.err.println("Failed to set " + name + ".");
         }
       }
     } else if (widget instanceof Button) {
       if (event.getAction() == ControlP5.ACTION_CLICK) {
         String name = event.getController().getLabel();
-        if (name == "reset") {
-          resetButton(event);
+        if (name == "Save") {
+          String styleName = ctlr.get(Textfield.class, "style name").getText();
+          if (styleName.isEmpty()) styleName = "Untitled";
+          settings.save(styleName);
+          List<String> styleNames = settings.presetStylesKeys();
+          int idx = styleNames.indexOf(styleName);
+          if (idx < 0) idx = 0;
+          ctlr.get(ScrollableList.class, "Preset Styles").setItems(styleNames).setValue(idx);
         }
       }
     }
   }
 
-  void resetButton(CallbackEvent event) {
-    if (event.getAction() == ControlP5.ACTION_CLICK) {
-      settings.resetSettings();
-      setValues();
-    }
+  void presetChanged(int value) {
+    String key = settings.presetStylesKeys().get(value);
+    Textfield styleName = ctlr.get(Textfield.class, "style name");
+    styleName.setValue(key);
+    settings.setPreset(key);
+    setValues();
   }
 }

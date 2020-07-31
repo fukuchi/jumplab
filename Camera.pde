@@ -106,6 +106,6 @@ class Camera {
 
     noStroke();
     fill(128);
-    rect(console.x, console.y, console.w, 100);
+    rect(console.x, console.y, console.w, 200);
   }
 }

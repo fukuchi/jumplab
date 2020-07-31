@@ -28,7 +28,6 @@ class Level {
 
     blockImg = loadImage(blockImgFile);
     bgImg = loadImage(bgFile);
-
     bw = blockImg.width;
     bh = blockImg.height;
 

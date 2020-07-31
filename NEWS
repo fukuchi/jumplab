@@ -1,0 +1,26 @@
+JumpLab NEWS - Overview of changes
+==================================
+
+Version 0.9.0 (2020.8.xx)
+------------------------
+
+* New jump features:
+  - Constant rising speed
+  - Horizontal braking
+* New UI features:
+  - Presets (the reset button has been deprecated)
+  - FPS indicator
+* Some minor bug fixes.
+* Many code cleanups.
+
+Version 0.1.1 (2020.7.28)
+------------------------
+
+* The renderer has been changed to P2D from JAVA2D.
+* Some minor bug fixes.
+* Some code cleanups.
+
+Version 0.1.0 (2020.7.27)
+------------------------
+
+* Initial public-beta release.

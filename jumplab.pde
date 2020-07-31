@@ -9,12 +9,14 @@ static final int gameScreen_h = 600;
 static final int console_w = 300;
 
 void settings() {
+  println("Initializing...");
   size(gameScreen_w + console_w, gameScreen_h, P2D);
   noSmooth();
 }
 
 void setup() {
   settings = new Settings();
+  settings.load();
   level = new Level("level1.csv", "block.png", "bg.png");
   masao = new Jumper(settings, level.sx, level.sy);
   camera = new Camera(masao, level, gameScreen_w, gameScreen_h);
@@ -22,6 +24,7 @@ void setup() {
   console = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, settings);
   frameRate(60);
   background(128);
+  println("Initialization completed.");
 }
 
 void draw() {
