@@ -14,6 +14,7 @@ class Console {
   int nextWidgetPosition_y;
   static final int widgetMargin_y = 6;
   NumIndicator numIndicator;
+  String currentTab = "global";
 
   Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
     this.x = x;
@@ -27,72 +28,98 @@ class Console {
     id2parameter = new HashMap<Integer, String>();
     indicators = new HashMap<String, int[]>();
 
+    ctlr.addTab("Camera")
+      .setId(2)
+      .activateEvent(true);
+    ctlr.getTab("default")
+      .setLabel("Jump")
+      .setId(1)
+      .activateEvent(true);
+    ctlr.getWindow().setPositionOfTabs(x + 10, y + 150);
+    stroke(255);
+
     ctlr.addTextlabel("JumperXY")
       .setPosition(x + 10, y + 10)
-      .setText("Jumper X,Y");
+      .setText("Jumper X,Y")
+      .moveTo("global");
     indicators.put("JumperXYvalue", new int[] {x + 80, y + 10});
     ctlr.addTextlabel("JumperVXY")
       .setPosition(x + 10, y + 25)
-      .setText("Jumper VX,VY");
+      .setText("Jumper VX,VY")
+      .moveTo("global");
     indicators.put("JumperVXYvalue", new int[] {x + 80, y + 25});
     ctlr.addTextlabel("VerticalAcc")
       .setPosition(x + 10, y + 40)
-      .setText("Vertical Acc");
+      .setText("Vertical Acc")
+      .moveTo("global");
     indicators.put("VerticalAccValue", new int[] {x + 80, y + 40});
     ctlr.addTextlabel("PropellingRemainingFrames")
       .setPosition(x + 10, y + 55)
-      .setText("Propelling Remainig");
+      .setText("Propelling Remainig")
+      .moveTo("global");
     indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 55});
     ctlr.addTextlabel("FPS")
       .setPosition(x + 10, y + 70)
-      .setText("FPS");
-    ctlr.addFrameRate().setInterval(10).setPosition(x + 50, y + 70);
+      .setText("FPS")
+      .moveTo("global");
+    ctlr.addFrameRate().setInterval(10).setPosition(x + 50, y + 70).moveTo("global");
     ctlr.addTextlabel("Jumping")
       .setPosition(x + 200, y + 10)
-      .setText("Jumping");
+      .setText("Jumping")
+      .moveTo("global");
     widgets.put("JumpingValue", ctlr.addTextlabel("JumpingValue")
-      .setPosition(x + 260, y + 10));
+      .setPosition(x + 260, y + 10)
+      .moveTo("global"));
     ctlr.addTextlabel("Propelling")
       .setPosition(x + 200, y + 25)
-      .setText("Propelling");
+      .setText("Propelling")
+      .moveTo("global");
     widgets.put("PropellingValue", ctlr.addTextlabel("PropellingValue")
-      .setPosition(x + 260, y + 25));
+      .setPosition(x + 260, y + 25)
+      .moveTo("global"));
     ctlr.addTextlabel("OnObstacle")
       .setPosition(x + 200, y + 40)
-      .setText("On obstacle");
+      .setText("On obstacle")
+      .moveTo("global");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
       .setPosition(x + 260, y + 40)
-      .setText("FALSE"));
+      .setText("FALSE")
+      .moveTo("global"));
 
     ctlr.addTextlabel("Preset Label")
       .setPosition(x + 10, y + 95)
-      .setText("PRESET STYLES");
+      .setText("PRESET STYLES")
+      .moveTo("global");
     ScrollableList slist = ctlr.addScrollableList("Preset Styles")
       .setPosition(x + 90, y + 90)
       .setSize(150, 100)
       .setBarHeight(20)
       .setItemHeight(15)
       .setItems(settings.presetStylesKeys())
+      .moveTo("global")
       .plugTo(this, "presetChanged");
     slist.getValueLabel().toUpperCase(false);
     slist.getCaptionLabel().toUpperCase(false);
 
     Textfield textfield = ctlr.addTextfield("style name")
       .setPosition(x + 60, y + 120)
-      .setSize(150, 20);
+      .setSize(150, 20)
+      .moveTo("global");
     textfield.getCaptionLabel().align(ControlP5.LEFT_OUTSIDE, ControlP5.CENTER);
     textfield.getCaptionLabel().setPadding(5, 0);
     slist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
     slist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     ctlr.addButton("Save")
       .setPosition(x + 220, y + 120)
-      .setSize(60, 20);
+      .setSize(60, 20)
+      .moveTo("global");
 
-    nextWidgetPosition_y = y + 150;
+    // Settings of jumping
+    setTab("global");
+    nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
     appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker"));
-    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
-    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing"));
+    setTab("default");
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
     appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
@@ -142,6 +169,12 @@ class Console {
       .setRange(0, 24)
       .setNumberOfTickMarks(25)
       .showTickMarks(false));
+
+    // Settings of Camera motion
+    setTab("Camera");
+    nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
+    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
+    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing"));
     appendFullwidthWidget("camEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
@@ -184,6 +217,7 @@ class Console {
       }
     }
     widget.setPosition(x + 10, nextWidgetPosition_y);
+    widget.moveTo(currentTab);
     widgets.put(name, widget);
     nextWidgetPosition_y += widget.getHeight() + widgetMargin_y;
     lastWidget = widget;
@@ -198,6 +232,7 @@ class Console {
       halfFilled = false;
       nextWidgetPosition_y += max(widget.getHeight(), lastWidget.getHeight()) + widgetMargin_y;
     }
+    widget.moveTo(currentTab);
     widgets.put(name, widget);
     lastWidget = widget;
   }
@@ -301,5 +336,9 @@ class Console {
     styleName.setValue(key);
     settings.setPreset(key);
     setValues();
+  }
+
+  void setTab(String name) {
+    currentTab = name;
   }
 }

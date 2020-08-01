@@ -87,13 +87,11 @@ class Camera {
     if (settings.showTrail) {
       noStroke();
       fill(255, 0, 0);
-      clip(0, 0, window_w, window_h);
       for (int i=0; i<posbuflen; i++) {
         if (posbuf[i].x - cx < window_w) {
           ellipse(posbuf[i].x - cx, posbuf[i].y - cy, 5, 5);
         }
       }
-      noClip();
     }
     jumper.draw(jumper.x - cx, jumper.y - cy);
 
@@ -106,6 +104,8 @@ class Camera {
 
     noStroke();
     fill(128);
-    rect(console.x, console.y, console.w, 200);
+    rect(console.x, console.y, console.w, console.h);
+    stroke(255);
+    line(console.x, console.y + 166, console.x + console.w, console.y + 166);
   }
 }
