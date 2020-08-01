@@ -173,7 +173,7 @@ class Jumper {
     if (jumping && jumpMotion > 0) {
       jumpMotion--;
       if (jumpMotion == 0) {
-        vy = -settings.jumpPower;
+        vy = -settings.jumpPower - (settings.jumpPowerBonus * abs(vx));
         vx *= (1.0 - settings.brakingAtTakeoff);
         onObstacle = false;
         if (settings.constantRising) {

@@ -133,6 +133,9 @@ class Console {
     appendFullwidthWidget("jumpPower", ctlr.addSlider("Jump Velocity")
       .setSize(150, 20)
       .setRange(1, 30));
+    appendFullwidthWidget("jumpPowerBonus", ctlr.addSlider("Jump Velocity Bonus")
+      .setSize(150, 20)
+      .setRange(0, 0.5));
     appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
       .setSize(150, 20)
       .setRange(0, 9)
