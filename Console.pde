@@ -177,13 +177,21 @@ class Console {
     setTab("Camera");
     nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
     appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
-    appendHalfwidthWidget("camVerticalEasing", ctlr.addToggle("Camera easing"));
-    appendFullwidthWidget("camEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
+    appendHalfwidthWidget("cameraVerticalEasing", ctlr.addToggle("Camera easing"));
+    appendHalfwidthWidget("haltVScrollWhileJumping", ctlr.addToggle("Halt V scroll when..."));
+    appendHalfwidthWidget();
+    appendFullwidthWidget("cameraEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
-    appendFullwidthWidget("camEasingGrounding", ctlr.addSlider("Camera Easing Coef (grounding)")
+    appendFullwidthWidget("cameraEasingGrounding", ctlr.addSlider("Camera Easing Coef (grounding)")
       .setSize(150, 20)
       .setRange(0, 1));
+    appendFullwidthWidget("cameraWindow_w", ctlr.addSlider("Camera Window Width")
+      .setSize(150, 20)
+      .setRange(0, 400));
+    appendFullwidthWidget("cameraWindow_h", ctlr.addSlider("Camera Window Height")
+      .setSize(150, 20)
+      .setRange(0, 400));
 
     for (String name : settings.booleanValues) {
       Label caption = widgets.get(name).getCaptionLabel();

@@ -45,21 +45,40 @@ class Camera {
   }
 
   void update() {
-    x = constrain(jumper.x + Jumper.w / 2, window_hw, level.w - window_hw);
-    if (!settings.camVerticalEasing) {
+    float tx = x; // target position
+    float ty = y;
+
+    float dx = jumper.x + Jumper.w / 2 - x;
+    float dy = jumper.y + Jumper.h / 2 - y;
+    if (dx < -settings.cameraWindow_w / 2) {
+      tx += dx + settings.cameraWindow_w / 2;
+    } else {
+      if (dx > settings.cameraWindow_w / 2) {
+        tx += dx - settings.cameraWindow_w / 2;
+      }
+    }
+    if (dy < -settings.cameraWindow_h / 2) {
+      ty += dy + settings.cameraWindow_h / 2;
+    } else {
+      if (dy > settings.cameraWindow_h / 2) {
+        ty += dy - settings.cameraWindow_h / 2;
+      }
+    }
+
+    x = constrain(tx, window_hw, level.w - window_hw);
+    if (!settings.cameraVerticalEasing) {
       py = y;
-      y = constrain(jumper.y + Jumper.h / 2, window_hh, level.h - window_hh);
+      y = constrain(ty, window_hh, level.h - window_hh);
     } else {
       float vy = y - py;
       py = y;
-      float ty = jumper.y + Jumper.h / 2;
       if (!jumper.onObstacle) {
         float dist = abs(ty - y);
-        vy += Math.signum(ty - y) * dist * settings.camEasingNormal;
+        vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal;
         vy = vy * 0.5;
         y += vy;
       } else {
-        y += (ty - y) * settings.camEasingGrounding;
+        y += (ty - y) * settings.cameraEasingGrounding;
       }
       y = constrain(y, window_hh, level.h - window_hh);
     }
@@ -98,8 +117,11 @@ class Camera {
     if (settings.showCameraMarker) {
       noStroke();
       fill(255, 0, 0);
-      rect(window_hw -  2, window_hh - 12,  5, 25);
-      rect(window_hw - 12, window_hh -  2, 25,  5);
+      rect(window_hw -  2, window_hh - 12, 5, 25);
+      rect(window_hw - 12, window_hh -  2, 25, 5);
+      stroke(255);
+      noFill();
+      rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
     }
 
     noStroke();

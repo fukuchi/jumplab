@@ -27,19 +27,21 @@ class Settings {
   float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
 
   // Camera parameters
-  float camEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
-  float camEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
   boolean showTrail = false; // Show the trail or not.
   boolean showCameraMarker = false; // Show the center marker or not.
   boolean parallaxScrolling = true; // Parallax scrolling or not.
-  boolean camVerticalEasing = true; // Ease the vertical camera motion or not.
-
+  boolean cameraVerticalEasing = true; // Ease the vertical camera motion or not.
+  boolean haltVScrollWhileJumping = false; // Halt the vertical camera motion when the jumper is jumping.
+  float cameraEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
+  float cameraEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
+  float cameraWindow_h = 0; // Height of the camera window.
+  float cameraWindow_w = 0; // Width of the camera window.
 
   ArrayList<String> booleanValues;
   ArrayList<String> floatValues;
   String[] allValues;
 
-  String[] ignoredVariables = {"showTrail", "showCameraMarker", "camVerticalEasing", "parallaxScrolling"};
+  String[] ignoredVariables = {"showTrail", "showCameraMarker", "cameraVerticalEasing", "parallaxScrolling"};
 
   HashMap<String, HashMap<String, Object>> presetStyles;
 
