@@ -63,7 +63,7 @@ class Settings {
   void setPreset(String name) {
     HashMap<String, Object> preset = presetStyles.get(name);
     if (preset == null) {
-      println("Preset '" + name + "' not found.");
+      System.err.println("Preset '" + name + "' not found.");
       return;
     }
     for (String key : preset.keySet()) {
