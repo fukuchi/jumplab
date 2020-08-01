@@ -154,10 +154,10 @@ class Console {
       .setRange(0, 3));
     appendFullwidthWidget("gravityFalling", ctlr.addSlider("Gravity (falling)")
       .setSize(150, 20)
-      .setRange(0.01, 3));
+      .setRange(0.01, 2));
     appendFullwidthWidget("verticalSpeedSustainLevel", ctlr.addSlider("Jump speed sustain level")
       .setSize(150, 20)
-      .setRange(0, 1));
+      .setRange(0, 2));
     appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")
       .setSize(150, 20)
       .setRange(0, 3));
