@@ -118,7 +118,7 @@ class Console {
     setTab("global");
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
-    appendHalfwidthWidget("showCenterMarker", ctlr.addToggle("Center marker"));
+    appendHalfwidthWidget("showCameraMarker", ctlr.addToggle("Camera marker"));
     setTab("default");
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));

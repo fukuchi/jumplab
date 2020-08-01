@@ -6,36 +6,40 @@ import java.util.Collections;
 import java.util.Comparator;
 
 class Settings {
-  float maxVx = 8; // Maximum horizontal velocity of the jumper.
-  float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
-  float jumpPower = 13; // Initial vertical velocity of a jump motion.
-  float gravity = 0.5; // gravity when rising.
-  float gravityFalling = 1.2; // gravity when falling.
-  float axNormal = 0.2; // Horizontal acceleration in normal state.
-  float axBrake = 1.0; // Horizontal acceleration when braking.
-  float axJumping = 0.1; // Horizontal acceleration when jumping.
-  float camEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
-  float camEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
-  float jumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
-  float maxPropellingFrames = 30; // Maximum duration of propelled jump.
-  float brakingAtTakeoff = 0.0; // Horizontal braking power at the takeoff.
-  float verticalSpeedSustainLevel = 1.0; // Sustain level of the vertical speed when the button released.
-  float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
-  float jumpPowerBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
-  boolean showTrail = false; // Show the trail or not.
-  boolean camVerticalEasing = true; // Ease the vertical camera motion or not.
-  boolean parallaxScrolling = true; // Parallax scrolling or not.
-  boolean showCenterMarker = false; // Show the center marker or not.
+  // Jump parameters
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
   boolean constantRising = false; // Keep constant vertical velocity when rising.
   boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
+  float maxVx = 8; // Maximum horizontal velocity of the jumper.
+  float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
+  float jumpPower = 13; // Initial vertical velocity of a jump motion.
+  float jumpPowerBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
+  float jumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
+  float brakingAtTakeoff = 0.0; // Horizontal braking power at the takeoff.
+  float maxPropellingFrames = 30; // Maximum duration of propelled jump.
+  float gravity = 0.5; // gravity when rising.
+  float gravityFalling = 1.2; // gravity when falling.
+  float verticalSpeedSustainLevel = 1.0; // Sustain level of the vertical speed when the button released.
+  float axNormal = 0.2; // Horizontal acceleration in normal state.
+  float axBrake = 1.0; // Horizontal acceleration when braking.
+  float axJumping = 0.1; // Horizontal acceleration when jumping.
+  float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
+
+  // Camera parameters
+  float camEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
+  float camEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
+  boolean showTrail = false; // Show the trail or not.
+  boolean showCameraMarker = false; // Show the center marker or not.
+  boolean parallaxScrolling = true; // Parallax scrolling or not.
+  boolean camVerticalEasing = true; // Ease the vertical camera motion or not.
+
 
   ArrayList<String> booleanValues;
   ArrayList<String> floatValues;
   String[] allValues;
 
-  String[] ignoredVariables = {"showTrail", "showCenterMarker", "camVerticalEasing", "parallaxScrolling"};
+  String[] ignoredVariables = {"showTrail", "showCameraMarker", "camVerticalEasing", "parallaxScrolling"};
 
   HashMap<String, HashMap<String, Object>> presetStyles;
 

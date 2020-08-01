@@ -95,11 +95,11 @@ class Camera {
     }
     jumper.draw(jumper.x - cx, jumper.y - cy);
 
-    if (settings.showCenterMarker) {
+    if (settings.showCameraMarker) {
       noStroke();
       fill(255, 0, 0);
-      rect(window_hw - 5, window_hh - 15, 10, 30);
-      rect(window_hw - 15, window_hh - 5, 30, 10);
+      rect(window_hw -  2, window_hh - 12,  5, 25);
+      rect(window_hw - 12, window_hh -  2, 25,  5);
     }
 
     noStroke();
