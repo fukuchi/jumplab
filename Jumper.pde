@@ -112,7 +112,8 @@ class Jumper {
     if (hUL || hDL) {
       float penalty = level.obstaclePenaltyL(x);
       if (hUL && !hDL) {
-        if (vy < 0 && penalty >= settings.collisionTolerance) {
+        float ny = y + level.obstaclePenaltyU(y);
+        if (vy < 0 && penalty >= settings.collisionTolerance && ny <= py) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
           propelling = false;
@@ -132,7 +133,7 @@ class Jumper {
       float penalty = level.obstaclePenaltyR(x + w);
       if (hUR && !hDR) {
         float ny = y + level.obstaclePenaltyU(y);
-        if (vy < 0 && penalty >= settings.collisionTolerance && ny < py) {
+        if (vy < 0 && penalty >= settings.collisionTolerance && ny <= py) {
           y += level.obstaclePenaltyU(y);
           vy = 0;
           propelling = false;
