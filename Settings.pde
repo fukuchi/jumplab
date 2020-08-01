@@ -30,10 +30,12 @@ class Settings {
   boolean showTrail = false; // Show the trail or not.
   boolean showCameraMarker = false; // Show the center marker or not.
   boolean parallaxScrolling = true; // Parallax scrolling or not.
-  boolean cameraVerticalEasing = true; // Ease the vertical camera motion or not.
+  boolean cameraEasing_x = false; // Ease the horizon camera motion or not.
+  boolean cameraEasing_y = true; // Ease the vertical camera motion or not.
   boolean verticalSnapping = false; // Halt the vertical camera motion when the jumper is jumping.
-  float cameraEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
-  float cameraEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
+  float cameraEasingNormal_x = 0.1; // Smoothness of the horizontal camera motion in normal state.
+  float cameraEasingNormal_y = 0.1; // Smoothness of the vertical camera motion in normal state.
+  float cameraEasingGrounding_y = 0.3; // Smoothness of the camera motion when the jumper grounded.
   float cameraWindow_h = 0; // Height of the camera window.
   float cameraWindow_w = 0; // Width of the camera window.
 
@@ -125,7 +127,7 @@ class Settings {
           }
         }
         catch (ReflectiveOperationException e) {
-          System.err.println("Failed to get " + name + ".");
+          System.err.println("Failed to set " + variableName + " of " + name + ".");
         }
       }
     }

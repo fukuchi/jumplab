@@ -176,14 +176,18 @@ class Console {
     // Settings of Camera motion
     setTab("Camera");
     nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
+    appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
+    appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
-    appendHalfwidthWidget("cameraVerticalEasing", ctlr.addToggle("Camera easing"));
     appendHalfwidthWidget("verticalSnapping", ctlr.addToggle("Vertical snapping"));
     appendHalfwidthWidget();
-    appendFullwidthWidget("cameraEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
+    appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
-    appendFullwidthWidget("cameraEasingGrounding", ctlr.addSlider("Camera Easing Coef (grounding)")
+    appendFullwidthWidget("cameraEasingNormal_y", ctlr.addSlider("Camera Y Easing Coef (normal)")
+      .setSize(150, 20)
+      .setRange(0, 1));
+    appendFullwidthWidget("cameraEasingGrounding_y", ctlr.addSlider("Camera Y Easing Coef (grounding)")
       .setSize(150, 20)
       .setRange(0, 1));
     appendFullwidthWidget("cameraWindow_w", ctlr.addSlider("Camera Window Width")

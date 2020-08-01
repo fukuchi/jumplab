@@ -7,7 +7,7 @@ class Camera {
   int posbufp = 0;
 
   float x, y;
-  float py;
+  float px, py;
   int window_w, window_h;
   int window_hw, window_hh;
 
@@ -41,6 +41,7 @@ class Camera {
   void reset(float x, float y) {
     this.x = constrain(x + Jumper.w / 2, window_hw, level.w - window_hw);
     this.y = constrain(y + Jumper.h / 2, window_hh, level.h - window_hh);
+    px = this.x;
     py = this.y;
   }
 
@@ -65,9 +66,21 @@ class Camera {
       }
     }
 
-    x = constrain(tx, window_hw, level.w - window_hw);
+    if (!settings.cameraEasing_x) {
+      px = x;
+      x = constrain(tx, window_hw, level.w - window_hw);
+    } else {
+      float vx = x - px;
+      px = x;
+      float dist = abs(tx - x);
+      vx += Math.signum(tx - x) * dist * settings.cameraEasingNormal_x;
+      vx = vx * 0.5;
+      x += vx;
+      x = constrain(x, window_hw, level.w - window_hw);
+    }
+
     if (!settings.verticalSnapping || !jumper.jumping) {
-      if (!settings.cameraVerticalEasing) {
+      if (!settings.cameraEasing_y) {
         py = y;
         y = constrain(ty, window_hh, level.h - window_hh);
       } else {
@@ -75,11 +88,11 @@ class Camera {
         py = y;
         if (!jumper.onObstacle) {
           float dist = abs(ty - y);
-          vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal;
+          vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal_y;
           vy = vy * 0.5;
           y += vy;
         } else {
-          y += (ty - y) * settings.cameraEasingGrounding;
+          y += (ty - y) * settings.cameraEasingGrounding_y;
         }
         y = constrain(y, window_hh, level.h - window_hh);
       }
