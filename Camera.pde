@@ -66,21 +66,23 @@ class Camera {
     }
 
     x = constrain(tx, window_hw, level.w - window_hw);
-    if (!settings.cameraVerticalEasing) {
-      py = y;
-      y = constrain(ty, window_hh, level.h - window_hh);
-    } else {
-      float vy = y - py;
-      py = y;
-      if (!jumper.onObstacle) {
-        float dist = abs(ty - y);
-        vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal;
-        vy = vy * 0.5;
-        y += vy;
+    if (!settings.verticalSnapping || !jumper.jumping) {
+      if (!settings.cameraVerticalEasing) {
+        py = y;
+        y = constrain(ty, window_hh, level.h - window_hh);
       } else {
-        y += (ty - y) * settings.cameraEasingGrounding;
+        float vy = y - py;
+        py = y;
+        if (!jumper.onObstacle) {
+          float dist = abs(ty - y);
+          vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal;
+          vy = vy * 0.5;
+          y += vy;
+        } else {
+          y += (ty - y) * settings.cameraEasingGrounding;
+        }
+        y = constrain(y, window_hh, level.h - window_hh);
       }
-      y = constrain(y, window_hh, level.h - window_hh);
     }
   }
 

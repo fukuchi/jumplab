@@ -31,7 +31,7 @@ class Settings {
   boolean showCameraMarker = false; // Show the center marker or not.
   boolean parallaxScrolling = true; // Parallax scrolling or not.
   boolean cameraVerticalEasing = true; // Ease the vertical camera motion or not.
-  boolean haltVScrollWhileJumping = false; // Halt the vertical camera motion when the jumper is jumping.
+  boolean verticalSnapping = false; // Halt the vertical camera motion when the jumper is jumping.
   float cameraEasingNormal = 0.1; // Smoothness of the camera motion in normal state.
   float cameraEasingGrounding = 0.3; // Smoothness of the camera motion when the jumper grounded.
   float cameraWindow_h = 0; // Height of the camera window.
@@ -41,7 +41,7 @@ class Settings {
   ArrayList<String> floatValues;
   String[] allValues;
 
-  String[] ignoredVariables = {"showTrail", "showCameraMarker", "cameraVerticalEasing", "parallaxScrolling"};
+  String[] ignoredVariables = {"showTrail", "showCameraMarker"};
 
   HashMap<String, HashMap<String, Object>> presetStyles;
 

@@ -178,7 +178,7 @@ class Console {
     nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
     appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
     appendHalfwidthWidget("cameraVerticalEasing", ctlr.addToggle("Camera easing"));
-    appendHalfwidthWidget("haltVScrollWhileJumping", ctlr.addToggle("Halt V scroll when..."));
+    appendHalfwidthWidget("verticalSnapping", ctlr.addToggle("Vertical snapping"));
     appendHalfwidthWidget();
     appendFullwidthWidget("cameraEasingNormal", ctlr.addSlider("Camera Easing Coef (normal)")
       .setSize(150, 20)
