@@ -39,7 +39,7 @@ class Jumper {
     onObstacle = false;
     jumpMotion = 0;
     dir = 0;
-    lastDir = 0;
+    lastDir = 1;
     jumpDir = 0;
     pattern = 0;
     verticalAcc = settings.gravityFalling;

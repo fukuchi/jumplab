@@ -7,7 +7,8 @@ class Camera {
   int posbufp = 0;
 
   float x, y;
-  float px, py;
+  float px, py; // previous position
+  float focus_x;
   int window_w, window_h;
   int window_hw, window_hh;
 
@@ -43,6 +44,7 @@ class Camera {
     this.y = constrain(y + Jumper.h / 2, window_hh, level.h - window_hh);
     px = this.x;
     py = this.y;
+    focus_x = x;
   }
 
   void update() {
@@ -51,6 +53,33 @@ class Camera {
 
     float dx = jumper.x + Jumper.w / 2 - x;
     float dy = jumper.y + Jumper.h / 2 - y;
+    if (settings.forwardFocus) {
+      float fx = jumper.lastDir * settings.focusDistance;
+      if (jumper.lastDir > 0) {
+        if (focus_x < fx) {
+          float cameraEdge_x = settings.cameraWindow_w / 2 - dx;
+          if (focus_x < cameraEdge_x) {
+            focus_x = cameraEdge_x;
+          }
+          focus_x += settings.focusingSpeed;
+          if (focus_x > fx) {
+            focus_x = fx;
+          }
+        }
+      } else if (jumper.lastDir < 0) {
+        if (focus_x > fx) {
+          float cameraEdge_x = -settings.cameraWindow_w / 2 - dx;
+          if (focus_x > cameraEdge_x) {
+            focus_x = cameraEdge_x;
+          }
+          focus_x -= settings.focusingSpeed;
+          if (focus_x < fx) {
+            focus_x = fx;
+          }
+        }
+      }
+      dx += focus_x;
+    }
     if (dx < -settings.cameraWindow_w / 2) {
       tx += dx + settings.cameraWindow_w / 2;
     } else {
@@ -137,6 +166,17 @@ class Camera {
       stroke(255);
       noFill();
       rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
+      if (settings.forwardFocus) {
+        int fx = (int)(jumper.x + Jumper.w / 2 + jumper.lastDir * settings.focusDistance) - cx;
+        int fy = (int)jumper.y + Jumper.h / 2 - cy;
+        line(fx - 12, fy, fx + 12, fy     );
+        line(fx, fy - 12, fx, fy + 12);
+        stroke(255, 255, 0);
+        fx = (int)(jumper.x + Jumper.w / 2 + focus_x) - cx;
+        fy = (int)jumper.y + Jumper.h / 2 - cy;
+        line(fx - 12, fy, fx + 12, fy     );
+        line(fx, fy - 12, fx, fy + 12);
+      }
     }
 
     noStroke();

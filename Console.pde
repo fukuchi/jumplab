@@ -178,9 +178,9 @@ class Console {
     nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
     appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
     appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
-    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
+    appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));
     appendHalfwidthWidget("verticalSnapping", ctlr.addToggle("Vertical snapping"));
-    appendHalfwidthWidget();
+    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
@@ -196,6 +196,12 @@ class Console {
     appendFullwidthWidget("cameraWindow_h", ctlr.addSlider("Camera Window Height")
       .setSize(150, 20)
       .setRange(0, 400));
+    appendFullwidthWidget("focusDistance", ctlr.addSlider("Focus Distance")
+      .setSize(150, 20)
+      .setRange(0, 400));
+    appendFullwidthWidget("focusingSpeed", ctlr.addSlider("Focusing Speed")
+      .setSize(150, 20)
+      .setRange(0, 30));
 
     for (String name : settings.booleanValues) {
       Label caption = widgets.get(name).getCaptionLabel();
