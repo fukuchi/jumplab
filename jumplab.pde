@@ -3,6 +3,7 @@ Jumper masao;
 Level level;
 Camera camera;
 Console console;
+Joystick joystick;
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
@@ -19,6 +20,7 @@ void settings() {
 void setup() {
   settings = new Settings();
   settings.load();
+  joystick = new Joystick(this);
   level = new Level("level1.csv", "block.png", "bg.png");
   masao = new Jumper(settings, level.sx, level.sy);
   camera = new Camera(masao, level, gameScreen_w, gameScreen_h);

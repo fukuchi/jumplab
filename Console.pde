@@ -1,4 +1,5 @@
 import controlP5.*;
+import controlP5.Controller;
 import java.util.Map;
 import java.lang.reflect.Field;
 
@@ -30,6 +31,9 @@ class Console {
 
     ctlr.addTab("Camera")
       .setId(2)
+      .activateEvent(true);
+    ctlr.addTab("Joystick")
+      .setId(3)
       .activateEvent(true);
     ctlr.getTab("default")
       .setLabel("Jump")
@@ -115,15 +119,14 @@ class Console {
       .moveTo("global");
 
     // Settings of jumping
-    setTab("global");
+    setTab("default");
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
-    appendHalfwidthWidget("showCameraMarker", ctlr.addToggle("Camera marker"));
-    setTab("default");
-    appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
-    appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
-    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
     appendHalfwidthWidget("haltedAndFall", ctlr.addToggle("Halted and fall"));
+    appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
+    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
+    appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
+    appendHalfwidthWidget();
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setSize(80, 20)
       .setRange(1, 20));
@@ -175,12 +178,13 @@ class Console {
 
     // Settings of Camera motion
     setTab("Camera");
-    nextWidgetPosition_y = y + 175 + ctlr.get(Toggle.class, "Show trail").getHeight() + widgetMargin_y;
+    nextWidgetPosition_y = y + 175;
+    appendHalfwidthWidget("showCameraMarker", ctlr.addToggle("Camera marker"));
+    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
     appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
     appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));
     appendHalfwidthWidget("platformSnapping", ctlr.addToggle("Platform snapping"));
-    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
@@ -202,6 +206,23 @@ class Console {
     appendFullwidthWidget("focusingSpeed", ctlr.addSlider("Focusing Speed")
       .setSize(150, 20)
       .setRange(0, 30));
+
+    // Settings of joystick
+    setTab("Joystick");
+    nextWidgetPosition_y = y + 175;
+    appendFullwidthWidget(null, ctlr.addTextlabel("Select Joystick")
+      .setText("SELECT JOYSTICK:"));
+    ScrollableList joylist = ctlr.addScrollableList("Joystick List")
+      .setSize(280, 100)
+      .setBarHeight(20)
+      .setItemHeight(15)
+      .setItems(joystick.getJoystickNames(60))
+      .plugTo(this, "joystickChanged");
+    joylist.getValueLabel().toUpperCase(false);
+    joylist.getCaptionLabel().toUpperCase(false);
+    joylist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
+    joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
+    appendFullwidthWidget("joystickList", joylist);
 
     for (String name : settings.booleanValues) {
       Label caption = widgets.get(name).getCaptionLabel();
@@ -239,7 +260,7 @@ class Console {
     }
     widget.setPosition(x + 10, nextWidgetPosition_y);
     widget.moveTo(currentTab);
-    widgets.put(name, widget);
+    if (name != null) widgets.put(name, widget);
     nextWidgetPosition_y += widget.getHeight() + widgetMargin_y;
     lastWidget = widget;
   }
@@ -254,7 +275,7 @@ class Console {
       nextWidgetPosition_y += max(widget.getHeight(), lastWidget.getHeight()) + widgetMargin_y;
     }
     widget.moveTo(currentTab);
-    widgets.put(name, widget);
+    if (name != null) widgets.put(name, widget);
     lastWidget = widget;
   }
 
@@ -357,6 +378,10 @@ class Console {
     styleName.setValue(key);
     settings.setPreset(key);
     setValues();
+  }
+
+  void joystickChanged(int value) {
+    joystick.selectDevice(value);
   }
 
   void setTab(String name) {

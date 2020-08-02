@@ -16,6 +16,7 @@ class Jumper {
   int propellingRemainingFrames;
   float pattern;
   Settings settings;
+  int[] joyInput;
 
   Vector<PImage> images_running_r;
   Vector<PImage> images_running_l;
@@ -43,6 +44,7 @@ class Jumper {
     jumpDir = 0;
     pattern = 0;
     verticalAcc = settings.gravityFalling;
+    joyInput = new int[3];
 
     initializeImages();
   }
@@ -72,6 +74,7 @@ class Jumper {
   void update() {
     boolean hDL, hDR, hUL, hUR;
 
+    joystickUpdate();
     px = x;
     py = y;
     velocityXUpdate();
@@ -312,6 +315,17 @@ class Jumper {
       return true;
     }
     return false;
+  }
+
+  void joystickUpdate() {
+    joystick.update(joyInput);
+    if(joyInput[0] < 0 && dir == -1 || joyInput[1] < 0 && dir == 1) {
+      move(0);
+    }
+    if(joyInput[2] < 0) jumpCanceled();
+    if(joyInput[0] > 0) move(-1);
+    if(joyInput[1] > 0) move(1);
+    if(joyInput[2] > 0) jump();
   }
 
   PImage hflipImage(PImage srcImg) {
