@@ -33,7 +33,7 @@ class Settings {
   boolean cameraEasing_x = false; // Ease the horizon camera motion or not.
   boolean cameraEasing_y = true; // Ease the vertical camera motion or not.
   boolean forwardFocus = false; //  Shift the focus to the front of the jumper to enable wide forward view.
-  boolean verticalSnapping = false; // Halt the vertical camera motion when the jumper is jumping.
+  boolean platformSnapping = false; // Halt the vertical camera motion when the jumper is jumping.
   float cameraEasingNormal_x = 0.1; // Smoothness of the horizontal camera motion in normal state.
   float cameraEasingNormal_y = 0.1; // Smoothness of the vertical camera motion in normal state.
   float cameraEasingGrounding_y = 0.3; // Smoothness of the camera motion when the jumper grounded.

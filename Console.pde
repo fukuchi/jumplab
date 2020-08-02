@@ -179,7 +179,7 @@ class Console {
     appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
     appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));
-    appendHalfwidthWidget("verticalSnapping", ctlr.addToggle("Vertical snapping"));
+    appendHalfwidthWidget("platformSnapping", ctlr.addToggle("Platform snapping"));
     appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)

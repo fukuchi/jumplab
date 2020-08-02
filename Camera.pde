@@ -108,7 +108,7 @@ class Camera {
       x = constrain(x, window_hw, level.w - window_hw);
     }
 
-    if (!settings.verticalSnapping || !jumper.jumping) {
+    if (!settings.platformSnapping || !jumper.jumping) {
       if (!settings.cameraEasing_y) {
         py = y;
         y = constrain(ty, window_hh, level.h - window_hh);
