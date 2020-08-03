@@ -73,21 +73,32 @@ class Settings {
   }
 
   void setPreset(String name) {
-    HashMap<String, Object> preset = presetStyles.get(name);
-    if (preset == null) {
+    HashMap<String, Object> presetMap = presetStyles.get(name);
+    if (presetMap == null) {
       System.err.println("Preset '" + name + "' not found.");
       return;
     }
-    for (String key : preset.keySet()) {
+    for (String key : presetMap.keySet()) {
+      if (key.equals("modifiable")) continue;
       try {
         Field variable = this.getClass().getDeclaredField(key);
-        Object value = preset.get(key);
+        Object value = presetMap.get(key);
         variable.set(this, value);
       }
       catch (ReflectiveOperationException e) {
-        System.err.println("Failed to get " + name + ".");
+        System.err.println("Failed to get " + key + " of " + name + ".");
       }
     }
+  }
+
+  boolean isModifiable(String styleName) {
+    HashMap<String, Object> presetMap = presetStyles.get(styleName);
+    if (presetMap == null) {
+      return true;
+    }
+    Boolean modifiable = (Boolean)presetMap.get("modifiable");
+    if (modifiable == null) return true;
+    return (boolean)modifiable;
   }
 
   void load() {
@@ -106,6 +117,12 @@ class Settings {
     }
     if (reader != null) {
       stylesJson = new JSONArray(reader);
+      try {
+        reader.close();
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     if (stylesJson == null) {
       System.err.println("Failed to load default presets.");
@@ -115,9 +132,11 @@ class Settings {
     for (int i=0; i<stylesJson.size(); i++) {
       JSONObject styleJson = stylesJson.getJSONObject(i);
       String name = styleJson.getString("name");
+      Boolean modifiable = styleJson.getBoolean("modifiable", true);
       JSONObject data = styleJson.getJSONObject("data");
       HashMap<String, Object> presetMap = new HashMap<String, Object>();
       presetStyles.put(name, presetMap);
+      presetMap.put("modifiable", modifiable);
       for (Object key : data.keys()) {
         String variableName = (String)key;
         try {
@@ -172,7 +191,9 @@ class Settings {
       JSONObject data = new JSONObject();
       HashMap<String, Object> presetMap = presetStyles.get(name);
       JSONObject styleJson = new JSONObject();
+      Boolean modifiable = (Boolean)presetMap.get("modifiable");
       for (String presetKey : presetMap.keySet()) {
+        if (presetKey.equals("modifiable")) continue;
         Object value = presetMap.get(presetKey);
         if (value instanceof Boolean) {
           data.setBoolean(presetKey, (Boolean)value);
@@ -182,6 +203,7 @@ class Settings {
       }
       styleJson.setString("name", name);
       styleJson.setJSONObject("data", data);
+      styleJson.setBoolean("modifiable", modifiable);
       stylesJson.setJSONObject(idx++, styleJson);
     }
     saveJSONArray(stylesJson, "data/" + userSettingsFilename);

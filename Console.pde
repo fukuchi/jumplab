@@ -108,7 +108,9 @@ class Console {
     Textfield textfield = ctlr.addTextfield("style name")
       .setPosition(x + 60, y + 120)
       .setSize(150, 20)
-      .moveTo("global");
+      .setAutoClear(false)
+      .moveTo("global")
+      .plugTo(this, "styleNameChanged");
     textfield.getCaptionLabel().align(ControlP5.LEFT_OUTSIDE, ControlP5.CENTER);
     textfield.getCaptionLabel().setPadding(5, 0);
     slist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
@@ -370,6 +372,14 @@ class Console {
           ctlr.get(ScrollableList.class, "Preset Styles").setItems(styleNames).setValue(idx);
         }
       }
+    } else if (widget instanceof Textfield) {
+      String name = event.getController().getLabel();
+      if (name == "style name") {
+        if (event.getAction() == ControlP5.ACTION_LEAVE) {
+          String styleName = ((Textfield)widget).getText();
+          changeSaveButtonStatus(settings.isModifiable(styleName));
+        }
+      }
     }
   }
 
@@ -379,6 +389,25 @@ class Console {
     styleName.setValue(key);
     settings.setPreset(key);
     setValues();
+    changeSaveButtonStatus(settings.isModifiable(key));
+  }
+
+  void styleNameChanged(String str) {
+    changeSaveButtonStatus(settings.isModifiable(str));
+  }
+
+  void changeSaveButtonStatus(boolean modifiable) {
+    Button saveButton = ctlr.get(Button.class, "Save");
+    if (modifiable) {
+      saveButton.unlock();
+      CColor mainColor = ControlP5.getColor();
+      saveButton.setColorBackground(mainColor.getBackground());
+      saveButton.setColorForeground(mainColor.getForeground());
+    } else {
+      saveButton.lock();
+      saveButton.setColorBackground(color(192, 192, 192));
+      saveButton.setColorForeground(color(128, 128, 128));
+    }
   }
 
   void joystickChanged(int value) {
