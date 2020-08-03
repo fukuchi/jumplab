@@ -10,7 +10,6 @@ class Joystick {
   int prevAxisX = 0;
   boolean prevButtonPressed = false;
   static final float stickMargin = 0.2;
-  final int[][][] lrKeysTable = {{{0, 0}, {-1, 0}, {-1, 1}}, {{1, 0}, {0, 0}, {0, 1}}, {{1, -1}, {0, -1}, {0, 0}}};
 
   Joystick(PApplet parent) {
     ctrlio = ControlIO.getInstance(parent);
@@ -53,8 +52,8 @@ class Joystick {
     } else if (axisXRawValue > stickMargin) {
       axisX = 1;
     }
-    res[0] = lrKeysTable[prevAxisX + 1][axisX + 1][0];
-    res[1] = lrKeysTable[prevAxisX + 1][axisX + 1][1];
+    res[0] = (prevAxisX == axisX)?0:1;
+    res[1] = axisX;
     if (prevButtonPressed) {
       res[2] = buttonPressed?0:-1;
     } else {

@@ -144,9 +144,10 @@ class Console {
       .setRange(0, 9)
       .setNumberOfTickMarks(10)
       .showTickMarks(false));
-    appendFullwidthWidget("brakingAtTakeoff", ctlr.addSlider("Braking at takeoff")
+    appendFullwidthWidget("vxAdjustmentAtTakeoff", ctlr.addSlider("VX ADJUSTMENT at takeoff")
       .setSize(150, 20)
-      .setRange(0, 1.0));
+      .setRange(-1.0, 1.0)
+      .setSliderMode(Slider.FLEXIBLE));
     appendFullwidthWidget("maxPropellingFrames", ctlr.addSlider("Maximum Propelling Duration")
       .setSize(150, 20)
       .setRange(1, 100)

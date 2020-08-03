@@ -10,9 +10,14 @@ Version 0.9.0 (2020.8.xx)
   - Halted and fall
   - Collision tolerance
   - Jump power bonus
+* New camera features:
+  - Camera window
+  - Platform snapping
+  - Forward focus
 * New UI features:
   - Presets (the reset button has been deprecated)
   - FPS indicator
+  - Joystick support
 * The renderer has been changed back to JAVA2D.
   - On some environment, P2D causes a long delay in setup().
 * Some minor bug fixes.

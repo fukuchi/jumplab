@@ -164,7 +164,11 @@ class Jumper {
     }
     if (dir != 0) {
       vx += ax * dir;
-      vx = constrain(vx, -settings.maxVx, settings.maxVx);
+      if (settings.vxAdjustmentAtTakeoff > 0 && jumping) {
+        vx = constrain(vx, -settings.maxVx * (1 + settings.vxAdjustmentAtTakeoff), settings.maxVx * (1 + settings.vxAdjustmentAtTakeoff));
+      } else {
+        vx = constrain(vx, -settings.maxVx, settings.maxVx);
+      }
     } else {
       vx -= ax * Math.signum(vx);
       if (abs(vx) < ax) {
@@ -178,7 +182,11 @@ class Jumper {
       jumpMotion--;
       if (jumpMotion == 0) {
         vy = -settings.jumpPower - (settings.jumpPowerBonus * abs(vx));
-        vx *= (1.0 - settings.brakingAtTakeoff);
+        if (settings.vxAdjustmentAtTakeoff < 0) {
+          vx += vx * settings.vxAdjustmentAtTakeoff;
+        } else if (settings.vxAdjustmentAtTakeoff > 0) {
+          vx += vx * settings.vxAdjustmentAtTakeoff;
+        }
         onObstacle = false;
         if (settings.constantRising) {
           propelling = true;
@@ -319,13 +327,11 @@ class Jumper {
 
   void joystickUpdate() {
     joystick.update(joyInput);
-    if(joyInput[0] < 0 && dir == -1 || joyInput[1] < 0 && dir == 1) {
-      move(0);
+    if(joyInput[0] != 0) {
+      move(joyInput[1]);
     }
-    if(joyInput[2] < 0) jumpCanceled();
-    if(joyInput[0] > 0) move(-1);
-    if(joyInput[1] > 0) move(1);
-    if(joyInput[2] > 0) jump();
+    if (joyInput[2] < 0) jumpCanceled();
+    if (joyInput[2] > 0) jump();
   }
 
   PImage hflipImage(PImage srcImg) {

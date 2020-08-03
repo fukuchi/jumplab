@@ -16,7 +16,7 @@ class Settings {
   float jumpPower = 13; // Initial vertical velocity of a jump motion.
   float jumpPowerBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
   float jumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
-  float brakingAtTakeoff = 0.0; // Horizontal braking power at the takeoff.
+  float vxAdjustmentAtTakeoff = 0.0; // Horizontal velocity adjustment at the takeoff.
   float maxPropellingFrames = 30; // Maximum duration of propelled jump.
   float gravity = 0.5; // gravity when rising.
   float gravityFalling = 1.2; // gravity when falling.
