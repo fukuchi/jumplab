@@ -1,13 +1,17 @@
-Settings settings;
+Settings gSettings;
 Jumper masao;
-Level level;
-Camera camera;
-Console console;
-Joystick joystick;
+Level gLevel;
+Camera gCamera;
+Console gConsole;
+Joystick gJoystick;
+PresetManager gPresets;
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
 static final int console_w = 300;
+
+static String userSettingsFilename = "usersettings.json";
+static String defaultSettingsFilename = "default.json";
 
 void settings() {
   println("Initializing...");
@@ -18,14 +22,20 @@ void settings() {
 }
 
 void setup() {
-  settings = new Settings();
-  settings.load();
-  joystick = new Joystick(this);
-  level = new Level("level1.csv", "block.png", "bg.png");
-  masao = new Jumper(settings, level.sx, level.sy);
-  camera = new Camera(masao, level, gameScreen_w, gameScreen_h);
-  camera.reset(masao.x, masao.y);
-  console = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, settings);
+  gPresets = new PresetManager();
+  if (!gPresets.load(userSettingsFilename)) {
+    if (!gPresets.load(defaultSettingsFilename)) {
+      System.err.println("The installed package seems to be broken. Check the files under the installed directory.");
+      exit();
+    }
+  }
+  gSettings = new Settings();
+  gJoystick = new Joystick(this);
+  gLevel = new Level("level1.csv", "block.png", "bg.png");
+  masao = new Jumper(gSettings, gLevel);
+  gCamera = new Camera(masao, gLevel, gSettings, gameScreen_w, gameScreen_h);
+  gCamera.reset(masao.x, masao.y);
+  gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gPresets, gSettings);
   frameRate(60);
   background(128);
   println("Initialization completed.");
@@ -33,10 +43,10 @@ void setup() {
 
 void draw() {
   masao.update();
-  camera.update();
-  console.statusUpdate(masao);
-  camera.draw();
-  console.drawStatus(masao);
+  gCamera.update();
+  gConsole.statusUpdate(masao);
+  gCamera.draw();
+  gConsole.drawStatus(masao);
 }
 
 void keyPressed() {

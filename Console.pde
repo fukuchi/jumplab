@@ -9,6 +9,7 @@ class Console {
   HashMap<String, Controller> widgets;
   HashMap<Integer, String> id2parameter;
   HashMap<String, int[]> indicators;
+  PresetManager presets;
   Settings settings;
   boolean halfFilled = false;
   Controller lastWidget;
@@ -17,11 +18,12 @@ class Console {
   NumIndicator numIndicator;
   String currentTab = "global";
 
-  Console(PApplet parent, int x, int y, int w, int h, Settings settings) {
+  Console(PApplet parent, int x, int y, int w, int h, PresetManager presets, Settings settings) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
+    this.presets = presets;
     this.settings = settings;
 
     ctlr = new ControlP5(parent);
@@ -99,9 +101,9 @@ class Console {
       .setSize(150, 100)
       .setBarHeight(20)
       .setItemHeight(15)
-      .setItems(settings.presetStylesKeys())
+      .setItems(presets.keyList())
       .moveTo("global")
-      .plugTo(this, "presetChanged");
+      .plugTo(this, "presetSelected");
     slist.getValueLabel().toUpperCase(false);
     slist.getCaptionLabel().toUpperCase(false);
 
@@ -219,7 +221,7 @@ class Console {
       .setSize(280, 100)
       .setBarHeight(20)
       .setItemHeight(15)
-      .setItems(joystick.getJoystickNames(60))
+      .setItems(gJoystick.getJoystickNames(60))
       .plugTo(this, "joystickChanged");
     joylist.getValueLabel().toUpperCase(false);
     joylist.getCaptionLabel().toUpperCase(false);
@@ -227,7 +229,7 @@ class Console {
     joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     appendFullwidthWidget("joystickList", joylist);
 
-    for (String name : settings.booleanValues) {
+    for (String name : Settings.booleanValues) {
       Label caption = widgets.get(name).getCaptionLabel();
       caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
       caption.setPadding(5, 0);
@@ -242,7 +244,7 @@ class Console {
     }
 
     ctlr.get(ScrollableList.class, "Preset Styles").bringToFront().setValue(0);
-    setValues();
+    setControllerValues();
 
     ctlr.addCallback(new CallbackListener() {
       public void controlEvent(CallbackEvent event) {
@@ -307,8 +309,8 @@ class Console {
     numIndicator.text(str, pos[0], pos[1]);
   }
 
-  void setValues() {
-    for (String name : settings.booleanValues) {
+  void setControllerValues() {
+    for (String name : Settings.booleanValues) {
       Toggle toggle = (Toggle)widgets.get(name);
       if (toggle != null) {
         try {
@@ -320,7 +322,7 @@ class Console {
         }
       }
     }
-    for (String name : settings.floatValues) {
+    for (String name : Settings.floatValues) {
       Slider slider = (Slider)widgets.get(name);
       if (slider != null) {
         try {
@@ -365,11 +367,12 @@ class Console {
         if (name == "Save") {
           String styleName = ctlr.get(Textfield.class, "style name").getText();
           if (styleName.isEmpty()) styleName = "Untitled";
-          settings.save(styleName);
-          List<String> styleNames = settings.presetStylesKeys();
-          int idx = styleNames.indexOf(styleName);
-          if (idx < 0) idx = 0;
-          ctlr.get(ScrollableList.class, "Preset Styles").setItems(styleNames).setValue(idx);
+          presets.upsert(styleName, settings);
+          presets.save(userSettingsFilename);
+          List<String> presetNames = presets.keyList();
+          int idx = presetNames.indexOf(styleName);
+          if (idx < 0) idx = 0; // if not found, choose the default.
+          ctlr.get(ScrollableList.class, "Preset Styles").setItems(presetNames).setValue(idx);
         }
       }
     } else if (widget instanceof Textfield) {
@@ -377,23 +380,23 @@ class Console {
       if (name == "style name") {
         if (event.getAction() == ControlP5.ACTION_LEAVE) {
           String styleName = ((Textfield)widget).getText();
-          changeSaveButtonStatus(settings.isModifiable(styleName));
+          changeSaveButtonStatus(presets.isModifiable(styleName));
         }
       }
     }
   }
 
-  void presetChanged(int value) {
-    String key = settings.presetStylesKeys().get(value);
+  void presetSelected(int value) {
+    String key = presets.keyList().get(value);
     Textfield styleName = ctlr.get(Textfield.class, "style name");
     styleName.setValue(key);
-    settings.setPreset(key);
-    setValues();
-    changeSaveButtonStatus(settings.isModifiable(key));
+    settings.load(presets.get(key));
+    setControllerValues();
+    changeSaveButtonStatus(presets.isModifiable(key));
   }
 
   void styleNameChanged(String str) {
-    changeSaveButtonStatus(settings.isModifiable(str));
+    changeSaveButtonStatus(presets.isModifiable(str));
   }
 
   void changeSaveButtonStatus(boolean modifiable) {
@@ -411,7 +414,7 @@ class Console {
   }
 
   void joystickChanged(int value) {
-    joystick.selectDevice(value);
+    gJoystick.selectDevice(value);
   }
 
   void setTab(String name) {

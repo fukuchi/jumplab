@@ -1,6 +1,7 @@
 class Camera {
   Jumper jumper;
   Level level;
+  Settings settings;
   PImage levelImg;
   PVector[] posbuf;
   static final int posbuflen = 64;
@@ -12,9 +13,10 @@ class Camera {
   int window_w, window_h;
   int window_hw, window_hh;
 
-  Camera(Jumper jumper, Level level, int w, int h) {
+  Camera(Jumper jumper, Level level, Settings settings, int w, int h) {
     this.jumper = jumper;
     this.level = level;
+    this.settings = settings;
     window_w = w;
     window_h = h;
     window_hw = w / 2;
@@ -181,8 +183,8 @@ class Camera {
 
     noStroke();
     fill(128);
-    rect(console.x, console.y, console.w, console.h);
+    rect(gConsole.x, gConsole.y, gConsole.w, gConsole.h);
     stroke(255);
-    line(console.x, console.y + 166, console.x + console.w, console.y + 166);
+    line(gConsole.x, gConsole.y + 166, gConsole.x + gConsole.w, gConsole.y + 166);
   }
 }

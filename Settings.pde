@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
-class Settings {
+static class Settings {
   // Jump parameters
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
@@ -42,21 +42,15 @@ class Settings {
   float focusDistance = 100; // Distance to the focal point.
   float focusingSpeed = 5; // Velocity of the focal point movement.
 
-  ArrayList<String> booleanValues;
-  ArrayList<String> floatValues;
-  String[] allValues;
+  static ArrayList<String> booleanValues;
+  static ArrayList<String> floatValues;
+  static String[] allValues;
+  static List<String> ignoredVariables = Arrays.asList("showTrail", "showCameraMarker");
 
-  String[] ignoredVariables = {"showTrail", "showCameraMarker"};
-
-  HashMap<String, HashMap<String, Object>> presetStyles;
-
-  String userSettingsFilename = "usersettings.json";
-  String defaultSettingsFilename = "default.json";
-
-  Settings() {
+  static {
     booleanValues = new ArrayList<String>();
     floatValues = new ArrayList<String>();
-    Field[] allVariables = this.getClass().getDeclaredFields();
+    Field[] allVariables = Settings.class.getDeclaredFields();
     for (Field f : allVariables) {
       if (!Modifier.isStatic(f.getModifiers())) {
         if (f.getType() == Boolean.TYPE) {
@@ -71,153 +65,46 @@ class Settings {
     allValuesList.addAll(floatValues);
     allValues = allValuesList.toArray(new String[booleanValues.size() + floatValues.size()]);
   }
+  
+  Settings() {
+    // Nothing to do at this momemnt. Just a placeholder.
+  }
 
-  void setPreset(String name) {
-    HashMap<String, Object> presetMap = presetStyles.get(name);
-    if (presetMap == null) {
-      System.err.println("Preset '" + name + "' not found.");
-      return;
-    }
-    for (String key : presetMap.keySet()) {
-      if (key.equals("modifiable")) continue;
+  void load(Preset preset) {
+    for (String key : preset.keySet()) {
       try {
         Field variable = this.getClass().getDeclaredField(key);
-        Object value = presetMap.get(key);
+        Object value = preset.get(key);
         variable.set(this, value);
       }
       catch (ReflectiveOperationException e) {
-        System.err.println("Failed to get " + key + " of " + name + ".");
+        System.err.println("Failed to get " + key + " of " + preset.getName() + ".");
       }
     }
   }
 
-  boolean isModifiable(String styleName) {
-    HashMap<String, Object> presetMap = presetStyles.get(styleName);
-    if (presetMap == null) {
-      return true;
-    }
-    Boolean modifiable = (Boolean)presetMap.get("modifiable");
-    if (modifiable == null) return true;
-    return (boolean)modifiable;
-  }
-
-  void load() {
-    JSONArray stylesJson = null;
-
-    presetStyles = new HashMap<String, HashMap<String, Object>>();
-
-    /* Processing 3.5.4 does not return null if the file is not found
-     and throws NullPointerException. As a workaround, we check the
-     file exists or not before open the file. */
-    BufferedReader reader;
-    reader = createReader(userSettingsFilename);
-    if (reader == null) {
-      reader = createReader(defaultSettingsFilename);
-      println("loading '" + defaultSettingsFilename + "'...");
-    }
-    if (reader != null) {
-      stylesJson = new JSONArray(reader);
+  HashMap<String, Object> toHashMap() {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    for (String variableName : booleanValues) {
+      if (ignoredVariables.contains(variableName)) continue;
       try {
-        reader.close();
-      }
-      catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    if (stylesJson == null) {
-      System.err.println("Failed to load default presets.");
-      return;
-    }
-
-    for (int i=0; i<stylesJson.size(); i++) {
-      JSONObject styleJson = stylesJson.getJSONObject(i);
-      String name = styleJson.getString("name");
-      Boolean modifiable = styleJson.getBoolean("modifiable", true);
-      JSONObject data = styleJson.getJSONObject("data");
-      HashMap<String, Object> presetMap = new HashMap<String, Object>();
-      presetStyles.put(name, presetMap);
-      presetMap.put("modifiable", modifiable);
-      for (Object key : data.keys()) {
-        String variableName = (String)key;
-        try {
-          Field variable = this.getClass().getDeclaredField(variableName);
-          Class variableType = variable.getType();
-          if (variableType == Boolean.TYPE) {
-            presetMap.put(variableName, data.getBoolean(variableName));
-          } else if (variableType == Float.TYPE) {
-            presetMap.put(variableName, data.getFloat(variableName));
-          }
-        }
-        catch (ReflectiveOperationException e) {
-          System.err.println("Failed to set " + variableName + " of " + name + ".");
-        }
-      }
-    }
-  }
-
-  void updateCurrentPreset(String styleName) {
-    HashMap<String, Object> presetMap = presetStyles.get(styleName);
-    if (presetMap == null) {
-      presetMap = new HashMap<String, Object>();
-    }
-    List<String> ignoredVariablesList = Arrays.asList(ignoredVariables);
-    for (String name : allValues) {
-      if (ignoredVariablesList.contains(name)) continue;
-      try {
-        Field variable = this.getClass().getDeclaredField(name);
-        Class variableType = variable.getType();
-        if (variableType == Boolean.TYPE) {
-          presetMap.put(name, variable.getBoolean(this));
-        } else if (variableType == Float.TYPE) {
-          presetMap.put(name, variable.getFloat(this));
-        }
-      }
+        Field variable = this.getClass().getDeclaredField(variableName);
+        map.put(variableName, variable.getBoolean(this));
+      } 
       catch (ReflectiveOperationException e) {
-        System.err.println("Failed to get " + name + ".");
+        System.err.println("Failed to get " + variableName + " from the current settings.");
       }
     }
-    presetStyles.put(styleName, presetMap);
-  }
-
-  void save(String styleName) {
-    println("Saving " + styleName);
-    updateCurrentPreset(styleName);
-
-    List<String> keys = presetStylesKeys();
-    JSONArray stylesJson = new JSONArray();
-    int idx = 0;
-
-    for (String name : keys) {
-      JSONObject data = new JSONObject();
-      HashMap<String, Object> presetMap = presetStyles.get(name);
-      JSONObject styleJson = new JSONObject();
-      Boolean modifiable = (Boolean)presetMap.get("modifiable");
-      for (String presetKey : presetMap.keySet()) {
-        if (presetKey.equals("modifiable")) continue;
-        Object value = presetMap.get(presetKey);
-        if (value instanceof Boolean) {
-          data.setBoolean(presetKey, (Boolean)value);
-        } else if (value instanceof Float) {
-          data.setFloat(presetKey, (Float)value);
-        }
-      }
-      styleJson.setString("name", name);
-      styleJson.setJSONObject("data", data);
-      styleJson.setBoolean("modifiable", modifiable);
-      stylesJson.setJSONObject(idx++, styleJson);
-    }
-    saveJSONArray(stylesJson, "data/" + userSettingsFilename);
-  }
-
-  List<String> presetStylesKeys() {
-    ArrayList<String> keys = new ArrayList<String>(presetStyles.keySet());
-    Collections.sort(keys, new Comparator<String>() {
-      @Override public int compare(String s1, String s2) {
-        int res = s1.compareToIgnoreCase(s2);
-        return (res != 0)? res : s1.compareTo(s2);
+    for (String variableName : floatValues) {
+      if (ignoredVariables.contains(variableName)) continue;
+      try {
+        Field variable = this.getClass().getDeclaredField(variableName);
+        map.put(variableName, variable.getFloat(this));
+      } 
+      catch (ReflectiveOperationException e) {
+        System.err.println("Failed to get " + variableName + " from the current settings.");
       }
     }
-    );
-    return keys;
+    return map;
   }
 }

@@ -16,6 +16,7 @@ class Jumper {
   int propellingRemainingFrames;
   float pattern;
   Settings settings;
+  Level level;
   int[] joyInput;
 
   Vector<PImage> images_running_r;
@@ -26,11 +27,12 @@ class Jumper {
   static final int w = 24;
   static final int h = 48;
 
-  Jumper(Settings settings, int x, int y) {
-    this.x = (float)x;
-    this.y = (float)y;
+  Jumper(Settings settings, Level level) {
     this.settings = settings;
+    this.level = level;
 
+    x = (float)level.sx;
+    y = (float)level.sy;
     px = x;
     py = y;
     vx = 0;
@@ -326,8 +328,8 @@ class Jumper {
   }
 
   void joystickUpdate() {
-    joystick.update(joyInput);
-    if(joyInput[0] != 0) {
+    gJoystick.update(joyInput);
+    if (joyInput[0] != 0) {
       move(joyInput[1]);
     }
     if (joyInput[2] < 0) jumpCanceled();
