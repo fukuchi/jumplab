@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 class Settings {
   // Jump parameters
+  boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
   boolean constantRising = false; // Keep constant vertical velocity when rising.
@@ -27,7 +28,6 @@ class Settings {
   float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
 
   // Camera parameters
-  boolean showTrail = false; // Show the trail or not.
   boolean showCameraMarker = false; // Show the center marker or not.
   boolean parallaxScrolling = true; // Parallax scrolling or not.
   boolean cameraEasing_x = false; // Ease the horizon camera motion or not.

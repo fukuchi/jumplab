@@ -15,7 +15,8 @@ class Joystick {
     ctrlio = ControlIO.getInstance(parent);
     devices = new ArrayList<ControlDevice>();
     for (ControlDevice dev : ctrlio.getDevices()) {
-      if (dev.getName().matches(".*[kK]eyboard.*")) continue;
+      int controllerType = dev.getTypeID();
+      if ((controllerType & (GCP.STICK | GCP.GAMEPAD)) == 0) continue;
       devices.add(dev);
     }
 
@@ -76,7 +77,7 @@ class Joystick {
     int sliders = currentDevice.getNumberOfSliders();
     for (int i=0; i<sliders; i++) {
       ControlSlider s = currentDevice.getSlider(i);
-      if (s.getName().equals("x")) {
+      if (s.getName().equals("x")) { // workaround needed because GCP hides the component's identifier.
         slider_x = s;
         break;
       }
