@@ -44,7 +44,7 @@ void setup() {
 void draw() {
   gMasao.update();
   gCamera.update();
-  gConsole.statusUpdate(gMasao);
+  gConsole.statusUpdate(gMasao, gLevel, gCamera);
   gCamera.draw();
   gConsole.drawStatus(gMasao);
 }

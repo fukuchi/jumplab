@@ -16,6 +16,7 @@ class Console {
   int nextWidgetPosition_y;
   static final int widgetMargin_y = 6;
   NumIndicator numIndicator;
+  ChartCanvas chart;
   String currentTab = "global";
 
   Console(PApplet parent, int x, int y, int w, int h, PresetManager presets, Settings settings) {
@@ -36,6 +37,9 @@ class Console {
       .activateEvent(true);
     ctlr.addTab("Joystick")
       .setId(3)
+      .activateEvent(true);
+    ctlr.addTab("Chart")
+      .setId(4)
       .activateEvent(true);
     ctlr.getTab("default")
       .setLabel("Jump")
@@ -229,6 +233,16 @@ class Console {
     joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     appendFullwidthWidget("joystickList", joylist);
 
+    // Chart tab
+    setTab("Chart");
+    chart = new ChartCanvas(x + 10, y + 175, w - 20, 300);
+    chart.addSeries("Jumper X", 0);
+    chart.addSeries("Jumper Y", 0);
+    chart.addSeries("Camera X", 0);
+    chart.addSeries("Camera Y", 0);
+    chart.pre();
+    ctlr.getTab("Chart").addCanvas(chart);
+
     for (String name : Settings.booleanVariables) {
       Label caption = widgets.get(name).getCaptionLabel();
       caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
@@ -291,10 +305,15 @@ class Console {
     }
   }
 
-  void statusUpdate(Jumper jumper) {
+  void statusUpdate(Jumper jumper, Level level, Camera camera) {
     ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"TRUE":"FALSE");
     ((Textlabel)widgets.get("PropellingValue")).setText(jumper.propelling?"TRUE":"FALSE");
     ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
+    chart.updateSeries("Jumper X", (jumper.x + Jumper.w / 2) / level.w);
+    chart.updateSeries("Jumper Y", 1.0 - (jumper.y + Jumper.h / 2) / level.h);
+    chart.updateSeries("Camera X", camera.x / level.w);
+    chart.updateSeries("Camera Y", 1.0 - camera.y / level.h);
+    chart.updateChart();
   }
 
   void drawStatus(Jumper jumper) {
