@@ -77,7 +77,7 @@ class Joystick {
     int sliders = currentDevice.getNumberOfSliders();
     for (int i=0; i<sliders; i++) {
       ControlSlider s = currentDevice.getSlider(i);
-      if (s.getName().equals("x")) { // workaround needed because GCP hides the component's identifier.
+      if (s.getName().matches("[xX].*")) { // workaround needed because GCP hides the component's identifier.
         slider_x = s;
         break;
       }
