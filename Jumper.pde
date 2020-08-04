@@ -262,7 +262,7 @@ class Jumper {
       if (onObstacle) {
         jumping = true;
         jumpDir = lastDir;
-        jumpMotion = (int)settings.jumpAnticipationFrames + 1;
+        jumpMotion = round(settings.jumpAnticipationFrames) + 1;
         verticalAcc = settings.gravity;
       }
     }

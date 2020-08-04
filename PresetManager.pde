@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.Comparator;
+
 class PresetManager {
   HashMap <String, Preset> presets;
 
@@ -40,7 +43,7 @@ class PresetManager {
 
     return true;
   }
-  
+
   Preset get(String name) {
     return presets.get(name);
   }

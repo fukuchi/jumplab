@@ -17,9 +17,9 @@ class Preset {
     JSONObject jsonData = json.getJSONObject("data");
     for (Object key : jsonData.keys()) {
       String variableName = (String)key;
-      if (Settings.booleanValues.contains(variableName)) {
+      if (Settings.booleanVariables.contains(variableName)) {
         data.put(variableName, jsonData.getBoolean(variableName));
-      } else if (Settings.floatValues.contains(variableName)) {
+      } else if (Settings.floatVariables.contains(variableName)) {
         data.put(variableName, jsonData.getFloat(variableName));
       }
     }

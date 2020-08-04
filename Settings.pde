@@ -2,8 +2,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
 
 static class Settings {
   // Jump parameters
@@ -42,28 +40,23 @@ static class Settings {
   float focusDistance = 100; // Distance to the focal point.
   float focusingSpeed = 5; // Velocity of the focal point movement.
 
-  static ArrayList<String> booleanValues;
-  static ArrayList<String> floatValues;
-  static String[] allValues;
+  static ArrayList<String> booleanVariables;
+  static ArrayList<String> floatVariables;
   static List<String> ignoredVariables = Arrays.asList("showTrail", "showCameraMarker");
 
   static {
-    booleanValues = new ArrayList<String>();
-    floatValues = new ArrayList<String>();
+    booleanVariables = new ArrayList<String>();
+    floatVariables = new ArrayList<String>();
     Field[] allVariables = Settings.class.getDeclaredFields();
     for (Field f : allVariables) {
       if (!Modifier.isStatic(f.getModifiers())) {
         if (f.getType() == Boolean.TYPE) {
-          booleanValues.add(f.getName());
+          booleanVariables.add(f.getName());
         } else if (f.getType() == Float.TYPE) {
-          floatValues.add(f.getName());
+          floatVariables.add(f.getName());
         }
       }
     }
-    ArrayList<String> allValuesList = new ArrayList<String>();
-    allValuesList.addAll(booleanValues);
-    allValuesList.addAll(floatValues);
-    allValues = allValuesList.toArray(new String[booleanValues.size() + floatValues.size()]);
   }
   
   Settings() {
@@ -85,7 +78,7 @@ static class Settings {
 
   HashMap<String, Object> toHashMap() {
     HashMap<String, Object> map = new HashMap<String, Object>();
-    for (String variableName : booleanValues) {
+    for (String variableName : booleanVariables) {
       if (ignoredVariables.contains(variableName)) continue;
       try {
         Field variable = this.getClass().getDeclaredField(variableName);
@@ -95,7 +88,7 @@ static class Settings {
         System.err.println("Failed to get " + variableName + " from the current settings.");
       }
     }
-    for (String variableName : floatValues) {
+    for (String variableName : floatVariables) {
       if (ignoredVariables.contains(variableName)) continue;
       try {
         Field variable = this.getClass().getDeclaredField(variableName);

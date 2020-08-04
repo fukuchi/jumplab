@@ -229,7 +229,7 @@ class Console {
     joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     appendFullwidthWidget("joystickList", joylist);
 
-    for (String name : Settings.booleanValues) {
+    for (String name : Settings.booleanVariables) {
       Label caption = widgets.get(name).getCaptionLabel();
       caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
       caption.setPadding(5, 0);
@@ -310,7 +310,7 @@ class Console {
   }
 
   void setControllerValues() {
-    for (String name : Settings.booleanValues) {
+    for (String name : Settings.booleanVariables) {
       Toggle toggle = (Toggle)widgets.get(name);
       if (toggle != null) {
         try {
@@ -322,7 +322,7 @@ class Console {
         }
       }
     }
-    for (String name : Settings.floatValues) {
+    for (String name : Settings.floatVariables) {
       Slider slider = (Slider)widgets.get(name);
       if (slider != null) {
         try {
