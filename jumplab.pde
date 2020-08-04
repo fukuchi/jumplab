@@ -1,5 +1,5 @@
 Settings gSettings;
-Jumper masao;
+Jumper gMasao;
 Level gLevel;
 Camera gCamera;
 Console gConsole;
@@ -32,9 +32,9 @@ void setup() {
   gSettings = new Settings();
   gJoystick = new Joystick(this);
   gLevel = new Level("level1.csv", "block.png", "bg.png");
-  masao = new Jumper(gSettings, gLevel);
-  gCamera = new Camera(masao, gLevel, gSettings, gameScreen_w, gameScreen_h);
-  gCamera.reset(masao.x, masao.y);
+  gMasao = new Jumper(gSettings, gLevel);
+  gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);
+  gCamera.reset(gMasao.x, gMasao.y);
   gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gPresets, gSettings);
   frameRate(60);
   background(128);
@@ -42,17 +42,17 @@ void setup() {
 }
 
 void draw() {
-  masao.update();
+  gMasao.update();
   gCamera.update();
-  gConsole.statusUpdate(masao);
+  gConsole.statusUpdate(gMasao);
   gCamera.draw();
-  gConsole.drawStatus(masao);
+  gConsole.drawStatus(gMasao);
 }
 
 void keyPressed() {
-  masao.keyPressed();
+  gMasao.keyPressed();
 }
 
 void keyReleased() {
-  masao.keyReleased();
+  gMasao.keyReleased();
 }

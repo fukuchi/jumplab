@@ -28,7 +28,7 @@ class PresetManager {
     catch (IOException e) {
       e.printStackTrace();
       return false;
-    } 
+    }
     catch (RuntimeException e) {
       System.err.println("Failed to load '" + filename + "'.");
       e.printStackTrace();

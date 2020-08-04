@@ -58,7 +58,7 @@ static class Settings {
       }
     }
   }
-  
+
   Settings() {
     // Nothing to do at this momemnt. Just a placeholder.
   }
@@ -83,7 +83,7 @@ static class Settings {
       try {
         Field variable = this.getClass().getDeclaredField(variableName);
         map.put(variableName, variable.getBoolean(this));
-      } 
+      }
       catch (ReflectiveOperationException e) {
         System.err.println("Failed to get " + variableName + " from the current settings.");
       }
@@ -93,7 +93,7 @@ static class Settings {
       try {
         Field variable = this.getClass().getDeclaredField(variableName);
         map.put(variableName, variable.getFloat(this));
-      } 
+      }
       catch (ReflectiveOperationException e) {
         System.err.println("Failed to get " + variableName + " from the current settings.");
       }
