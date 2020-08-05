@@ -8,7 +8,6 @@ static class Settings {
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
-  boolean constantRising = false; // Keep constant vertical velocity when rising.
   boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
@@ -16,7 +15,7 @@ static class Settings {
   float jumpPowerBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
   float jumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
   float vxAdjustmentAtTakeoff = 0.0; // Horizontal velocity adjustment at the takeoff.
-  float maxPropellingFrames = 30; // Maximum duration of propelled jump.
+  float maxPropellingFrames = 0; // Maximum duration of propelled jump.
   float gravity = 0.5; // gravity when rising.
   float gravityFalling = 1.2; // gravity when falling.
   float verticalSpeedSustainLevel = 1.0; // Sustain level of the vertical speed when the button released.

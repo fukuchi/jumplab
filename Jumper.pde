@@ -193,7 +193,7 @@ class Jumper {
           vx += vx * settings.vxAdjustmentAtTakeoff;
         }
         onObstacle = false;
-        if (settings.constantRising) {
+        if (settings.maxPropellingFrames > 0) {
           propelling = true;
           propellingRemainingFrames = round(settings.maxPropellingFrames);
         }
@@ -208,13 +208,13 @@ class Jumper {
       if (vy > 0) {
         verticalAcc = settings.gravityFalling;
       }
-      if (!settings.constantRising || !propelling) {
+      if (!propelling) {
         vy += verticalAcc;
         if (vy > settings.maxVy) {
           vy = settings.maxVy;
         }
       }
-      if (settings.constantRising) {
+      if (settings.maxPropellingFrames > 0) {
         if (propelling) {
           propellingRemainingFrames--;
           if (propellingRemainingFrames <= 0) {

@@ -132,9 +132,7 @@ class Console {
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
     appendHalfwidthWidget("haltedAndFall", ctlr.addToggle("Halted and fall"));
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
-    appendHalfwidthWidget("constantRising", ctlr.addToggle("Constant rising"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
-    appendHalfwidthWidget();
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setSize(80, 20)
       .setRange(1, 20));
@@ -158,8 +156,8 @@ class Console {
       .setSliderMode(Slider.FLEXIBLE));
     appendFullwidthWidget("maxPropellingFrames", ctlr.addSlider("Maximum Propelling Duration")
       .setSize(150, 20)
-      .setRange(1, 100)
-      .setNumberOfTickMarks(100)
+      .setRange(0, 100)
+      .setNumberOfTickMarks(101)
       .showTickMarks(false));
     appendFullwidthWidget("gravity", ctlr.addSlider("Gravity (rising)")
       .setSize(150, 20)
