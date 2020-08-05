@@ -293,7 +293,8 @@ class Jumper {
 
     if (jumping) {
       int p = jumpMotion==0?0:(int)(jumpMotion * (jumpMotionMax - 1) / (settings.jumpAnticipationFrames + 1) + 1);
-      if (jumpDir < 0) {
+      int dir = settings.allowAerialTurn?lastDir:jumpDir;
+      if (dir < 0) {
         img = images_jumping_l.get(p);
       } else {
         img = images_jumping_r.get(p);

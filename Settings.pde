@@ -8,6 +8,7 @@ static class Settings {
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
+  boolean allowAerialTurn = false; // Allow aerial turn or not. (Only affects the visual appearance)
   boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.

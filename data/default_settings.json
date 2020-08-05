@@ -3,6 +3,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+	  "allowAerialTurn": false,
       "axBrake": 1,
       "axJumping": 0.1,
       "axNormal": 0.2,
@@ -39,6 +40,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+	  "allowAerialTurn": false,
       "axBrake": 3,
       "axJumping": 3,
       "axNormal": 3,
@@ -76,6 +78,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": false,
+	  "allowAerialTurn": true,
       "axBrake": 1,
       "axJumping": 0.24,
       "axNormal": 0.9,
@@ -112,6 +115,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+      "allowAerialTurn": true,
       "axBrake": 0.2,
       "axJumping": 0.1,
       "axNormal": 0.1,
@@ -148,6 +152,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+      "allowAerialTurn": true,
       "axBrake": 3,
       "axJumping": 3,
       "axNormal": 3,
@@ -185,6 +190,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+      "allowAerialTurn": false,
       "axBrake": 1,
       "axJumping": 1,
       "axNormal": 1,
@@ -222,6 +228,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+      "allowAerialTurn": true,
       "axBrake": 2,
       "axJumping": 2,
       "axNormal": 2,
@@ -258,6 +265,7 @@
     "data": {
       "allowAerialJump": true,
       "allowAerialWalk": true,
+      "allowAerialTurn": false,
       "axBrake": 0.66,
       "axJumping": 0.18,
       "axNormal": 0.20000002,
