@@ -65,10 +65,11 @@ class Jumper {
       images_running_l.add(hflipImage(images_running_r.get(i)));
     }
 
-    images_jumping_r.add(loadImage("stickman-jump-4.png"));
-    images_jumping_r.add(loadImage("stickman-jump-3.png"));
-    images_jumping_r.add(loadImage("stickman-jump-2.png"));
-    images_jumping_r.add(loadImage("stickman-jump-1.png"));
+    jumpMotionMax = 4;
+    for (int i=0; i<jumpMotionMax; i++) {
+      String filename = String.format("stickman-jump-%d.png", jumpMotionMax - i);
+      images_jumping_r.add(loadImage(filename));
+    }
     jumpMotionMax = images_jumping_r.size();
     for (int i = 0; i < jumpMotionMax; i++) {
       images_jumping_l.add(hflipImage(images_jumping_r.get(i)));
@@ -234,7 +235,7 @@ class Jumper {
         standing = true;
       }
     } else {
-      pattern += abs(vx/16);
+      pattern += abs(vx/12);
       standing = false;
     }
     if (pattern >= runningMotionMax) {
