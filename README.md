@@ -11,7 +11,7 @@ Please visit <https://fukuchi.org/works/jumplab/> for further information.
 ## Quick note
 
   - [Processing](https://processing.org/) 3 or higher is required.
-  - Install [ControlP5](http://www.sojamo.de/libraries/controlP5/).
+  - Install [ControlP5](http://www.sojamo.de/libraries/controlP5/) and [Game Control Plus](http://lagers.org.uk/gamecontrol/) from "Add Library..." from the "Import Library..." menu.
   - Press left/right arrow keys to move left/right, and space key to jump.
 
 ## LICENSE
