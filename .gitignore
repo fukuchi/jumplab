@@ -10,3 +10,4 @@ application.macosx
 out
 *~
 data/user_settings.json
+data/joystick_config.json
