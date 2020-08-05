@@ -55,8 +55,14 @@ class Camera {
 
     float dx = jumper.x + Jumper.w / 2 - x;
     float dy = jumper.y + Jumper.h / 2 - y;
-    if (settings.forwardFocus) {
-      float fx = jumper.lastDir * settings.focusDistance;
+    if (settings.forwardFocus || settings.projectedFocus) {
+      float fx = 0;
+      if (settings.forwardFocus) {
+        fx += jumper.lastDir * settings.focusDistance;
+      }
+      if (settings.projectedFocus) {
+        fx += settings.focusDistance * jumper.vx / settings.maxVx;
+      }
       if (jumper.lastDir > 0) {
         if (focus_x < fx) {
           float cameraEdge_x = settings.cameraWindow_w / 2 - dx;
@@ -65,6 +71,11 @@ class Camera {
           }
           focus_x += settings.focusingSpeed;
           if (focus_x > fx) {
+            focus_x = fx;
+          }
+        } else if (focus_x > fx) {
+          focus_x -= 1;
+          if (focus_x < fx) {
             focus_x = fx;
           }
         }
@@ -76,6 +87,11 @@ class Camera {
           }
           focus_x -= settings.focusingSpeed;
           if (focus_x < fx) {
+            focus_x = fx;
+          }
+        } else if (focus_x < fx) {
+          focus_x += 1;
+          if (focus_x > fx) {
             focus_x = fx;
           }
         }
@@ -168,8 +184,15 @@ class Camera {
       stroke(255);
       noFill();
       rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
-      if (settings.forwardFocus) {
-        int fx = (int)(jumper.x + Jumper.w / 2 + jumper.lastDir * settings.focusDistance) - cx;
+      if (settings.forwardFocus || settings.projectedFocus) {
+        float tx = 0;
+        if (settings.forwardFocus) {
+          tx += jumper.lastDir * settings.focusDistance;
+        }
+        if (settings.projectedFocus) {
+          tx += settings.focusDistance * jumper.vx / settings.maxVx;
+        }
+        int fx = (int)(jumper.x + Jumper.w / 2 + tx) - cx;
         int fy = (int)jumper.y + Jumper.h / 2 - cy;
         line(fx - 12, fy, fx + 12, fy     );
         line(fx, fy - 12, fx, fy + 12);

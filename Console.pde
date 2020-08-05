@@ -194,6 +194,7 @@ class Console {
     appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));
     appendHalfwidthWidget("platformSnapping", ctlr.addToggle("Platform snapping"));
+    appendHalfwidthWidget("projectedFocus", ctlr.addToggle("Projected focus"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)
       .setRange(0, 1));
@@ -232,6 +233,8 @@ class Console {
     joylist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
     joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     appendFullwidthWidget("joystickList", joylist);
+    int currentJoystickIdx = gJoystick.getCurrentDeviceIndex();
+    if (currentJoystickIdx >= 0) joylist.setValue(currentJoystickIdx);
 
     // Chart tab
     setTab("Chart");
@@ -434,6 +437,7 @@ class Console {
 
   void joystickChanged(int value) {
     gJoystick.selectDevice(value);
+    gJoystick.saveConfig();
   }
 
   void setTab(String name) {

@@ -10,8 +10,9 @@ static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
 static final int console_w = 300;
 
-static String userSettingsFilename = "usersettings.json";
-static String defaultSettingsFilename = "default.json";
+static String userSettingsFilename = "user_settings.json";
+static String defaultSettingsFilename = "default_settings.json";
+static String joystickConfigFilename = "joystick_config.json";
 
 void settings() {
   println("Initializing...");
@@ -30,7 +31,7 @@ void setup() {
     }
   }
   gSettings = new Settings();
-  gJoystick = new Joystick(this);
+  gJoystick = new Joystick(this, joystickConfigFilename);
   gLevel = new Level("level1.csv", "block.png", "bg.png");
   gMasao = new Jumper(gSettings, gLevel);
   gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);

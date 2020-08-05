@@ -10,8 +10,10 @@ class Joystick {
   int prevAxisX = 0;
   boolean prevButtonPressed = false;
   static final float stickMargin = 0.2;
+  String configFilename;
 
-  Joystick(PApplet parent) {
+  Joystick(PApplet parent, String configFilename) {
+    buttons = new ControlButton[4];
     ctrlio = ControlIO.getInstance(parent);
     devices = new ArrayList<ControlDevice>();
     for (ControlDevice dev : ctrlio.getDevices()) {
@@ -19,8 +21,54 @@ class Joystick {
       if ((controllerType & (GCP.STICK | GCP.GAMEPAD)) == 0) continue;
       devices.add(dev);
     }
+    this.configFilename = configFilename;
+    loadConfig();
+  }
 
-    buttons = new ControlButton[4];
+  boolean loadConfig() {
+    JSONObject configJson;
+
+    /* Processing 3.5.4 does not return null if the file is not found
+     and throws NullPointerException. As a workaround, we check the
+     file exists or not before open the file. */
+    BufferedReader reader;
+    reader = createReader(configFilename);
+    if (reader == null) {
+      return false;
+    }
+    println("loading '" + configFilename + "'...");
+
+    try {
+      configJson = new JSONObject(reader);
+      reader.close();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+    catch (RuntimeException e) {
+      System.err.println("Failed to load '" + configFilename + "'.");
+      e.printStackTrace();
+      return false;
+    }
+
+    String lastSelectedDeviceName = configJson.getString("lastSelected", null);
+    if (lastSelectedDeviceName != null) {
+      for (ControlDevice dev : devices) {
+        if (dev.getName().equals(lastSelectedDeviceName)) {
+          selectDevice(dev);
+          break;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  void saveConfig() {
+    JSONObject configJson = new JSONObject();
+    configJson.setString("lastSelected", currentDevice.getName());
+    saveJSONObject(configJson, "data/" + configFilename);
   }
 
   List<String> getJoystickNames(int maxLength) {
@@ -65,6 +113,10 @@ class Joystick {
   }
 
   ControlDevice selectDevice(int idx) {
+    return selectDevice(devices.get(idx));
+  }
+
+  ControlDevice selectDevice(ControlDevice device) {
     if (currentDevice != null) {
       currentDevice.close();
     }
@@ -72,7 +124,7 @@ class Joystick {
     for (int i=0; i<buttons.length; i++) {
       buttons[i] = null;
     }
-    currentDevice = devices.get(idx);
+    currentDevice = device;
     currentDevice.open();
     int sliders = currentDevice.getNumberOfSliders();
     for (int i=0; i<sliders; i++) {
@@ -88,5 +140,14 @@ class Joystick {
     }
 
     return currentDevice;
+  }
+
+  int getCurrentDeviceIndex() {
+    for (int i=0; i<devices.size(); i++) {
+      if (currentDevice == devices.get(i)) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

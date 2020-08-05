@@ -9,4 +9,4 @@ application.windows64
 application.macosx
 out
 *~
-data/usersettings.json
+data/user_settings.json
