@@ -194,8 +194,8 @@ class Camera {
         }
         int fx = (int)(jumper.x + Jumper.w / 2 + tx) - cx;
         int fy = (int)jumper.y + Jumper.h / 2 - cy;
-        line(fx - 12, fy, fx + 12, fy     );
-        line(fx, fy - 12, fx, fy + 12);
+        line(fx - 9, fy - 9, fx + 9, fy + 9);
+        line(fx - 9, fy + 9, fx + 9, fy - 9);
         stroke(255, 255, 0);
         fx = (int)(jumper.x + Jumper.w / 2 + focus_x) - cx;
         fy = (int)jumper.y + Jumper.h / 2 - cy;
