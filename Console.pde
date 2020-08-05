@@ -58,11 +58,11 @@ class Console {
       .setText("Jumper VX,VY")
       .moveTo("global");
     indicators.put("JumperVXYvalue", new int[] {x + 80, y + 25});
-    ctlr.addTextlabel("VerticalAcc")
+    ctlr.addTextlabel("JumperAXY")
       .setPosition(x + 10, y + 40)
-      .setText("Vertical Acc")
+      .setText("Jumper AX,AY")
       .moveTo("global");
-    indicators.put("VerticalAccValue", new int[] {x + 80, y + 40});
+    indicators.put("JumperAXYValue", new int[] {x + 80, y + 40});
     ctlr.addTextlabel("PropellingRemainingFrames")
       .setPosition(x + 10, y + 55)
       .setText("Propelling Remainig")
@@ -322,7 +322,7 @@ class Console {
   void drawStatus(Jumper jumper) {
     drawNumIndicator("JumperXYvalue", String.format("%7.2f,%7.2f", jumper.x, jumper.y));
     drawNumIndicator("JumperVXYvalue", String.format("% 7.2f,% 7.2f", jumper.vx, jumper.vy));
-    drawNumIndicator("VerticalAccValue", String.format("% 7.2f", jumper.verticalAcc));
+    drawNumIndicator("JumperAXYValue", String.format("% 7.2f,% 7.2f", jumper.ax, jumper.ay));
     drawNumIndicator("PropellingRemainingFramesValue", String.format("%4d", jumper.propellingRemainingFrames));
   }
 

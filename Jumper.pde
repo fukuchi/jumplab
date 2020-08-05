@@ -4,6 +4,7 @@ class Jumper {
   float x, y;
   float px, py;
   float vx, vy;
+  float ax, ay;
   int dir;
   int lastDir;
   int jumpDir;
@@ -11,7 +12,6 @@ class Jumper {
   boolean standing;
   boolean propelling;
   boolean onObstacle;
-  float verticalAcc;
   int jumpMotion;
   int jumpMotionMax;
   int propellingRemainingFrames;
@@ -47,7 +47,7 @@ class Jumper {
     lastDir = 1;
     jumpDir = 0;
     pattern = 0;
-    verticalAcc = settings.gravityFalling;
+    ay = settings.gravityFalling;
     joyInput = new int[3];
 
     initializeImages();
@@ -157,7 +157,6 @@ class Jumper {
   }
 
   void velocityXUpdate() {
-    float ax;
     if (jumping || (!onObstacle && !settings.allowAerialWalk)) {
       ax = settings.axJumping;
     } else if (!jumping && !onObstacle && settings.haltedAndFall) {
@@ -206,10 +205,10 @@ class Jumper {
         propelling = false;
       }
       if (vy > 0) {
-        verticalAcc = settings.gravityFalling;
+        ay = settings.gravityFalling;
       }
       if (!propelling) {
-        vy += verticalAcc;
+        vy += ay;
         if (vy > settings.maxVy) {
           vy = settings.maxVy;
         }
@@ -275,14 +274,14 @@ class Jumper {
         jumping = true;
         jumpDir = lastDir;
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
-        verticalAcc = settings.gravity;
+        ay = settings.gravity;
       }
     }
   }
 
   void jumpCanceled() {
     if (jumping) {
-      verticalAcc = settings.gravityFalling;
+      ay = settings.gravityFalling;
       if (vy < 0) vy *= settings.verticalSpeedSustainLevel;
       propelling = false;
     }
