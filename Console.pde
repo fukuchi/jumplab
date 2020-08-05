@@ -322,7 +322,7 @@ class Console {
   void drawStatus(Jumper jumper) {
     drawNumIndicator("JumperXYvalue", String.format("%7.2f,%7.2f", jumper.x, jumper.y));
     drawNumIndicator("JumperVXYvalue", String.format("% 7.2f,% 7.2f", jumper.vx, jumper.vy));
-    drawNumIndicator("JumperAXYValue", String.format("% 7.2f,% 7.2f", jumper.ax, jumper.ay));
+    drawNumIndicator("JumperAXYValue", String.format("% 7.2f,% 7.2f", jumper.vx - jumper.pvx, jumper.vy - jumper.pvy));
     drawNumIndicator("PropellingRemainingFramesValue", String.format("%4d", jumper.propellingRemainingFrames));
   }
 

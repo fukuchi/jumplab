@@ -4,7 +4,8 @@ class Jumper {
   float x, y;
   float px, py;
   float vx, vy;
-  float ax, ay;
+  float pvx, pvy;
+  float ay;
   int dir;
   int lastDir;
   int jumpDir;
@@ -37,8 +38,8 @@ class Jumper {
     y = (float)level.sy;
     px = x;
     py = y;
-    vx = 0;
-    vy = 0;
+    vx = vy = 0;
+    pvx = pvy = 0;
     jumping = false;
     propelling = false;
     onObstacle = false;
@@ -78,6 +79,9 @@ class Jumper {
 
   void update() {
     boolean hDL, hDR, hUL, hUR;
+
+    pvx = vx;
+    pvy = vy;
 
     joystickUpdate();
     px = x;
@@ -157,6 +161,7 @@ class Jumper {
   }
 
   void velocityXUpdate() {
+    float ax;
     if (jumping || (!onObstacle && !settings.allowAerialWalk)) {
       ax = settings.axJumping;
     } else if (!jumping && !onObstacle && settings.haltedAndFall) {
