@@ -8,6 +8,7 @@ class Jumper {
   int lastDir;
   int jumpDir;
   boolean jumping;
+  boolean standing;
   boolean propelling;
   boolean onObstacle;
   float verticalAcc;
@@ -15,6 +16,7 @@ class Jumper {
   int jumpMotionMax;
   int propellingRemainingFrames;
   float pattern;
+  int runningMotionMax;
   Settings settings;
   Level level;
   int[] joyInput;
@@ -56,17 +58,17 @@ class Jumper {
     images_running_l = new Vector<PImage>();
     images_jumping_r = new Vector<PImage>();
     images_jumping_l = new Vector<PImage>();
-    images_running_r.add(loadImage("char-run-1.png"));
-    images_running_r.add(loadImage("char-run-2.png"));
-    images_running_r.add(loadImage("char-run-3.png"));
-    images_running_r.add(loadImage("char-run-4.png"));
-    for (int i = 0; i < images_running_r.size (); i++) {
+    runningMotionMax = 8;
+    for (int i=0; i<runningMotionMax+1; i++) {
+      String filename = String.format("stickman-%d.png", i);
+      images_running_r.add(loadImage(filename));
       images_running_l.add(hflipImage(images_running_r.get(i)));
     }
-    images_jumping_r.add(loadImage("char-jump.png"));
-    images_jumping_r.add(loadImage("char-jump-pre3.png"));
-    images_jumping_r.add(loadImage("char-jump-pre2.png"));
-    images_jumping_r.add(loadImage("char-jump-pre1.png"));
+
+    images_jumping_r.add(loadImage("stickman-jump-4.png"));
+    images_jumping_r.add(loadImage("stickman-jump-3.png"));
+    images_jumping_r.add(loadImage("stickman-jump-2.png"));
+    images_jumping_r.add(loadImage("stickman-jump-1.png"));
     jumpMotionMax = images_jumping_r.size();
     for (int i = 0; i < jumpMotionMax; i++) {
       images_jumping_l.add(hflipImage(images_jumping_r.get(i)));
@@ -223,11 +225,20 @@ class Jumper {
   }
 
   void animationUpdate() {
-    if (vx != 0) {
-      pattern += abs(vx/16);
-      if (pattern >= images_running_r.size()) {
-        pattern = 0;
+    if (vx == 0) {
+      int p = (int)pattern;
+      if (p % (runningMotionMax / 2) > 0) {
+        pattern += 0.5;
+      } else {
+        p = 0;
+        standing = true;
       }
+    } else {
+      pattern += abs(vx/16);
+      standing = false;
+    }
+    if (pattern >= runningMotionMax) {
+      pattern -= runningMotionMax;
     }
   }
 
@@ -286,12 +297,14 @@ class Jumper {
       } else {
         img = images_jumping_r.get(p);
       }
+    } else if (standing) {
+      img = (lastDir < 0)?images_running_l.get(0):images_running_r.get(0);
     } else {
       int p = (int)pattern;
       if (lastDir < 0) {
-        img = images_running_l.get(p);
+        img = images_running_l.get(p + 1);
       } else {
-        img = images_running_r.get(p);
+        img = images_running_r.get(p + 1);
       }
     }
     image(img, dx - (img.width - 24) / 2, dy);
