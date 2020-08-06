@@ -47,52 +47,55 @@ class Console {
       .activateEvent(true);
     ctlr.getWindow().setPositionOfTabs(x + 10, y + 150);
     stroke(255);
-
+    ctlr.addTextlabel("ProgramTitle")
+      .setPosition(x + 10, y + 5)
+      .setText("JumpLab ver. " + gVersionString)
+      .moveTo("global");
     ctlr.addTextlabel("JumperXY")
-      .setPosition(x + 10, y + 10)
+      .setPosition(x + 10, y + 25)
       .setText("Jumper X,Y")
       .moveTo("global");
-    indicators.put("JumperXYvalue", new int[] {x + 80, y + 10});
+    indicators.put("JumperXYvalue", new int[] {x + 80, y + 25});
     ctlr.addTextlabel("JumperVXY")
-      .setPosition(x + 10, y + 25)
+      .setPosition(x + 10, y + 40)
       .setText("Jumper VX,VY")
       .moveTo("global");
-    indicators.put("JumperVXYvalue", new int[] {x + 80, y + 25});
+    indicators.put("JumperVXYvalue", new int[] {x + 80, y + 40});
     ctlr.addTextlabel("JumperAXY")
-      .setPosition(x + 10, y + 40)
+      .setPosition(x + 10, y + 55)
       .setText("Jumper AX,AY")
       .moveTo("global");
-    indicators.put("JumperAXYValue", new int[] {x + 80, y + 40});
+    indicators.put("JumperAXYValue", new int[] {x + 80, y + 55});
     ctlr.addTextlabel("PropellingRemainingFrames")
-      .setPosition(x + 10, y + 55)
-      .setText("Propelling Remainig")
-      .moveTo("global");
-    indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 55});
-    ctlr.addTextlabel("FPS")
       .setPosition(x + 10, y + 70)
+      .setText("Propelling Remaining")
+      .moveTo("global");
+    indicators.put("PropellingRemainingFramesValue", new int[] {x + 98, y + 70});
+    ctlr.addTextlabel("FPS")
+      .setPosition(x + 200, y + 70)
       .setText("FPS")
       .moveTo("global");
-    ctlr.addFrameRate().setInterval(10).setPosition(x + 50, y + 70).moveTo("global");
+    ctlr.addFrameRate().setInterval(10).setPosition(x + 260, y + 70).moveTo("global");
     ctlr.addTextlabel("Jumping")
-      .setPosition(x + 200, y + 10)
+      .setPosition(x + 200, y + 25)
       .setText("Jumping")
       .moveTo("global");
     widgets.put("JumpingValue", ctlr.addTextlabel("JumpingValue")
-      .setPosition(x + 260, y + 10)
+      .setPosition(x + 260, y + 25)
       .moveTo("global"));
     ctlr.addTextlabel("Propelling")
-      .setPosition(x + 200, y + 25)
+      .setPosition(x + 200, y + 40)
       .setText("Propelling")
       .moveTo("global");
     widgets.put("PropellingValue", ctlr.addTextlabel("PropellingValue")
-      .setPosition(x + 260, y + 25)
+      .setPosition(x + 260, y + 40)
       .moveTo("global"));
     ctlr.addTextlabel("OnObstacle")
-      .setPosition(x + 200, y + 40)
+      .setPosition(x + 200, y + 55)
       .setText("On obstacle")
       .moveTo("global");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
-      .setPosition(x + 260, y + 40)
+      .setPosition(x + 260, y + 55)
       .setText("FALSE")
       .moveTo("global"));
 

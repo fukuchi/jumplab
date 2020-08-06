@@ -3,15 +3,20 @@ class Camera {
   Level level;
   Settings settings;
   PImage levelImg;
+  PImage titleImg;
   PVector[] posbuf;
   static final int posbuflen = 64;
   int posbufp = 0;
+  boolean showTitle = true;
+  int titleTimer;
 
   float x, y;
   float px, py; // previous position
   float focus_x;
   int window_w, window_h;
   int window_hw, window_hh;
+
+  PFont onScreenFont;
 
   Camera(Jumper jumper, Level level, Settings settings, int w, int h) {
     this.jumper = jumper;
@@ -34,11 +39,15 @@ class Camera {
     }
     levelGfx.endDraw();
     levelImg = levelGfx.get();
+    titleImg = loadImage("title.png");
+    titleTimer = -1;
 
     posbuf = new PVector[posbuflen];
     for (int i=0; i<posbuflen; i++) {
       posbuf[i] = new PVector(0, 0);
     }
+
+    onScreenFont = createFont("Lucida Sans", 16);
   }
 
   void reset(float x, float y) {
@@ -209,5 +218,25 @@ class Camera {
     rect(gConsole.x, gConsole.y, gConsole.w, gConsole.h);
     stroke(255);
     line(gConsole.x, gConsole.y + 166, gConsole.x + gConsole.w, gConsole.y + 166);
+
+    if (showTitle) {
+      int now = millis();
+      if (titleTimer < 0) {
+        titleTimer = now + 3500;
+      } else if (now < titleTimer) {
+        int remaining = titleTimer - now;
+        if (remaining < 256) {
+          tint(255, remaining);
+        }
+        image(titleImg, (window_w - titleImg.width) / 2, 50);
+        textAlign(RIGHT, CENTER);
+        textFont(onScreenFont);
+        fill(255, remaining);
+        text("Version " + gVersionString, (window_w - titleImg.width) / 2 + titleImg.width, 50 + titleImg.height);
+        tint(255, 255);
+      } else {
+        showTitle =false;
+      }
+    }
   }
 }

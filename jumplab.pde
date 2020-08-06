@@ -6,6 +6,8 @@ Console gConsole;
 Joystick gJoystick;
 PresetManager gPresets;
 
+static final String gVersionString = "0.9.0-pre";
+
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
 static final int console_w = 300;
@@ -15,6 +17,7 @@ static String defaultSettingsFilename = "default_settings.json";
 static String joystickConfigFilename = "joystick_config.json";
 
 void settings() {
+  println("JumpLab version " + gVersionString);
   println("Initializing...");
   // If you have any performance problem, try P2D render as follows.
   size(gameScreen_w + console_w, gameScreen_h);
@@ -38,6 +41,7 @@ void setup() {
   gCamera.reset(gMasao.x, gMasao.y);
   gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gPresets, gSettings);
   frameRate(60);
+
   background(128);
   println("Initialization completed.");
 }

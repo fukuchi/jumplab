@@ -1,4 +1,4 @@
-# Jump Lab: an experiment software for the analysis of 'jump' for platformer game.
+# JumpLab: a testbed for studying jump motion and scrolling algorithms of videogames
 
 ## Introduction
 
