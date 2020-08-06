@@ -1,5 +1,7 @@
 # JumpLab: a testbed for studying jump motion and scrolling algorithms of videogames
 
+![JumpLab](data/title.png)
+
 ## Introduction
 
 JumpLab is a software that allows you to experiment with variable parameters for jumping and camera
