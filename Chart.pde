@@ -30,6 +30,8 @@ class ChartCanvas extends Canvas {
     destPg.image(pg, 0, 0);
     destPg.translate(0, pg.height + 10);
     destPg.colorMode(HSB, 360, 100, 100);
+    destPg.textSize(10);
+    destPg.textAlign(LEFT, CENTER);
     for (int i=0; i<seriesNum; i++) {
       destPg.fill(0, 0, 100);
       String label = keyList.get(i);
