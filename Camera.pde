@@ -109,49 +109,39 @@ class Camera {
     }
     if (dx < -settings.cameraWindow_w / 2) {
       tx += dx + settings.cameraWindow_w / 2;
-    } else {
-      if (dx > settings.cameraWindow_w / 2) {
-        tx += dx - settings.cameraWindow_w / 2;
-      }
+    } else if (dx > settings.cameraWindow_w / 2) {
+      tx += dx - settings.cameraWindow_w / 2;
     }
     if (dy < -settings.cameraWindow_h / 2) {
       ty += dy + settings.cameraWindow_h / 2;
-    } else {
-      if (dy > settings.cameraWindow_h / 2) {
-        ty += dy - settings.cameraWindow_h / 2;
-      }
+    } else if (dy > settings.cameraWindow_h / 2) {
+      ty += dy - settings.cameraWindow_h / 2;
     }
 
     if (!settings.cameraEasing_x) {
       px = x;
-      x = constrain(tx, window_hw, level.w - window_hw);
+      x = tx;
     } else {
       float vx = x - px;
       px = x;
-      float dist = abs(tx - x);
-      vx += Math.signum(tx - x) * dist * settings.cameraEasingNormal_x;
-      vx = vx * 0.5;
-      x += vx;
-      x = constrain(x, window_hw, level.w - window_hw);
+      x += vx * (0.5 - settings.cameraEasingNormal_x) + (tx - x) * settings.cameraEasingNormal_x;
     }
+    x = constrain(x, window_hw, level.w - window_hw);
 
     if (!settings.platformSnapping || !jumper.jumping) {
       if (!settings.cameraEasing_y) {
         py = y;
-        y = constrain(ty, window_hh, level.h - window_hh);
+        y = ty;
       } else {
         float vy = y - py;
         py = y;
         if (!jumper.onObstacle) {
-          float dist = abs(ty - y);
-          vy += Math.signum(ty - y) * dist * settings.cameraEasingNormal_y;
-          vy = vy * 0.5;
-          y += vy;
+          y += vy * (0.5 - settings.cameraEasingNormal_y) + (ty - y) * settings.cameraEasingNormal_y;
         } else {
-          y += (ty - y) * settings.cameraEasingGrounding_y;
+          y += vy * (0.5 - settings.cameraEasingGrounding_y) + (ty - y) * settings.cameraEasingGrounding_y;
         }
-        y = constrain(y, window_hh, level.h - window_hh);
       }
+      y = constrain(y, window_hh, level.h - window_hh);
     }
   }
 

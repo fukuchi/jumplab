@@ -200,13 +200,13 @@ class Console {
     appendHalfwidthWidget("projectedFocus", ctlr.addToggle("Projected focus"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
       .setSize(150, 20)
-      .setRange(0, 1));
+      .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraEasingNormal_y", ctlr.addSlider("Camera Y Easing Coef (normal)")
       .setSize(150, 20)
-      .setRange(0, 1));
+      .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraEasingGrounding_y", ctlr.addSlider("Camera Y Easing Coef (grounding)")
       .setSize(150, 20)
-      .setRange(0, 1));
+      .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraWindow_w", ctlr.addSlider("Camera Window Width")
       .setSize(150, 20)
       .setRange(0, 400));
