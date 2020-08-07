@@ -44,10 +44,9 @@ class ChartCanvas extends Canvas {
     destPg.popMatrix();
   }
 
-  void addSeries(String label, float value) {
+  void addSeries(String label) {
     float[] series = new float[2];
-    series[0] = series[1] = value;
-    serieses.put(label, new float[2]);
+    serieses.put(label, series);
     keyList.add(label);
   }
 
