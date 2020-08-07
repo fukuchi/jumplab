@@ -55,7 +55,7 @@ class Camera {
     this.y = constrain(y + Jumper.h / 2, window_hh, level.h - window_hh);
     px = this.x;
     py = this.y;
-    focus_x = x;
+    focus_x = 0;
   }
 
   void update() {
