@@ -123,7 +123,7 @@
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
       "cameraEasing_x": true,
-      "cameraEasing_y": true,
+      "cameraEasing_y": false,
       "cameraWindow_h": 0,
       "cameraWindow_w": 0,
       "collisionTolerance": 0,
