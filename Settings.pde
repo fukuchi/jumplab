@@ -12,8 +12,8 @@ static class Settings {
   boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
-  float jumpPower = 13; // Initial vertical velocity of a jump motion.
-  float jumpPowerBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
+  float jumpVelocity = 13; // Initial vertical velocity of a jump motion.
+  float jumpVelocityBonus = 0;// The faster run gives an initial jump velocity bonus that allows a higher jump.
   float jumpAnticipationFrames = 2; // Duration of the anticipation of jump motion in frames.
   float vxAdjustmentAtTakeoff = 0.0; // Horizontal velocity adjustment at the takeoff.
   float maxPropellingFrames = 0; // Maximum duration of propelled jump.

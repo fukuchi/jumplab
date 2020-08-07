@@ -190,7 +190,7 @@ class Jumper {
     if (jumping && jumpMotion > 0) {
       jumpMotion--;
       if (jumpMotion == 0) {
-        vy = -settings.jumpPower - (settings.jumpPowerBonus * abs(vx));
+        vy = -settings.jumpVelocity - (settings.jumpVelocityBonus * abs(vx));
         if (settings.vxAdjustmentAtTakeoff < 0) {
           vx += vx * settings.vxAdjustmentAtTakeoff;
         } else if (settings.vxAdjustmentAtTakeoff > 0) {

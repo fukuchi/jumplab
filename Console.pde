@@ -144,10 +144,10 @@ class Console {
     appendHalfwidthWidget("maxVy", ctlr.addSlider("Max Vy")
       .setSize(80, 20)
       .setRange(1, 80));
-    appendFullwidthWidget("jumpPower", ctlr.addSlider("Jump Velocity")
+    appendFullwidthWidget("jumpVelocity", ctlr.addSlider("Jump Velocity")
       .setSize(150, 20)
       .setRange(1, 30));
-    appendFullwidthWidget("jumpPowerBonus", ctlr.addSlider("Jump Velocity Bonus")
+    appendFullwidthWidget("jumpVelocityBonus", ctlr.addSlider("Jump Velocity Bonus")
       .setSize(150, 20)
       .setRange(0, 0.5));
     appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
@@ -155,7 +155,7 @@ class Console {
       .setRange(0, 9)
       .setNumberOfTickMarks(10)
       .showTickMarks(false));
-    appendFullwidthWidget("vxAdjustmentAtTakeoff", ctlr.addSlider("VX ADJUSTMENT at takeoff")
+    appendFullwidthWidget("vxAdjustmentAtTakeoff", ctlr.addSlider("VX Adjustment at Takeoff")
       .setSize(150, 20)
       .setRange(-1.0, 1.0)
       .setSliderMode(Slider.FLEXIBLE));
@@ -170,7 +170,7 @@ class Console {
     appendFullwidthWidget("gravityFalling", ctlr.addSlider("Gravity (falling)")
       .setSize(150, 20)
       .setRange(0.01, 2));
-    appendFullwidthWidget("verticalSpeedSustainLevel", ctlr.addSlider("Jump speed sustain level")
+    appendFullwidthWidget("verticalSpeedSustainLevel", ctlr.addSlider("Jump Speed Sustain Level")
       .setSize(150, 20)
       .setRange(0, 1));
     appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")

@@ -1,3 +1,23 @@
+/**
+ * JumpLab: a testbed for studying jump motion and scrolling algorithms of videogames
+ *
+ * Web: https://fukuchi.org/works/jumplab/
+ * Repository: https://github.com/fukuchi/jumplab/
+ *
+ * Copyright (C) 2020 Kentaro Fukuchi <kentaro@fukuchi.org>
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see https://www.gnu.org/licenses/.
+ */
+
 Settings gSettings;
 Jumper gMasao;
 Level gLevel;
@@ -21,7 +41,7 @@ void settings() {
   println("Initializing...");
   // If you have any performance problem, try P2D render as follows.
   size(gameScreen_w + console_w, gameScreen_h);
-  //  size(gameScreen_w + console_w, gameScreen_h, P2D);
+  //size(gameScreen_w + console_w, gameScreen_h, P2D);
   noSmooth();
 }
 
@@ -35,7 +55,7 @@ void setup() {
   }
   gSettings = new Settings();
   gJoystick = new Joystick(this, joystickConfigFilename);
-  gLevel = new Level("level1.csv", "block.png", "bg.png");
+  gLevel = new Level("level1.csv", "tiles.png", "bg.png");
   gMasao = new Jumper(gSettings, gLevel);
   gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);
   gCamera.reset(gMasao.x, gMasao.y);
