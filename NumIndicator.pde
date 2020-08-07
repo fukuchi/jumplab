@@ -1,5 +1,5 @@
 class NumIndicator {
-  // This class would not be needed if ControlP5 had provided any monospcae font...
+  // This class would not be needed if ControlP5 had provided any monospace font...
   static final int glyph_w = 6;
   static final int glyph_h = 8;
 
