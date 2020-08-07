@@ -241,13 +241,17 @@ class Console {
 
     // Chart tab
     setTab("Chart");
-    chart = new ChartCanvas(x + 10, y + 175, w - 20, 300);
-    chart.addSeries("Jumper X", 0);
-    chart.addSeries("Jumper Y", 0);
-    chart.addSeries("Camera X", 0);
-    chart.addSeries("Camera Y", 0);
+    chart = new ChartCanvas(settings, x + 10, y + 175, w - 20, 300);
+    chart.addSeries("Jumper X");
+    chart.addSeries("Jumper Y");
+    chart.addSeries("Camera X");
+    chart.addSeries("Camera Y");
     chart.pre();
     ctlr.getTab("Chart").addCanvas(chart);
+    nextWidgetPosition_y = y + 480;
+    Toggle toggle = ctlr.addToggle("Show Velocity");
+    toggle.plugTo(this, "showVelocityChartChanged");
+    appendHalfwidthWidget("showVelocityChart", toggle);
 
     for (String name : Settings.booleanVariables) {
       Label caption = widgets.get(name).getCaptionLabel();
@@ -441,6 +445,10 @@ class Console {
   void joystickChanged(int value) {
     gJoystick.selectDevice(value);
     gJoystick.saveConfig();
+  }
+
+  void showVelocityChartChanged() {
+    chart.showVelocityChartChanged();
   }
 
   void setTab(String name) {
