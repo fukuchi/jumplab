@@ -1,11 +1,12 @@
 class Level {
   int w, h; // level size in pixel
   int cw, ch; // level size in character
-  int bw, bh; // block size
+  int bw = 48; // block size
+  int bh = 48;
   int sx, sy; // initial position of the player character
   int[][] map;
   PImage bgImg;
-  PImage blockImg;
+  PImage tileImg;
 
   Level(String mapFile, String blockImgFile, String bgFile) {
     sx = sy = 1;
@@ -26,16 +27,30 @@ class Level {
       }
     }
 
-    blockImg = loadImage(blockImgFile);
+    tileImg = loadImage(blockImgFile);
     bgImg = loadImage(bgFile);
-    bw = blockImg.width;
-    bh = blockImg.height;
 
     w = bw * cw;
     h = bh * ch;
 
     sx = sx * bw;
     sy = sy * bh;
+  }
+
+  PImage createLevelImage() {
+    PGraphics levelGfx = createGraphics(w, h);
+    levelGfx.beginDraw();
+    levelGfx.background(0, 0);
+    for (int y=0; y<ch; y++) {
+      for (int x=0; x<cw; x++) {
+        int chip = map[y][x];
+        if (chip > 0 && chip < 9) {
+          levelGfx.copy(tileImg, (chip - 1) * bw, 0, bw, bh, x * bw, y * bh, bw, bh);
+        }
+      }
+    }
+    levelGfx.endDraw();
+    return levelGfx.get();
   }
 
   boolean isThereObstacle(int x, int y) {

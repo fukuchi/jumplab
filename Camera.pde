@@ -32,18 +32,7 @@ class Camera {
     window_hw = w / 2;
     window_hh = h / 2;
 
-    PGraphics levelGfx = createGraphics(level.w, level.h);
-    levelGfx.beginDraw();
-    levelGfx.background(0, 0);
-    for (int y=0; y<level.ch; y++) {
-      for (int x=0; x<level.cw; x++) {
-        if (level.map[y][x] > 0) {
-          levelGfx.image(level.blockImg, x * level.bw, y * level.bh);
-        }
-      }
-    }
-    levelGfx.endDraw();
-    levelImg = levelGfx.get();
+    levelImg = level.createLevelImage();
     titleImg = loadImage("title.png");
     titleTimer = -1;
 
@@ -51,12 +40,6 @@ class Camera {
     for (int i=0; i<trailLen; i++) {
       trail[i] = new JumperTrail();
     }
-    /*
-    posbuf = new PVector[posbuflen];
-     for (int i=0; i<posbuflen; i++) {
-     posbuf[i] = new PVector(0, 0);
-     }
-     */
 
     onScreenFont = createFont("Lucida Sans", 16);
   }
