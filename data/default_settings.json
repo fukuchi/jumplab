@@ -291,7 +291,7 @@
       "maxPropellingFrames": 0,
       "maxVx": 8,
       "maxVy": 20.75,
-      "parallaxScrolling": true,
+      "parallaxScrolling": false,
       "platformSnapping": true,
       "projectedFocus": false,
       "verticalSpeedSustainLevel": 1,
