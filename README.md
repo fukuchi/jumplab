@@ -16,6 +16,16 @@ Please visit <https://fukuchi.org/works/jumplab/> for further information.
   - Install [ControlP5](https://www.sojamo.de/libraries/controlP5/) and [Game Control Plus](http://lagers.org.uk/gamecontrol/) from "Add Library..." from the "Import Library..." menu.
   - Press left/right arrow keys to move left/right, and space key to jump.
 
+## TODO
+
+  - Dash button
+  - Sound effects
+  - Level selector / level editor
+  - Double jump
+  - Wall jump
+  - Vertical forward focus
+  - Terminology check
+
 ## LICENSE
 
 JumpLab is released under the terms of the GNU GPL 3.0.
