@@ -210,11 +210,15 @@ class Camera {
     line(gConsole.x, gConsole.y + 166, gConsole.x + gConsole.w, gConsole.y + 166);
 
     if (showTitle) {
+      pushStyle();
       int now = millis();
       if (titleTimer < 0) {
         titleTimer = now + 3500;
       } else if (now < titleTimer) {
         int remaining = titleTimer - now;
+        if (remaining >= 256 && (jumper.vx != 0 || !jumper.onObstacle)) {
+          titleTimer -= 100;
+        }
         if (remaining < 256) {
           tint(255, remaining);
         }
@@ -223,10 +227,10 @@ class Camera {
         textFont(onScreenFont);
         fill(255, remaining);
         text("Version " + gVersionString, (window_w - titleImg.width) / 2 + titleImg.width, 50 + titleImg.height);
-        tint(255, 255);
       } else {
         showTitle =false;
       }
+      popStyle();
     }
   }
 }
