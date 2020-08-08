@@ -292,7 +292,11 @@ class Jumper {
     }
   }
 
-  void draw(float dx, float dy) {
+  void draw(PImage img, float dx, float dy) {
+    image(img, dx - (img.width - 24) / 2, dy);
+  }
+
+  PImage draw(float cx, float cy) {
     PImage img;
 
     if (jumping) {
@@ -313,7 +317,9 @@ class Jumper {
         img = images_running_r.get(p + 1);
       }
     }
-    image(img, dx - (img.width - 24) / 2, dy);
+    this.draw(img, x - cx, y - cy);
+
+    return img;
   }
 
   boolean keyPressed() {

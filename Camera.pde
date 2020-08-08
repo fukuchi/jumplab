@@ -4,9 +4,9 @@ class Camera {
   Settings settings;
   PImage levelImg;
   PImage titleImg;
-  PVector[] posbuf;
-  static final int posbuflen = 64;
-  int posbufp = 0;
+  JumperTrail[] trail;
+  static final int trailLen = 64;
+  int trailHead = 0;
   boolean showTitle = true;
   int titleTimer;
 
@@ -17,6 +17,11 @@ class Camera {
   int window_hw, window_hh;
 
   PFont onScreenFont;
+
+  class JumperTrail {
+    float x, y;
+    PImage image;
+  }
 
   Camera(Jumper jumper, Level level, Settings settings, int w, int h) {
     this.jumper = jumper;
@@ -42,10 +47,16 @@ class Camera {
     titleImg = loadImage("title.png");
     titleTimer = -1;
 
-    posbuf = new PVector[posbuflen];
-    for (int i=0; i<posbuflen; i++) {
-      posbuf[i] = new PVector(0, 0);
+    trail = new JumperTrail[trailLen];
+    for (int i=0; i<trailLen; i++) {
+      trail[i] = new JumperTrail();
     }
+    /*
+    posbuf = new PVector[posbuflen];
+     for (int i=0; i<posbuflen; i++) {
+     posbuf[i] = new PVector(0, 0);
+     }
+     */
 
     onScreenFont = createFont("Lucida Sans", 16);
   }
@@ -161,19 +172,31 @@ class Camera {
     copy(level.bgImg, bgx, bgy, window_w, window_h, 0, 0, window_w, window_h);
     copy(levelImg, cx, cy, window_w, window_h, 0, 0, window_w, window_h);
 
-    posbuf[posbufp].x = jumper.x + Jumper.w / 2;
-    posbuf[posbufp].y = jumper.y + Jumper.h / 2;
-    posbufp = (posbufp + 1) % posbuflen;
     if (settings.showTrail) {
-      noStroke();
-      fill(255, 0, 0);
-      for (int i=0; i<posbuflen; i++) {
-        if (posbuf[i].x - cx < window_w) {
-          ellipse(posbuf[i].x - cx, posbuf[i].y - cy, 5, 5);
+      pushStyle();
+      if (!settings.showAfterimage) {
+        noStroke();
+        fill(255, 0, 0);
+        for (int i=0; i<trailLen; i++) {
+          ellipse(trail[i].x + Jumper.w / 2 - cx, trail[i].y + Jumper.h / 2 - cy, 5, 5);
+        }
+      } else {
+        tint(255, 128);
+        for (int i=0; i<trailLen; i++) {
+          int idx = (trailHead + 1 + i) % trailLen;
+          if (idx % 4 == 0) {
+            jumper.draw(trail[idx].image, trail[idx].x - cx, trail[idx].y - cy);
+          }
         }
       }
+      popStyle();
     }
-    jumper.draw(jumper.x - cx, jumper.y - cy);
+    PImage img = jumper.draw(cx, cy);
+    trail[trailHead].x = jumper.x;
+    trail[trailHead].y = jumper.y;
+    trail[trailHead].image = img;
+    trailHead++;
+    if (trailHead >= trailLen) trailHead = 0;
 
     if (settings.showCameraMarker) {
       noStroke();

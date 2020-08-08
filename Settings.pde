@@ -42,11 +42,12 @@ static class Settings {
   float focusingSpeed = 5; // Velocity of the focal point movement.
 
   // Misc. parameters
-  boolean showVelocityChart;
+  boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
+  boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;
-  static List<String> ignoredVariables = Arrays.asList("showTrail", "showCameraMarker", "showVelocityChart");
+  static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart");
 
   static {
     booleanVariables = new ArrayList<String>();

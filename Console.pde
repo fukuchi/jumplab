@@ -1,6 +1,7 @@
 import controlP5.*;
 import controlP5.Controller;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.lang.reflect.Field;
 
 class Console {
@@ -253,17 +254,20 @@ class Console {
     toggle.plugTo(this, "showVelocityChartChanged");
     appendHalfwidthWidget("showVelocityChart", toggle);
 
-    for (String name : Settings.booleanVariables) {
-      Label caption = widgets.get(name).getCaptionLabel();
-      caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
-      caption.setPadding(5, 0);
+    for (Entry<String, Controller> entry : widgets.entrySet()) {
+      Controller widget = entry.getValue();
+      if (widget instanceof Toggle) {
+        Label caption = widget.getCaptionLabel();
+        caption.align(ControlP5.RIGHT_OUTSIDE, ControlP5.CENTER);
+        caption.setPadding(5, 0);
+      }
     }
 
     int id = 100;
-    for (String name : widgets.keySet()) {
-      Controller widget = widgets.get(name);
+    for (Entry<String, Controller> entry : widgets.entrySet()) {
+      Controller widget = entry.getValue();
       widget.setId(id);
-      id2parameter.put(id, name);
+      id2parameter.put(id, entry.getKey());
       id++;
     }
 
