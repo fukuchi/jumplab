@@ -66,8 +66,8 @@ class Preset {
     json.setString("last modified", lastModified.toString());
 
     JSONObject jsonData = new JSONObject();
-    for (String key : data.keySet()) {
-      jsonData.put(key, data.get(key));
+    for (Entry<String, Object> entry : data.entrySet()) {
+      jsonData.put(entry.getKey(), entry.getValue());
     }
     json.setJSONObject("data", jsonData);
 

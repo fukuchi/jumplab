@@ -59,8 +59,8 @@ class PresetManager {
 
   void save(String filename) {
     JSONArray presetsJson = new JSONArray();
-    for (String key : presets.keySet()) {
-      presetsJson.append(presets.get(key).toJson());
+    for (Preset preset : presets.values()) {
+      presetsJson.append(preset.toJson());
     }
     saveJSONArray(presetsJson, "data/" + filename);
   }
