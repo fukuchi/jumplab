@@ -293,7 +293,9 @@ class Jumper {
   }
 
   void draw(PImage img, float dx, float dy) {
-    image(img, dx - (img.width - 24) / 2, dy);
+    if (img != null) {
+      image(img, dx - (img.width - 24) / 2, dy);
+    }
   }
 
   PImage draw(float cx, float cy) {
