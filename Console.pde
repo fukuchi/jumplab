@@ -153,8 +153,8 @@ class Console {
       .setRange(0, 0.5));
     appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
       .setSize(150, 20)
-      .setRange(0, 9)
-      .setNumberOfTickMarks(10)
+      .setRange(0, 14)
+      .setNumberOfTickMarks(15)
       .showTickMarks(false));
     appendFullwidthWidget("vxAdjustmentAtTakeoff", ctlr.addSlider("VX Adjustment at Takeoff")
       .setSize(150, 20)
