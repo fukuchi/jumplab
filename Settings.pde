@@ -43,7 +43,7 @@ static class Settings {
 
   // Misc. parameters
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
-  boolean showAfterimage = true; // Show afterimage instead of red dots when 'showTrail' is true.
+  boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;
