@@ -42,6 +42,9 @@ class Console {
     ctlr.addTab("Chart")
       .setId(4)
       .activateEvent(true);
+    ctlr.addTab("Misc")
+      .setId(5)
+      .activateEvent(true);
     ctlr.getTab("default")
       .setLabel("Jump")
       .setId(1)
@@ -254,6 +257,12 @@ class Console {
     toggle.plugTo(this, "showVelocityChartChanged");
     appendHalfwidthWidget("showVelocityChart", toggle);
 
+    // Misc tab
+    setTab("Misc");
+    nextWidgetPosition_y = y + 175;
+    appendHalfwidthWidget("showAfterimage", ctlr.addToggle("Show afterimage"));
+    appendHalfwidthWidget("showInputStatus", ctlr.addToggle("Show input status"));
+
     for (Entry<String, Controller> entry : widgets.entrySet()) {
       Controller widget = entry.getValue();
       if (widget instanceof Toggle) {
@@ -457,5 +466,6 @@ class Console {
 
   void setTab(String name) {
     currentTab = name;
+    halfFilled = false;
   }
 }
