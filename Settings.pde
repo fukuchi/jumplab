@@ -44,10 +44,11 @@ static class Settings {
   // Misc. parameters
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
   boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
+  boolean showInputStatus = false; // Show the input status.
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;
-  static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart");
+  static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart", "showInputStatus");
 
   static {
     booleanVariables = new ArrayList<String>();

@@ -21,6 +21,7 @@ class Jumper {
   Settings settings;
   Level level;
   int[] joyInput;
+  boolean[] inputStatus;
 
   Vector<PImage> images_running_r;
   Vector<PImage> images_running_l;
@@ -50,6 +51,7 @@ class Jumper {
     pattern = 0;
     ay = settings.gravityFalling;
     joyInput = new int[3];
+    inputStatus = new boolean[3];
 
     initializeImages();
   }
@@ -328,13 +330,16 @@ class Jumper {
     if (key == CODED) {
       if (keyCode == LEFT) {
         move(-1);
+        inputStatus[0] = true;
         return true;
       } else if (keyCode == RIGHT) {
         move(1);
+        inputStatus[1] = true;
         return true;
       }
     } else if (key == ' ') {
       jump();
+      inputStatus[2] = true;
       return true;
     }
     return false;
@@ -342,6 +347,11 @@ class Jumper {
 
   boolean keyReleased() {
     if (key == CODED) {
+      if (keyCode == LEFT) {
+        inputStatus[0] = false;
+      } else if (keyCode == RIGHT) {
+        inputStatus[1] = false;
+      }
       if (keyCode == LEFT && dir == -1 ||
         keyCode == RIGHT && dir == 1) {
         move(0);
@@ -349,6 +359,7 @@ class Jumper {
       }
     } else if (key == ' ') {
       jumpCanceled();
+      inputStatus[2] = false;
       return true;
     }
     return false;
@@ -358,9 +369,16 @@ class Jumper {
     gJoystick.update(joyInput);
     if (joyInput[0] != 0) {
       move(joyInput[1]);
+      inputStatus[0] = joyInput[1]<0;
+      inputStatus[1] = joyInput[1]>0;
     }
-    if (joyInput[2] < 0) jumpCanceled();
-    if (joyInput[2] > 0) jump();
+    if (joyInput[2] < 0) {
+      jumpCanceled();
+      inputStatus[2] = false;
+    } else if (joyInput[2] > 0) {
+      jump();
+      inputStatus[2] = true;
+    }
   }
 
   PImage hflipImage(PImage srcImg) {

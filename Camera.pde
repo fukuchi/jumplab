@@ -216,27 +216,63 @@ class Camera {
     line(gConsole.x, gConsole.y + 166, gConsole.x + gConsole.w, gConsole.y + 166);
 
     if (showTitle) {
-      pushStyle();
-      int now = millis();
-      if (titleTimer < 0) {
-        titleTimer = now + 3500;
-      } else if (now < titleTimer) {
-        int remaining = titleTimer - now;
-        if (remaining >= 256 && (jumper.vx != 0 || !jumper.onObstacle)) {
-          titleTimer -= 100;
-        }
-        if (remaining < 256) {
-          tint(255, remaining);
-        }
-        image(titleImg, (window_w - titleImg.width) / 2, 50);
-        textAlign(RIGHT, CENTER);
-        textFont(onScreenFont);
-        fill(255, remaining);
-        text("Version " + gVersionString, (window_w - titleImg.width) / 2 + titleImg.width, 50 + titleImg.height);
-      } else {
-        showTitle =false;
-      }
-      popStyle();
+      drawTitle();
     }
+
+    if (settings.showInputStatus) {
+      drawInputStatus();
+    }
+  }
+
+  void drawInputStatus() {
+    pushMatrix();
+    translate(window_hw - 120, 40);
+    stroke(0);
+    strokeWeight(3);
+    if (jumper.inputStatus[0]) {
+      fill(64, 255, 255);
+    } else {
+      fill(0, 64, 64);
+    }
+    triangle(0, 40, 60, 0, 60, 80);
+    translate(80, 0);
+    if (jumper.inputStatus[1]) {
+      fill(64, 255, 255);
+    } else {
+      fill(0, 64, 64);
+    }
+    triangle(20, 0, 80, 40, 20, 80);
+    translate(100, 0);
+    if (jumper.inputStatus[2]) {
+      fill(255, 64, 64);
+    } else {
+      fill(64, 0, 0);
+    }
+    ellipse(40, 40, 70, 70);
+    popMatrix();
+  }
+
+  void drawTitle() {
+    pushStyle();
+    int now = millis();
+    if (titleTimer < 0) {
+      titleTimer = now + 3500;
+    } else if (now < titleTimer) {
+      int remaining = titleTimer - now;
+      if (remaining >= 256 && (jumper.vx != 0 || !jumper.onObstacle)) {
+        titleTimer -= 100;
+      }
+      if (remaining < 256) {
+        tint(255, remaining);
+      }
+      image(titleImg, (window_w - titleImg.width) / 2, 50);
+      textAlign(RIGHT, CENTER);
+      textFont(onScreenFont);
+      fill(255, remaining);
+      text("Version " + gVersionString, (window_w - titleImg.width) / 2 + titleImg.width, 50 + titleImg.height);
+    } else {
+      showTitle =false;
+    }
+    popStyle();
   }
 }
