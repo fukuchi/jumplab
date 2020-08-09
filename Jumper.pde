@@ -108,7 +108,7 @@ class Jumper {
       }
     } else if (!hitBL() && !hitBR()) {
       onObstacle = false;
-      if (!jumping && settings.haltedAndFall) {
+      if (!jumping && settings.stopAndFall) {
         vx = 0;
       }
     }
@@ -164,7 +164,7 @@ class Jumper {
     float ax;
     if (jumping || (!onObstacle && !settings.allowAerialWalk)) {
       ax = settings.axJumping;
-    } else if (!jumping && !onObstacle && settings.haltedAndFall) {
+    } else if (!jumping && !onObstacle && settings.stopAndFall) {
       ax = 0;
     } else if (Math.signum(vx) != dir) {
       ax = settings.axBrake;

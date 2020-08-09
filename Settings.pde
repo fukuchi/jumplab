@@ -9,7 +9,7 @@ static class Settings {
   boolean allowAerialJump = true; // Allow aerial jump or not.
   boolean allowAerialWalk = true; // Allow aerial walk or not.
   boolean allowAerialTurn = false; // Allow aerial turn or not. (Only affects the visual appearance)
-  boolean haltedAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
+  boolean stopAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
   float jumpVelocity = 13; // Initial vertical velocity of a jump motion.
@@ -43,7 +43,7 @@ static class Settings {
 
   // Misc. parameters
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
-  boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
+  boolean showAfterimage = true; // Show afterimage instead of red dots when 'showTrail' is true.
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;

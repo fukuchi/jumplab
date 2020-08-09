@@ -134,7 +134,7 @@ class Console {
     setTab("default");
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showTrail", ctlr.addToggle("Show trail"));
-    appendHalfwidthWidget("haltedAndFall", ctlr.addToggle("Halted and fall"));
+    appendHalfwidthWidget("stopAndFall", ctlr.addToggle("Stop and fall"));
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
     appendHalfwidthWidget("allowAerialTurn", ctlr.addToggle("Allow aerial turn"));
