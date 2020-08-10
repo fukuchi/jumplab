@@ -84,10 +84,10 @@ class Jumper {
 
     pvx = vx;
     pvy = vy;
-
-    joystickUpdate();
     px = x;
     py = y;
+
+    joystickUpdate();
     velocityXUpdate();
     velocityYUpdate();
     animationUpdate();
