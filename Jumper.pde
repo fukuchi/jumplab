@@ -307,22 +307,38 @@ class Jumper {
   }
 
   boolean hitUL() {
-    return level.isThereObstacle((int)x, (int)y);
+    return level.getChip((int)x, (int)y) == 1;
   }
   boolean hitUR() {
-    return level.isThereObstacle(ceil(x + w - 1), (int)y);
+    return level.getChip(ceil(x + w - 1), (int)y) == 1;
   }
   boolean hitDL(int d) {
-    return level.isThereObstacle((int)x - d, ceil(y + h - 1));
+    float ly = y + h - 1;
+    int chip = level.getChip((int)x - d, ceil(ly));
+    if (vy > 0) {
+      if (level.mapY(ceil(ly)) > level.mapY(ceil(py + h - 1))) {
+        return chip == 1 || chip == 2;
+      }
+    }
+    return chip == 1;
   }
   boolean hitDR(int d) {
-    return level.isThereObstacle(ceil(x + w - 1) + d, ceil(y + h - 1));
+    float ly = y + h - 1;
+    int chip = level.getChip(ceil(x + w - 1) + d, ceil(ly));
+    if (vy > 0) {
+      if (level.mapY(ceil(ly)) > level.mapY(ceil(py + h - 1))) {
+        return chip == 1 || chip == 2;
+      }
+    }
+    return chip == 1;
   }
   boolean hitBL() {
-    return level.isThereObstacle((int)x, ceil(y + h));
+    int chip = level.getChip((int)x, ceil(y + h));
+    return chip == 1 || chip == 2;
   }
   boolean hitBR() {
-    return level.isThereObstacle(ceil(x + w - 1), ceil(y + h));
+    int chip = level.getChip(ceil(x + w - 1), ceil(y + h));
+    return chip == 1 || chip == 2;
   }
 
   void move(int d) {

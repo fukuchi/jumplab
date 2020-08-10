@@ -60,8 +60,12 @@ class Level {
     return map[cy][cx];
   }
 
-  boolean isThereObstacle(int x, int y) {
-    return getChip(x, y) > 0;
+  int mapX(int x) {
+    return (int)x / bw;
+  }
+
+  int mapY(int y) {
+    return (int)y / bh;
   }
 
   float obstaclePenaltyL(float x) {
