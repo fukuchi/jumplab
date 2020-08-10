@@ -86,7 +86,7 @@ class ChartCanvas extends Canvas {
       }
     } else {
       float pg_hh = pg.height / 2;
-      pg.stroke(0, 0, 0);
+      pg.stroke(0, 0, 75);
       pg.line(pg.width - 2, pg_hh, pg.width - 1, pg_hh);
       for (int i=0; i<seriesNum; i++) {
         pg.stroke(360 * i / seriesNum, 100, 100);
