@@ -226,6 +226,7 @@ class Camera {
 
   void drawInputStatus() {
     pushMatrix();
+    pushStyle();
     translate(window_hw - 120, 40);
     stroke(0);
     strokeWeight(3);
@@ -250,6 +251,7 @@ class Camera {
     }
     ellipse(40, 40, 70, 70);
     popMatrix();
+    popStyle();
   }
 
   void drawTitle() {
