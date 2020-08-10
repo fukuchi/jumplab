@@ -26,7 +26,7 @@ Console gConsole;
 Joystick gJoystick;
 PresetManager gPresets;
 
-static final String gVersionString = "0.9.0-pre";
+static final String gVersionString = "0.9.0";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
