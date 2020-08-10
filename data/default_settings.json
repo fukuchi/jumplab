@@ -93,11 +93,11 @@
       "focusDistance": 100,
       "focusingSpeed": 5,
       "forwardFocus": false,
-      "gravity": 0.4,
-      "gravityFalling": 0.4,
+      "gravity": 0.50,
+      "gravityFalling": 0.50,
       "stopAndFall": true,
       "jumpAnticipationFrames": 0,
-      "jumpVelocity": 7.57,
+      "jumpVelocity": 10.08,
       "jumpVelocityBonus": 0,
       "maxPropellingFrames": 0,
       "maxVx": 2.42,
@@ -105,7 +105,7 @@
       "parallaxScrolling": false,
       "platformSnapping": true,
       "verticalSpeedSustainLevel": 1,
-      "vxAdjustmentAtTakeoff": -0.8
+      "vxAdjustmentAtTakeoff": -0.85
     },
     "last modified": "2020-08-04T23:25:36.473+09:00",
     "modifiable": false,
