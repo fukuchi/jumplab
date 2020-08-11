@@ -20,6 +20,7 @@ class Jumper {
   int runningMotionMax;
   Settings settings;
   Level level;
+  int[] keyInput;
   int[] joyInput;
   boolean[] inputStatus;
 
@@ -50,6 +51,7 @@ class Jumper {
     jumpDir = 0;
     pattern = 0;
     ay = settings.gravityFalling;
+    keyInput = new int[3];
     joyInput = new int[3];
     inputStatus = new boolean[3];
 
@@ -87,6 +89,7 @@ class Jumper {
     px = x;
     py = y;
 
+    keyUpdate();
     joystickUpdate();
     velocityXUpdate();
     velocityYUpdate();
@@ -329,17 +332,14 @@ class Jumper {
   boolean keyPressed() {
     if (key == CODED) {
       if (keyCode == LEFT) {
-        move(-1);
-        inputStatus[0] = true;
+        keyInput[0] = 1;
         return true;
       } else if (keyCode == RIGHT) {
-        move(1);
-        inputStatus[1] = true;
+        keyInput[1] = 1;
         return true;
       }
     } else if (key == ' ') {
-      jump();
-      inputStatus[2] = true;
+      keyInput[2] = 1;
       return true;
     }
     return false;
@@ -348,21 +348,37 @@ class Jumper {
   boolean keyReleased() {
     if (key == CODED) {
       if (keyCode == LEFT) {
-        inputStatus[0] = false;
+        keyInput[0] = -1;
+        return true;
       } else if (keyCode == RIGHT) {
-        inputStatus[1] = false;
-      }
-      if (keyCode == LEFT && dir == -1 ||
-        keyCode == RIGHT && dir == 1) {
-        move(0);
+        keyInput[1] = -1;
         return true;
       }
     } else if (key == ' ') {
-      jumpCanceled();
-      inputStatus[2] = false;
+      keyInput[2] = -1;
       return true;
     }
     return false;
+  }
+
+  void keyUpdate() {
+    if (keyInput[0] > 0) {
+      move(-1);
+    } else if (keyInput[1] > 0) {
+      move(1);
+    } else if (keyInput[0] < 0 && dir == -1 || keyInput[1] < 0 && dir == 1) {
+      move(0);
+    }
+    if (keyInput[2]>0) {
+      jump();
+    } else if (keyInput[2] < 0) {
+      jumpCanceled();
+    }
+    for (int i=0; i<3; i++) {
+      if (keyInput[i]>0) inputStatus[i] = true;
+      if (keyInput[i]<0) inputStatus[i] = false;
+      keyInput[i] = 0;
+    }
   }
 
   void joystickUpdate() {
