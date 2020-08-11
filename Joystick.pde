@@ -101,8 +101,23 @@ class Joystick {
     } else if (axisXRawValue > stickMargin) {
       axisX = 1;
     }
-    res[0] = (prevAxisX == axisX)?0:1;
-    res[1] = axisX;
+    if (prevAxisX == axisX) {
+      res[0] = 0;
+      res[1] = 0;
+    } else {
+      if (prevAxisX < 0) {
+        res[0] = -1;
+      }
+      if (prevAxisX > 0) {
+        res[1] = -1;
+      }
+      if (axisX < 0) {
+        res[0] = 1;
+      }
+      if (axisX > 0) {
+        res[1] = 1;
+      }
+    }
     if (prevButtonPressed) {
       res[2] = buttonPressed?0:-1;
     } else {

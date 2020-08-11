@@ -89,7 +89,7 @@ class Jumper {
     px = x;
     py = y;
 
-    keyUpdate();
+    control(keyInput);
     joystickUpdate();
     velocityXUpdate();
     velocityYUpdate();
@@ -361,40 +361,29 @@ class Jumper {
     return false;
   }
 
-  void keyUpdate() {
-    if (keyInput[0] > 0) {
+  void control(int[] input) {
+    if (input[0] > 0) {
       move(-1);
-    } else if (keyInput[1] > 0) {
+    } else if (input[1] > 0) {
       move(1);
-    } else if (keyInput[0] < 0 && dir == -1 || keyInput[1] < 0 && dir == 1) {
+    } else if (input[0] < 0 && dir == -1 || input[1] < 0 && dir == 1) {
       move(0);
     }
-    if (keyInput[2]>0) {
+    if (input[2]>0) {
       jump();
-    } else if (keyInput[2] < 0) {
+    } else if (input[2] < 0) {
       jumpCanceled();
     }
     for (int i=0; i<3; i++) {
-      if (keyInput[i]>0) inputStatus[i] = true;
-      if (keyInput[i]<0) inputStatus[i] = false;
-      keyInput[i] = 0;
+      if (input[i]>0) inputStatus[i] = true;
+      if (input[i]<0) inputStatus[i] = false;
+      input[i] = 0;
     }
   }
 
   void joystickUpdate() {
     gJoystick.update(joyInput);
-    if (joyInput[0] != 0) {
-      move(joyInput[1]);
-      inputStatus[0] = joyInput[1]<0;
-      inputStatus[1] = joyInput[1]>0;
-    }
-    if (joyInput[2] < 0) {
-      jumpCanceled();
-      inputStatus[2] = false;
-    } else if (joyInput[2] > 0) {
-      jump();
-      inputStatus[2] = true;
-    }
+    control(joyInput);
   }
 
   PImage hflipImage(PImage srcImg) {
