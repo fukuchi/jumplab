@@ -1,7 +1,8 @@
 import java.util.LinkedHashMap;
 
 enum ButtonFunction {
-  NONE("None"), JUMP("Jump"), TOGGLE_TRAIL("Toggle show Trail"), TOGGLE_CAMERA("Toggle show Camera Marker");
+  NONE("None"), JUMP("Jump"), TOGGLE_TRAIL("Toggle show Trail"), TOGGLE_CAMERA("Toggle show Camera Marker"), 
+    NEXT_STYLE("Next style"), PREV_STYLE("Previous style");
 
   private final String label;
 
@@ -15,6 +16,8 @@ enum ButtonFunction {
 
   private static final List<String> labels;
   private static final Map<String, Object> valuesMap;
+  private static final ButtonFunction[] reverseLookupTable;
+  private static final int size = ButtonFunction.values().length;
   static {
     labels = new ArrayList<String>();
     valuesMap = new LinkedHashMap<String, Object>();
@@ -22,6 +25,7 @@ enum ButtonFunction {
       labels.add(func.getLabel());
       valuesMap.put(func.getLabel(), func);
     }
+    reverseLookupTable = ButtonFunction.values();
   }
 
   static List<String> getLabels() {
@@ -32,5 +36,7 @@ enum ButtonFunction {
     return valuesMap;
   }
 
-  private static final int size = ButtonFunction.values().length;
+  static ButtonFunction getEnumByOrdinal(int o) {
+    return reverseLookupTable[o];
+  }
 }
