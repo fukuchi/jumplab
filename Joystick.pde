@@ -2,6 +2,8 @@ import net.java.games.input.*;
 import org.gamecontrolplus.*;
 
 class Joystick {
+  static final String joystickConfigVersion = "1.0";
+  static final int MaxButtonNum = 12; // 12 would be enough for the most joysticks
   ControlIO ctrlio;
   List<ControlDevice> devices;
   ControlDevice currentDevice;
@@ -12,6 +14,7 @@ class Joystick {
   boolean[] buttonPressed;
   static final float stickMargin = 0.2;
   String configFilename;
+  HashMap<String, ButtonFunction[]> buttonAssignmentsMap;
 
   private class JoyButton {
     ControlButton ctlrButton;
@@ -41,7 +44,7 @@ class Joystick {
   }
 
   Joystick(PApplet parent, String configFilename) {
-    buttons = new JoyButton[12]; // 12 would be enough for the most joysticks
+    buttons = new JoyButton[MaxButtonNum];
     prevButtonPressed = new boolean[ButtonFunction.size];
     buttonPressed = new boolean[ButtonFunction.size];
     ctrlio = ControlIO.getInstance(parent);
@@ -82,6 +85,8 @@ class Joystick {
       return false;
     }
 
+    loadJoystickConfigs(configJson);
+
     String lastSelectedDeviceName = configJson.getString("lastSelected", null);
     if (lastSelectedDeviceName != null) {
       for (ControlDevice dev : devices) {
@@ -93,6 +98,22 @@ class Joystick {
     }
 
     return true;
+  }
+
+  void loadJoystickConfigs(JSONObject jsonObject) {
+    buttonAssignmentsMap = new HashMap<String, ButtonFunction[]>();
+    JSONArray configsJson = jsonObject.getJSONArray("configs");
+    if (configsJson == null) return;
+
+    for (int i=0; i<configsJson.size(); i++) {
+      JSONObject configJson = configsJson.getJSONObject(i);
+      JSONArray buttonAssignmentsJson = configJson.getJSONArray("buttons");
+      ArrayList<ButtonFunction> assignments = new ArrayList<ButtonFunction>();
+      for (int j=0; j<buttonAssignmentsJson.size(); j++) {
+        assignments.add(ButtonFunction.valueOf(buttonAssignmentsJson.getString(j)));
+      }
+      buttonAssignmentsMap.put(configJson.getString("name"), assignments.toArray(new ButtonFunction[0]));
+    }
   }
 
   void saveConfig() {
@@ -199,12 +220,40 @@ class Joystick {
         break;
       }
     }
-    int buttonsNum = min(buttons.length, currentDevice.getNumberOfButtons());
-    for (int i=0; i<buttonsNum; i++) {
-      buttons[i] = new JoyButton(currentDevice.getButton(i));
+    int buttonsNum = currentDevice.getNumberOfButtons();
+    for (int i=0; i<buttons.length; i++) {
+      if (i < buttonsNum) {
+        buttons[i] = new JoyButton(currentDevice.getButton(i));
+      } else {
+        buttons[i] = null;
+      }
     }
+    restoreConfig(currentDevice);
 
     return currentDevice;
+  }
+
+  void restoreConfig(ControlDevice device) {
+    ButtonFunction[] buttonAssignments = buttonAssignmentsMap.get(device.getName());
+    if (buttonAssignments == null) {
+      int num = min(MaxButtonNum, device.getNumberOfButtons());
+      buttonAssignments = new ButtonFunction[num];
+      for (int i=0; i<num; i++) {
+        if (i < 4) {
+          buttons[i].buttonFunction = ButtonFunction.JUMP;
+          buttonAssignments[i] = ButtonFunction.JUMP;
+        } else {
+          buttons[i].buttonFunction = ButtonFunction.NONE;
+          buttonAssignments[i] = ButtonFunction.NONE;
+        }
+      }
+      buttonAssignmentsMap.put(device.getName(), buttonAssignments);
+    } else {
+      int num = min(MaxButtonNum, device.getNumberOfButtons(), buttonAssignments.length);
+      for (int i=0; i<num; i++) {
+        buttons[i].buttonFunction = buttonAssignments[i];
+      }
+    }
   }
 
   int getCurrentDeviceIndex() {
@@ -218,5 +267,7 @@ class Joystick {
 
   void assignButtonFunction(int buttonNum, ButtonFunction func) {
     buttons[buttonNum].setFunction(func);
+    ButtonFunction[] buttonAssignments = buttonAssignmentsMap.get(currentDevice.getName());
+    buttonAssignments[buttonNum] = func;
   }
 }

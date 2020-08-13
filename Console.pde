@@ -246,8 +246,6 @@ class Console {
     joylist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
     joylist.getCaptionLabel().setFont(textfield.getValueLabel().getFont());
     appendFullwidthWidget("joystickList", joylist);
-    int currentJoystickIdx = gJoystick.getCurrentDeviceIndex();
-    if (currentJoystickIdx >= 0) joylist.setValue(currentJoystickIdx);
     setItemsColor(joylist, scrollableListItemColor);
 
     for (int i=gJoystick.buttons.length-1; i>=0; i--) {
@@ -255,7 +253,7 @@ class Console {
       label.setText("Button " + i)
         .setPosition(x + 10, y + 235 + i * 25)
         .moveTo("Joystick");
-      String listLabel = "Button " + i + " feature";
+      String listLabel = buttonFunctionListName(i);
       ScrollableList buttonFunctionList = ctlr.addScrollableList(listLabel)
         .setBackgroundColor(color(192))
         .setSize(150, 100)
@@ -269,6 +267,8 @@ class Console {
       buttonFunctionSelectorsMap.put(listLabel, i);
     }
     joylist.bringToFront();
+    int currentJoystickIdx = gJoystick.getCurrentDeviceIndex();
+    if (currentJoystickIdx >= 0) joylist.setValue(currentJoystickIdx);
 
     // Chart tab
     setTab("Chart");
@@ -513,6 +513,20 @@ class Console {
   void joystickSelected(int value) {
     gJoystick.selectDevice(value);
     gJoystick.saveConfig();
+    setButtonAssignmentsValue();
+  }
+
+  String buttonFunctionListName(int i) {
+    return "Button " + i + " feature";
+  }
+
+  void setButtonAssignmentsValue() {
+    for (int i=0; i<gJoystick.buttons.length; i++) {
+      if (gJoystick.buttons[i] == null) continue;
+      int n = gJoystick.buttons[i].buttonFunction.ordinal();
+      ScrollableList buttonFunctionList = ctlr.get(ScrollableList.class, buttonFunctionListName(i));
+      buttonFunctionList.setValue(n);
+    }
   }
 
   void assignButtonFunction(String name, ScrollableList widget, int index) {
