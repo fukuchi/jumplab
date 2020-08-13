@@ -1,4 +1,4 @@
-/**
+/*
  * JumpLab: a testbed for studying jump motion and scrolling algorithms of videogames
  *
  * Web: https://fukuchi.org/works/jumplab/
