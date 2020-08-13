@@ -169,6 +169,12 @@ class Joystick {
     } else {
       res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?1:0;
     }
+    if (buttonPressed[ButtonFunction.TOGGLE_TRAIL.ordinal()] && !prevButtonPressed[ButtonFunction.TOGGLE_TRAIL.ordinal()]) {
+      gConsole.toggleShowTrail();
+    }
+    if (buttonPressed[ButtonFunction.TOGGLE_CAMERA.ordinal()] && !prevButtonPressed[ButtonFunction.TOGGLE_CAMERA.ordinal()]) {
+      gConsole.toggleShowCameraMarker();
+    }
   }
 
   ControlDevice selectDevice(int idx) {
