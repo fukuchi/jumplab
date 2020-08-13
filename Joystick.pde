@@ -6,14 +6,44 @@ class Joystick {
   List<ControlDevice> devices;
   ControlDevice currentDevice;
   ControlSlider slider_x;
-  ControlButton[] buttons;
+  JoyButton[] buttons;
   int prevAxisX = 0;
-  boolean prevButtonPressed = false;
+  boolean[] prevButtonPressed;
+  boolean[] buttonPressed;
   static final float stickMargin = 0.2;
   String configFilename;
 
+  private class JoyButton {
+    ControlButton ctlrButton;
+    ButtonFunction buttonFunction;
+
+    JoyButton(ControlButton button) {
+      this(button, ButtonFunction.NONE);
+    }
+
+    JoyButton(ControlButton button, ButtonFunction func) {
+      ctlrButton = button;
+      buttonFunction = func;
+    }
+
+    float getValue() {
+      return ctlrButton.getValue();
+    }
+
+    JoyButton setFunction(ButtonFunction func) {
+      buttonFunction = func;
+      return this;
+    }
+
+    ButtonFunction getFunction() {
+      return buttonFunction;
+    }
+  }
+
   Joystick(PApplet parent, String configFilename) {
-    buttons = new ControlButton[4];
+    buttons = new JoyButton[12]; // 12 would be enough for the most joysticks
+    prevButtonPressed = new boolean[ButtonFunction.size];
+    buttonPressed = new boolean[ButtonFunction.size];
     ctrlio = ControlIO.getInstance(parent);
     devices = new ArrayList<ControlDevice>();
     for (ControlDevice dev : ctrlio.getDevices()) {
@@ -84,18 +114,16 @@ class Joystick {
   }
 
   void update(int[] res) {
-    int axisX = 0;
-
     if (currentDevice == null) return;
     currentDevice.update();
+    axesUpdate(res);
+    buttonsUpdate(res);
+  }
 
+  void axesUpdate(int[] res) {
+    int axisX = 0;
     float axisXRawValue = slider_x.getValue();
-    boolean buttonPressed = false;
-    for (int i=0; i<buttons.length; i++) {
-      if (buttons[i] != null) {
-        if (buttons[i].getValue() > 0) buttonPressed |= true;
-      }
-    }
+
     if (axisXRawValue < -stickMargin) {
       axisX = -1;
     } else if (axisXRawValue > stickMargin) {
@@ -118,13 +146,29 @@ class Joystick {
         res[1] = 1;
       }
     }
-    if (prevButtonPressed) {
-      res[2] = buttonPressed?0:-1;
-    } else {
-      res[2] = buttonPressed?1:0;
-    }
-    prevButtonPressed = buttonPressed;
     prevAxisX = axisX;
+  }
+
+  void buttonsUpdate(int[] res) {
+    for (int i=0; i<ButtonFunction.size; i++) {
+      prevButtonPressed[i] = buttonPressed[i];
+      buttonPressed[i] = false;
+    }
+    for (int i=0; i<buttons.length; i++) {
+      if (buttons[i] != null) {
+        ButtonFunction func = buttons[i].getFunction();
+        if (func != ButtonFunction.NONE) {
+          if (buttons[i].getValue() > 0) {
+            buttonPressed[func.ordinal()] |= true;
+          }
+        }
+      }
+    }
+    if (prevButtonPressed[ButtonFunction.JUMP.ordinal()]) {
+      res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?0:-1;
+    } else {
+      res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?1:0;
+    }
   }
 
   ControlDevice selectDevice(int idx) {
@@ -151,7 +195,7 @@ class Joystick {
     }
     int buttonsNum = min(buttons.length, currentDevice.getNumberOfButtons());
     for (int i=0; i<buttonsNum; i++) {
-      buttons[i] = currentDevice.getButton(i);
+      buttons[i] = new JoyButton(currentDevice.getButton(i));
     }
 
     return currentDevice;
@@ -164,5 +208,9 @@ class Joystick {
       }
     }
     return -1;
+  }
+
+  void assignButtonFunction(int buttonNum, ButtonFunction func) {
+    buttons[buttonNum].setFunction(func);
   }
 }
