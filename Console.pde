@@ -555,11 +555,37 @@ class Console {
     button.toggle();
   }
 
+  void buttonFunctionActivated(ButtonFunction func) {
+    switch(func) {
+    case TOGGLE_TRAIL:
+      toggleShowTrail();
+      break;
+    case TOGGLE_CAMERA:
+      toggleShowCameraMarker();
+      break;
+    case NEXT_STYLE:
+      shiftStyle(1);
+      break;
+    case PREV_STYLE:
+      shiftStyle(-1);
+      break;
+    default:
+      break;
+    }
+  }
+
   void toggleShowTrail() {
     toggleButton("showTrail");
   }
 
   void toggleShowCameraMarker() {
     toggleButton("showCameraMarker");
+  }
+
+  void shiftStyle(int dir) {
+    ScrollableList slist = ctlr.get(ScrollableList.class, "Preset Styles");
+    int slistItemsNum = slist.getItems().size();
+    int newValue = ((int)slist.getValue() + dir + slistItemsNum) % slistItemsNum;
+    slist.setValue(newValue);
   }
 }
