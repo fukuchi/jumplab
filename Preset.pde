@@ -2,6 +2,7 @@ import java.util.Set;
 import java.time.OffsetDateTime;
 
 class Preset {
+  static final String styleVersion = "1.1";
   private String name;
   private boolean modifiable;
   private HashMap<String, Object> data;
@@ -64,6 +65,7 @@ class Preset {
     json.setString("name", name);
     json.setBoolean("modifiable", modifiable);
     json.setString("last modified", lastModified.toString());
+    json.setString("version", styleVersion);
 
     JSONObject jsonData = new JSONObject();
     for (Entry<String, Object> entry : data.entrySet()) {

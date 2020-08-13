@@ -20,7 +20,6 @@
       "forwardFocus": false,
       "gravity": 0.5,
       "gravityFalling": 1.2,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 1,
       "jumpVelocity": 13,
       "jumpVelocityBonus": 0,
@@ -29,12 +28,15 @@
       "maxVy": 30,
       "parallaxScrolling": true,
       "platformSnapping": false,
+      "projectedFocus": false,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-01T00:00+09:00",
+    "last modified": "2020-08-13T09:39:35.562+09:00",
     "modifiable": false,
-    "name": "*default*"
+    "name": "*default*",
+    "version": "1.1"
   },
   {
     "data": {
@@ -57,7 +59,6 @@
       "forwardFocus": false,
       "gravity": 0.28,
       "gravityFalling": 0.2886,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 0,
       "jumpVelocity": 10.86,
       "jumpVelocityBonus": 0,
@@ -67,12 +68,14 @@
       "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": false,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-05T16:31:30.683+09:00",
+    "last modified": "2020-08-13T09:39:38.412+09:00",
     "modifiable": false,
-    "name": "Chelnov"
+    "name": "Chelnov",
+    "version": "1.1"
   },
   {
     "data": {
@@ -93,9 +96,8 @@
       "focusDistance": 100,
       "focusingSpeed": 5,
       "forwardFocus": false,
-      "gravity": 0.50,
-      "gravityFalling": 0.50,
-      "stopAndFall": true,
+      "gravity": 0.5,
+      "gravityFalling": 0.5,
       "jumpAnticipationFrames": 0,
       "jumpVelocity": 10.08,
       "jumpVelocityBonus": 0,
@@ -104,12 +106,15 @@
       "maxVy": 20,
       "parallaxScrolling": false,
       "platformSnapping": true,
+      "projectedFocus": false,
+      "stopAndFall": true,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": -0.85
     },
-    "last modified": "2020-08-04T23:25:36.473+09:00",
+    "last modified": "2020-08-13T09:39:41.746+09:00",
     "modifiable": false,
-    "name": "Ghosts'n Goblins"
+    "name": "Ghosts'n Goblins",
+    "version": "1.1"
   },
   {
     "data": {
@@ -132,7 +137,6 @@
       "forwardFocus": false,
       "gravity": 0.1,
       "gravityFalling": 0.1,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 0,
       "jumpVelocity": 5.2,
       "jumpVelocityBonus": 0,
@@ -142,12 +146,14 @@
       "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": true,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 0.7,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-07T16:55:39.300+09:00",
+    "last modified": "2020-08-13T09:39:44.297+09:00",
     "modifiable": false,
-    "name": "Major Havoc"
+    "name": "Major Havoc",
+    "version": "1.1"
   },
   {
     "data": {
@@ -170,7 +176,6 @@
       "forwardFocus": false,
       "gravity": 0.28,
       "gravityFalling": 0.28,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 2,
       "jumpVelocity": 8,
       "jumpVelocityBonus": 0,
@@ -180,12 +185,14 @@
       "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": false,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0.62
     },
-    "last modified": "2020-08-05T16:55:59.682+09:00",
+    "last modified": "2020-08-13T09:39:46.914+09:00",
     "modifiable": false,
-    "name": "Metal Slug"
+    "name": "Metal Slug",
+    "version": "1.1"
   },
   {
     "data": {
@@ -208,7 +215,6 @@
       "forwardFocus": false,
       "gravity": 0.25,
       "gravityFalling": 0.25,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 0,
       "jumpVelocity": 4.3,
       "jumpVelocityBonus": 0,
@@ -218,12 +224,14 @@
       "parallaxScrolling": true,
       "platformSnapping": false,
       "projectedFocus": false,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 0,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-05T19:26:53.036+09:00",
+    "last modified": "2020-08-13T09:39:50.747+09:00",
     "modifiable": false,
-    "name": "Metroid"
+    "name": "Metroid",
+    "version": "1.1"
   },
   {
     "data": {
@@ -232,7 +240,7 @@
       "allowAerialWalk": true,
       "axBrake": 0.66,
       "axJumping": 0.18,
-      "axNormal": 0.20000002,
+      "axNormal": 0.2,
       "cameraEasingGrounding_y": 0.1,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -246,7 +254,6 @@
       "forwardFocus": false,
       "gravity": 0.5,
       "gravityFalling": 1,
-      "stopAndFall": false,
       "jumpAnticipationFrames": 1,
       "jumpVelocity": 12,
       "jumpVelocityBonus": 0.2,
@@ -256,11 +263,13 @@
       "parallaxScrolling": false,
       "platformSnapping": true,
       "projectedFocus": false,
+      "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-05T16:46:23.039+09:00",
+    "last modified": "2020-08-13T09:39:55.083+09:00",
     "modifiable": false,
-    "name": "Super Mario Bros."
+    "name": "Super Mario Bros.",
+    "version": "1.1"
   }
 ]
