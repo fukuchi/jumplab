@@ -427,7 +427,7 @@ class Console {
   void parameterChange(CallbackEvent event) {
     Controller widget = event.getController();
     if (widget instanceof Toggle) {
-      if (event.getAction() == ControlP5.ACTION_PRESS) {
+      if (event.getAction() == ControlP5.ACTION_BROADCAST) {
         String name = id2parameter.get(event.getController().getId());
         try {
           Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
@@ -533,5 +533,18 @@ class Console {
       Map<String, Object> item = (Map<String, Object>)itemPtr;
       item.put("color", col);
     }
+  }
+
+  void toggleButton(String name) {
+    Toggle button = (Toggle)widgets.get(name);
+    button.toggle();
+  }
+
+  void toggleShowTrail() {
+    toggleButton("showTrail");
+  }
+
+  void toggleShowCameraMarker() {
+    toggleButton("showCameraMarker");
   }
 }
