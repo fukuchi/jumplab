@@ -531,6 +531,7 @@ class Console {
 
   void assignButtonFunction(String name, ScrollableList widget, int index) {
     gJoystick.assignButtonFunction(buttonFunctionSelectorsMap.get(name), (ButtonFunction) widget.getItem(index).get("value"));
+    gJoystick.saveConfig();
   }
 
   void showVelocityChartChanged() {

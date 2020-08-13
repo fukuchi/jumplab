@@ -1,5 +1,6 @@
 import net.java.games.input.*;
 import org.gamecontrolplus.*;
+import java.util.Map.Entry;
 
 class Joystick {
   static final String joystickConfigVersion = "1.0";
@@ -119,7 +120,25 @@ class Joystick {
   void saveConfig() {
     JSONObject configJson = new JSONObject();
     configJson.setString("lastSelected", currentDevice.getName());
+    JSONArray buttonAssignmentsJson = dumpButtonAssignmentsToJson();
+    configJson.setJSONArray("configs", buttonAssignmentsJson);
     saveJSONObject(configJson, "data/" + configFilename);
+  }
+
+  JSONArray dumpButtonAssignmentsToJson() {
+    JSONArray configsJson = new JSONArray();
+    for (Entry<String, ButtonFunction[]> entry : buttonAssignmentsMap.entrySet()) {
+      JSONObject configJson = new JSONObject();
+      JSONArray buttonAssignmentsJson = new JSONArray();
+      ButtonFunction[] functions = entry.getValue();
+      for (ButtonFunction function : functions) {
+        buttonAssignmentsJson.append(function.toString());
+      }
+      configJson.setString("name", entry.getKey());
+      configJson.setJSONArray("buttons", buttonAssignmentsJson);
+      configsJson.append(configJson);
+    }
+    return configsJson;
   }
 
   List<String> getJoystickNames(int maxLength) {
