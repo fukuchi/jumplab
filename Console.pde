@@ -10,6 +10,7 @@ class Console {
   HashMap<String, Controller> widgets;
   HashMap<Integer, String> id2parameter;
   HashMap<String, int[]> indicators;
+  HashMap<String, Integer> buttonFunctionSelectorsMap;
   PresetManager presets;
   Settings settings;
   boolean halfFilled = false;
@@ -19,6 +20,7 @@ class Console {
   NumIndicator numIndicator;
   ChartCanvas chart;
   String currentTab = "global";
+  CColor scrollableListItemColor = new CColor().setBackground(color(32, 64, 192));
 
   Console(PApplet parent, int x, int y, int w, int h, PresetManager presets, Settings settings) {
     this.x = x;
@@ -32,6 +34,7 @@ class Console {
     widgets = new HashMap<String, Controller>();
     id2parameter = new HashMap<Integer, String>();
     indicators = new HashMap<String, int[]>();
+    buttonFunctionSelectorsMap = new HashMap<String, Integer>();
 
     ctlr.addTab("Camera")
       .setId(2)
@@ -108,6 +111,7 @@ class Console {
       .setText("PRESET STYLES")
       .moveTo("global");
     ScrollableList slist = ctlr.addScrollableList("Preset Styles")
+      .setBackgroundColor(color(192))
       .setPosition(x + 90, y + 90)
       .setSize(150, 100)
       .setBarHeight(20)
@@ -117,6 +121,7 @@ class Console {
       .plugTo(this, "presetSelected");
     slist.getValueLabel().toUpperCase(false);
     slist.getCaptionLabel().toUpperCase(false);
+    setItemsColor(slist, scrollableListItemColor);
 
     Textfield textfield = ctlr.addTextfield("style name")
       .setPosition(x + 60, y + 120)
@@ -230,11 +235,12 @@ class Console {
     appendFullwidthWidget(null, ctlr.addTextlabel("Select Joystick")
       .setText("SELECT JOYSTICK:"));
     ScrollableList joylist = ctlr.addScrollableList("Joystick List")
+      .setBackgroundColor(color(192))
       .setSize(280, 100)
       .setBarHeight(20)
       .setItemHeight(15)
       .setItems(gJoystick.getJoystickNames(60))
-      .plugTo(this, "joystickChanged");
+      .plugTo(this, "joystickSelected");
     joylist.getValueLabel().toUpperCase(false);
     joylist.getCaptionLabel().toUpperCase(false);
     joylist.getValueLabel().setFont(textfield.getValueLabel().getFont()); // workaround to get defaultFontForText
@@ -242,6 +248,27 @@ class Console {
     appendFullwidthWidget("joystickList", joylist);
     int currentJoystickIdx = gJoystick.getCurrentDeviceIndex();
     if (currentJoystickIdx >= 0) joylist.setValue(currentJoystickIdx);
+    setItemsColor(joylist, scrollableListItemColor);
+
+    for (int i=gJoystick.buttons.length-1; i>=0; i--) {
+      Textlabel label = ctlr.addTextlabel("Button_" + i);
+      label.setText("Button " + i)
+        .setPosition(x + 10, y + 235 + i * 25)
+        .moveTo("Joystick");
+      String listLabel = "Button " + i + " feature";
+      ScrollableList buttonFunctionList = ctlr.addScrollableList(listLabel)
+        .setBackgroundColor(color(192))
+        .setSize(150, 100)
+        .setBarHeight(20)
+        .setItemHeight(15)
+        .setPosition(x + 80, y + 230 + i * 25)
+        .setItems(ButtonFunction.getValuesMap())
+        .setValue(0)
+        .moveTo("Joystick");
+      setItemsColor(buttonFunctionList, scrollableListItemColor);
+      buttonFunctionSelectorsMap.put(listLabel, i);
+    }
+    joylist.bringToFront();
 
     // Chart tab
     setTab("Chart");
@@ -344,6 +371,25 @@ class Console {
     drawNumIndicator("JumperVXYvalue", String.format("% 7.2f,% 7.2f", jumper.vx, jumper.vy));
     drawNumIndicator("JumperAXYValue", String.format("% 7.2f,% 7.2f", jumper.vx - jumper.pvx, jumper.vy - jumper.pvy));
     drawNumIndicator("PropellingRemainingFramesValue", String.format("%4d", jumper.propellingRemainingFrames));
+    drawButtonsStatus();
+  }
+
+  void drawButtonsStatus() {
+    if (ctlr.getTab("Joystick").isActive()) {
+      stroke(255);
+      for (int i=0; i<gJoystick.buttons.length; i++) {
+        if (gJoystick.buttons[i] != null) {
+          if (gJoystick.buttons[i].getValue() > 0) {
+            fill(255, 255, 0);
+          } else {
+            fill(64, 64, 0);
+          }
+        } else {
+          fill(128);
+        }
+        rect (x + 60, y + 234 + i * 25, 10, 10);
+      }
+    }
   }
 
   void drawNumIndicator(String name, String str) {
@@ -414,7 +460,9 @@ class Console {
           List<String> presetNames = presets.keyList();
           int idx = presetNames.indexOf(styleName);
           if (idx < 0) idx = 0; // if not found, choose the default.
-          ctlr.get(ScrollableList.class, "Preset Styles").setItems(presetNames).setValue(idx);
+          ScrollableList slist = ctlr.get(ScrollableList.class, "Preset Styles");
+          slist.setItems(presetNames).setValue(idx);
+          setItemsColor(slist, scrollableListItemColor);
         }
       }
     } else if (widget instanceof Textfield) {
@@ -423,6 +471,13 @@ class Console {
         if (event.getAction() == ControlP5.ACTION_LEAVE) {
           String styleName = ((Textfield)widget).getText();
           changeSaveButtonStatus(presets.isModifiable(styleName));
+        }
+      }
+    } else if (widget instanceof ScrollableList) {
+      String name = event.getController().getName();
+      if (name.matches("Button ([0-9]*) feature")) {
+        if (event.getAction() == ControlP5.ACTION_BROADCAST) {
+          assignButtonFunction(name, (ScrollableList)widget, (int)event.getController().getValue());
         }
       }
     }
@@ -455,9 +510,13 @@ class Console {
     }
   }
 
-  void joystickChanged(int value) {
+  void joystickSelected(int value) {
     gJoystick.selectDevice(value);
     gJoystick.saveConfig();
+  }
+
+  void assignButtonFunction(String name, ScrollableList widget, int index) {
+    gJoystick.assignButtonFunction(buttonFunctionSelectorsMap.get(name), (ButtonFunction) widget.getItem(index).get("value"));
   }
 
   void showVelocityChartChanged() {
@@ -467,5 +526,12 @@ class Console {
   void setTab(String name) {
     currentTab = name;
     halfFilled = false;
+  }
+
+  void setItemsColor(ScrollableList list, CColor col) {
+    for (Object itemPtr : list.getItems()) {
+      Map<String, Object> item = (Map<String, Object>)itemPtr;
+      item.put("color", col);
+    }
   }
 }
