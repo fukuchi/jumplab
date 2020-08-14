@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 class Joystick {
   static final String joystickConfigVersion = "1.1";
   static final int MaxButtonNum = 12; // 12 would be enough for the most joysticks
-  ControlIO ctrlio;
   List<ControlDevice> devices;
   ControlDevice currentDevice;
   ControlSlider slider_x;
@@ -48,12 +47,13 @@ class Joystick {
     buttons = new JoyButton[MaxButtonNum];
     prevButtonPressed = new boolean[ButtonFunction.size];
     buttonPressed = new boolean[ButtonFunction.size];
-    ctrlio = ControlIO.getInstance(parent);
     devices = new ArrayList<ControlDevice>();
+
+    ControlIO ctrlio = ControlIO.getInstance(parent);
     for (ControlDevice dev : ctrlio.getDevices()) {
-      int controllerType = dev.getTypeID();
-      if ((controllerType & (GCP.STICK | GCP.GAMEPAD)) == 0) continue;
-      devices.add(dev);
+      if ((dev.getTypeID() & (GCP.STICK | GCP.GAMEPAD)) != 0) {
+        devices.add(dev);
+      }
     }
     this.configFilename = configFilename;
     loadConfig();
