@@ -14,26 +14,19 @@ enum ButtonFunction {
     return label;
   }
 
-  private static final List<String> labels;
   private static final Map<String, Object> valuesMap;
   private static final ButtonFunction[] reverseLookupTable;
   private static final boolean[] enabledWhilePausing;
   private static final int size = ButtonFunction.values().length;
   static {
-    labels = new ArrayList<String>();
     valuesMap = new LinkedHashMap<String, Object>();
     for (ButtonFunction func : ButtonFunction.values()) {
-      labels.add(func.getLabel());
       valuesMap.put(func.getLabel(), func);
     }
     reverseLookupTable = ButtonFunction.values();
     enabledWhilePausing = new boolean[size];
     enabledWhilePausing[PAUSE.ordinal()] = true;
     enabledWhilePausing[STEP_FORWARD.ordinal()] = true;
-  }
-
-  static List<String> getLabels() {
-    return labels;
   }
 
   static Map<String, Object> getValuesMap() {
