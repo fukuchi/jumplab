@@ -248,7 +248,7 @@ class Console {
     appendFullwidthWidget("joystickList", joylist);
     setItemsColor(joylist, scrollableListItemColor);
 
-    for (int i=gJoystick.buttons.length-1; i>=0; i--) {
+    for (int i=Joystick.MaxButtonNum-1; i>=0; i--) {
       Textlabel label = ctlr.addTextlabel("Button_" + i);
       label.setText("Button " + i)
         .setPosition(x + 10, y + 235 + i * 25)
@@ -499,14 +499,9 @@ class Console {
   void changeSaveButtonStatus(boolean modifiable) {
     Button saveButton = ctlr.get(Button.class, "Save");
     if (modifiable) {
-      saveButton.unlock();
-      CColor mainColor = ControlP5.getColor();
-      saveButton.setColorBackground(mainColor.getBackground());
-      saveButton.setColorForeground(mainColor.getForeground());
+      unlockWidget(saveButton);
     } else {
-      saveButton.lock();
-      saveButton.setColorBackground(color(192, 192, 192));
-      saveButton.setColorForeground(color(128, 128, 128));
+      lockWidget(saveButton);
     }
   }
 
@@ -521,11 +516,16 @@ class Console {
   }
 
   void setButtonAssignmentsValue() {
-    for (int i=0; i<gJoystick.buttons.length; i++) {
-      if (gJoystick.buttons[i] == null) continue;
-      int n = gJoystick.buttons[i].buttonFunction.ordinal();
+    for (int i=0; i<Joystick.MaxButtonNum; i++) {
       ScrollableList buttonFunctionList = ctlr.get(ScrollableList.class, buttonFunctionListName(i));
-      buttonFunctionList.setValue(n);
+      if (gJoystick.buttons[i] != null) {
+        unlockWidget(buttonFunctionList);
+        int n = gJoystick.buttons[i].buttonFunction.ordinal();
+        buttonFunctionList.setValue(n);
+      } else {
+        buttonFunctionList.setValue(0);
+        lockWidget(buttonFunctionList);
+      }
     }
   }
 
@@ -548,6 +548,19 @@ class Console {
       Map<String, Object> item = (Map<String, Object>)itemPtr;
       item.put("color", col);
     }
+  }
+
+  void lockWidget(Controller widget) {
+    widget.lock();
+    widget.setColorBackground(color(192, 192, 192));
+    widget.setColorForeground(color(128, 128, 128));
+  }
+
+  void unlockWidget(Controller widget) {
+    widget.unlock();
+    CColor mainColor = ControlP5.getColor();
+    widget.setColorBackground(mainColor.getBackground());
+    widget.setColorForeground(mainColor.getForeground());
   }
 
   void toggleButton(String name) {

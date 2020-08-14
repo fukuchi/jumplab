@@ -314,8 +314,12 @@ class Joystick {
   }
 
   void assignButtonFunction(int buttonNum, ButtonFunction func) {
-    buttons[buttonNum].setFunction(func);
+    if (buttons[buttonNum] != null) {
+      buttons[buttonNum].setFunction(func);
+    }
     ButtonFunction[] buttonAssignments = buttonAssignmentsMap.get(currentDevice.getName());
-    buttonAssignments[buttonNum] = func;
+    if (buttonNum < buttonAssignments.length) {
+      buttonAssignments[buttonNum] = func;
+    }
   }
 }
