@@ -3,7 +3,7 @@ import org.gamecontrolplus.*;
 import java.util.Map.Entry;
 
 class Joystick {
-  static final String joystickConfigVersion = "1.0";
+  static final String joystickConfigVersion = "1.1";
   static final int MaxButtonNum = 12; // 12 would be enough for the most joysticks
   ControlIO ctrlio;
   List<ControlDevice> devices;
@@ -120,6 +120,7 @@ class Joystick {
   void saveConfig() {
     JSONObject configJson = new JSONObject();
     configJson.setString("lastSelected", currentDevice.getName());
+    configJson.setString("version", joystickConfigVersion);
     JSONArray buttonAssignmentsJson = dumpButtonAssignmentsToJson();
     configJson.setJSONArray("configs", buttonAssignmentsJson);
     saveJSONObject(configJson, "data/" + configFilename);
