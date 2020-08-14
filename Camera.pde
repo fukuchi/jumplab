@@ -222,6 +222,22 @@ class Camera {
     if (settings.showInputStatus) {
       drawInputStatus();
     }
+
+    if (gPause) {
+      pushStyle();
+      pushMatrix();
+      translate(window_hw, window_hh - 50);
+      textFont(onScreenFont);
+      textSize(16);
+      float w = textWidth("PAUSE");
+      noStroke();
+      fill(0);
+      rect(-w / 2 - 50, -10, w + 100, 20);
+      fill(255);
+      text("PAUSE", -w / 2, 7);
+      popStyle();
+      popMatrix();
+    }
   }
 
   void drawInputStatus() {
