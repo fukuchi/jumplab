@@ -175,11 +175,13 @@ class Camera {
       popStyle();
     }
     PImage img = jumper.draw(cx, cy);
-    trail[trailHead].x = jumper.x;
-    trail[trailHead].y = jumper.y;
-    trail[trailHead].image = img;
-    trailHead++;
-    if (trailHead >= trailLen) trailHead = 0;
+    if (!gPause || gStepForward) {
+      trail[trailHead].x = jumper.x;
+      trail[trailHead].y = jumper.y;
+      trail[trailHead].image = img;
+      trailHead++;
+      if (trailHead >= trailLen) trailHead = 0;
+    }
 
     if (settings.showCameraMarker) {
       noStroke();
