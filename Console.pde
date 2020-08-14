@@ -36,23 +36,13 @@ class Console {
     indicators = new HashMap<String, int[]>();
     buttonFunctionSelectorsMap = new HashMap<String, Integer>();
 
-    ctlr.addTab("Camera")
-      .setId(2)
-      .activateEvent(true);
-    ctlr.addTab("Joystick")
-      .setId(3)
-      .activateEvent(true);
-    ctlr.addTab("Chart")
-      .setId(4)
-      .activateEvent(true);
-    ctlr.addTab("Misc")
-      .setId(5)
-      .activateEvent(true);
-    ctlr.getTab("default")
-      .setLabel("Jump")
-      .setId(1)
-      .activateEvent(true);
+    ctlr.getTab("default").setLabel("Jump");
+    ctlr.addTab("Camera");
+    ctlr.addTab("Joystick");
+    ctlr.addTab("Chart");
+    ctlr.addTab("Misc");
     ctlr.getWindow().setPositionOfTabs(x + 10, y + 150);
+
     stroke(255);
     ctlr.addTextlabel("ProgramTitle")
       .setPosition(x + 10, y + 5)
@@ -103,7 +93,6 @@ class Console {
       .moveTo("global");
     widgets.put("OnObstacleValue", ctlr.addTextlabel("OnObstracleValue")
       .setPosition(x + 260, y + 55)
-      .setText("FALSE")
       .moveTo("global"));
 
     ctlr.addTextlabel("Preset Label")
@@ -511,10 +500,6 @@ class Console {
     setButtonAssignmentsValue();
   }
 
-  String buttonFunctionListName(int i) {
-    return "Button " + i + " feature";
-  }
-
   void setButtonAssignmentsValue() {
     for (int i=0; i<Joystick.MaxButtonNum; i++) {
       ScrollableList buttonFunctionList = ctlr.get(ScrollableList.class, buttonFunctionListName(i));
@@ -563,11 +548,6 @@ class Console {
     widget.setColorForeground(mainColor.getForeground());
   }
 
-  void toggleButton(String name) {
-    Toggle button = (Toggle)widgets.get(name);
-    button.toggle();
-  }
-
   void buttonFunctionActivated(ButtonFunction func) {
     switch(func) {
     case TOGGLE_TRAIL:
@@ -593,6 +573,11 @@ class Console {
     }
   }
 
+  void toggleButton(String name) {
+    Toggle button = (Toggle)widgets.get(name);
+    button.toggle();
+  }
+
   void toggleShowTrail() {
     toggleButton("showTrail");
   }
@@ -614,5 +599,9 @@ class Console {
     int slistItemsNum = slist.getItems().size();
     int newValue = ((int)slist.getValue() + dir + slistItemsNum) % slistItemsNum;
     slist.setValue(newValue);
+  }
+
+  String buttonFunctionListName(int i) {
+    return "Button " + i + " feature";
   }
 }
