@@ -161,6 +161,7 @@ class Joystick {
   }
 
   void axesUpdate(int[] res) {
+    if (gPause && !gStepForward) return;
     int axisX = 0;
     float axisXRawValue = slider_x.getValue();
 
@@ -190,6 +191,11 @@ class Joystick {
   }
 
   void buttonsUpdate(int[] res) {
+    if (gPause && !gStepForward) {
+      buttonsUpdateWhilePausing();
+      return;
+    }
+
     for (int i=0; i<ButtonFunction.size; i++) {
       prevButtonPressed[i] = buttonPressed[i];
       buttonPressed[i] = false;
@@ -209,8 +215,32 @@ class Joystick {
     } else {
       res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?1:0;
     }
-    for(int i=ButtonFunction.JUMP.ordinal() + 1; i<ButtonFunction.size; i++) {
-      if(buttonPressed[i] && !prevButtonPressed[i]) {
+    for (int i=ButtonFunction.JUMP.ordinal() + 1; i<ButtonFunction.size; i++) {
+      if (buttonPressed[i] && !prevButtonPressed[i]) {
+        gConsole.buttonFunctionActivated(ButtonFunction.getEnumByOrdinal(i));
+      }
+    }
+  }
+
+  void buttonsUpdateWhilePausing() {
+    for (int i=0; i<ButtonFunction.size; i++) {
+      if (ButtonFunction.isEnabledWhilePausing(i)) {
+        prevButtonPressed[i] = buttonPressed[i];
+        buttonPressed[i] = false;
+      }
+    }
+    for (int i=0; i<buttons.length; i++) {
+      if (buttons[i] != null) {
+        ButtonFunction func = buttons[i].getFunction();
+        if (func.isEnabledWhilePausing()) {
+          if (buttons[i].getValue() > 0) {
+            buttonPressed[func.ordinal()] |= true;
+          }
+        }
+      }
+    }
+    for (int i=ButtonFunction.JUMP.ordinal() + 1; i<ButtonFunction.size; i++) {
+      if (ButtonFunction.isEnabledWhilePausing(i) && buttonPressed[i] && !prevButtonPressed[i]) {
         gConsole.buttonFunctionActivated(ButtonFunction.getEnumByOrdinal(i));
       }
     }

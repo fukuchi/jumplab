@@ -2,7 +2,7 @@ import java.util.LinkedHashMap;
 
 enum ButtonFunction {
   NONE("None"), JUMP("Jump"), TOGGLE_TRAIL("Toggle show Trail"), TOGGLE_CAMERA("Toggle show Camera Marker"), 
-    NEXT_STYLE("Next style"), PREV_STYLE("Previous style");
+    NEXT_STYLE("Next style"), PREV_STYLE("Previous style"), PAUSE("Pause"), STEP_FORWARD("Step forward");
 
   private final String label;
 
@@ -17,6 +17,7 @@ enum ButtonFunction {
   private static final List<String> labels;
   private static final Map<String, Object> valuesMap;
   private static final ButtonFunction[] reverseLookupTable;
+  private static final boolean[] enabledWhilePausing;
   private static final int size = ButtonFunction.values().length;
   static {
     labels = new ArrayList<String>();
@@ -26,6 +27,9 @@ enum ButtonFunction {
       valuesMap.put(func.getLabel(), func);
     }
     reverseLookupTable = ButtonFunction.values();
+    enabledWhilePausing = new boolean[size];
+    enabledWhilePausing[PAUSE.ordinal()] = true;
+    enabledWhilePausing[STEP_FORWARD.ordinal()] = true;
   }
 
   static List<String> getLabels() {
@@ -38,5 +42,13 @@ enum ButtonFunction {
 
   static ButtonFunction getEnumByOrdinal(int o) {
     return reverseLookupTable[o];
+  }
+
+  boolean isEnabledWhilePausing() {
+    return enabledWhilePausing[ordinal()];
+  }
+
+  static boolean isEnabledWhilePausing(int o) {
+    return enabledWhilePausing[o];
   }
 }

@@ -36,6 +36,9 @@ static String userSettingsFilename = "user_settings.json";
 static String defaultSettingsFilename = "default_settings.json";
 static String joystickConfigFilename = "joystick_config.json";
 
+static boolean gPause;
+static boolean gStepForward;
+
 void settings() {
   println("JumpLab version " + gVersionString);
   println("Initializing...");
@@ -67,9 +70,15 @@ void setup() {
 }
 
 void draw() {
-  gMasao.update();
-  gCamera.update();
-  gConsole.statusUpdate(gMasao, gLevel, gCamera);
+  if (!gPause || gStepForward) {
+    gMasao.update();
+    gCamera.update();
+    gConsole.statusUpdate(gMasao, gLevel, gCamera);
+    gStepForward = false;
+  } else {
+    int res[] = new int[4];
+    gJoystick.update(res);
+  }
   gCamera.draw();
   gConsole.drawStatus(gMasao);
 }

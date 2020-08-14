@@ -569,6 +569,12 @@ class Console {
     case PREV_STYLE:
       shiftStyle(-1);
       break;
+    case PAUSE:
+      togglePause();
+      break;
+    case STEP_FORWARD:
+      pressStepForward();
+      break;
     default:
       break;
     }
@@ -580,6 +586,14 @@ class Console {
 
   void toggleShowCameraMarker() {
     toggleButton("showCameraMarker");
+  }
+
+  void togglePause() {
+    gPause ^= true;
+  }
+
+  void pressStepForward() {
+    gStepForward = true;
   }
 
   void shiftStyle(int dir) {
