@@ -10,6 +10,7 @@ static class Settings {
   boolean allowAerialWalk = true; // Allow aerial walk or not.
   boolean allowAerialTurn = false; // Allow aerial turn or not. (Only affects the visual appearance)
   boolean stopAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
+  boolean jumpAtButtonRelease = false; // Jumps when the jump button is released, not when it is pressed.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
   float jumpVelocity = 13; // Initial vertical velocity of a jump motion.

@@ -139,7 +139,7 @@ class Console {
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
     appendHalfwidthWidget("allowAerialTurn", ctlr.addToggle("Allow aerial turn"));
-    appendHalfwidthWidget();
+    appendHalfwidthWidget("jumpAtButtonRelease", ctlr.addToggle("Jump when released"));
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setRange(1, 20));
     appendHalfwidthWidget("maxVy", ctlr.addSlider("Max Vy")

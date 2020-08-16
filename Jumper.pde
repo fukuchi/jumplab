@@ -367,9 +367,15 @@ class Jumper {
       move(0);
     }
     if (input[2]>0) {
-      jump();
+      if (!settings.jumpAtButtonRelease) {
+        jump();
+      }
     } else if (input[2] < 0) {
-      jumpCanceled();
+      if (!settings.jumpAtButtonRelease) {
+        jumpCanceled();
+      } else {
+        jump();
+      }
     }
     for (int i=0; i<3; i++) {
       if (input[i]>0) inputStatus[i] = true;
