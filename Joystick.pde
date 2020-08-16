@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 class Joystick {
   static final String joystickConfigVersion = "1.1";
   static final int MaxButtonNum = 12; // 12 would be enough for the most joysticks
-  List<ControlDevice> devices;
+  ArrayList<ControlDevice> devices;
   ControlDevice currentDevice;
   ControlSlider slider_x;
   JoyButton[] buttons;
@@ -31,15 +31,6 @@ class Joystick {
 
     float getValue() {
       return ctlrButton.getValue();
-    }
-
-    JoyButton setFunction(ButtonFunction func) {
-      buttonFunction = func;
-      return this;
-    }
-
-    ButtonFunction getFunction() {
-      return buttonFunction;
     }
   }
 
@@ -203,7 +194,7 @@ class Joystick {
     }
     for (int i=0; i<buttons.length; i++) {
       if (buttons[i] != null) {
-        ButtonFunction func = buttons[i].getFunction();
+        ButtonFunction func = buttons[i].buttonFunction;
         if (func != ButtonFunction.NONE) {
           if (buttons[i].getValue() > 0) {
             buttonPressed[func.ordinal()] |= true;
@@ -232,7 +223,7 @@ class Joystick {
     }
     for (int i=0; i<buttons.length; i++) {
       if (buttons[i] != null) {
-        ButtonFunction func = buttons[i].getFunction();
+        ButtonFunction func = buttons[i].buttonFunction;
         if (func.isEnabledWhilePausing()) {
           if (buttons[i].getValue() > 0) {
             buttonPressed[func.ordinal()] |= true;
@@ -256,9 +247,7 @@ class Joystick {
       currentDevice.close();
     }
     slider_x = null;
-    for (int i=0; i<buttons.length; i++) {
-      buttons[i] = null;
-    }
+    Arrays.fill(buttons, null);
     currentDevice = device;
     currentDevice.open();
     int sliders = currentDevice.getNumberOfSliders();
@@ -269,13 +258,9 @@ class Joystick {
         break;
       }
     }
-    int buttonsNum = currentDevice.getNumberOfButtons();
-    for (int i=0; i<buttons.length; i++) {
-      if (i < buttonsNum) {
-        buttons[i] = new JoyButton(currentDevice.getButton(i));
-      } else {
-        buttons[i] = null;
-      }
+    int buttonsNum = min(MaxButtonNum, currentDevice.getNumberOfButtons());
+    for (int i=0; i<buttonsNum; i++) {
+      buttons[i] = new JoyButton(currentDevice.getButton(i));
     }
     restoreConfig(currentDevice);
 
@@ -306,17 +291,12 @@ class Joystick {
   }
 
   int getCurrentDeviceIndex() {
-    for (int i=0; i<devices.size(); i++) {
-      if (currentDevice == devices.get(i)) {
-        return i;
-      }
-    }
-    return -1;
+    return devices.indexOf(currentDevice);
   }
 
   void assignButtonFunction(int buttonNum, ButtonFunction func) {
     if (buttons[buttonNum] != null) {
-      buttons[buttonNum].setFunction(func);
+      buttons[buttonNum].buttonFunction = func;
     }
     ButtonFunction[] buttonAssignments = buttonAssignmentsMap.get(currentDevice.getName());
     if (buttonNum < buttonAssignments.length) {

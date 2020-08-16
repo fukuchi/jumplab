@@ -253,6 +253,7 @@ class Console {
         .setValue(0)
         .moveTo("Joystick");
       setItemsColor(buttonFunctionList, scrollableListItemColor);
+      lockWidget(buttonFunctionList);
       buttonFunctionSelectorsMap.put(listLabel, i);
     }
     joylist.bringToFront();
