@@ -13,6 +13,7 @@ class Camera {
   float x, y;
   float px, py; // previous position
   float focus_x;
+  float targetFocus_x;
   int window_w, window_h;
   int window_hw, window_hh;
 
@@ -59,43 +60,43 @@ class Camera {
     float dx = jumper.x + Jumper.w / 2 - x;
     float dy = jumper.y + Jumper.h / 2 - y;
     if (settings.forwardFocus || settings.projectedFocus) {
-      float fx = 0;
+      targetFocus_x = 0;
       if (settings.forwardFocus) {
-        fx += jumper.lastDir * settings.focusDistance;
+        targetFocus_x += jumper.lastDir * settings.focusDistance;
       }
       if (settings.projectedFocus) {
-        fx += settings.focusDistance * jumper.vx / settings.maxVx;
+        targetFocus_x += settings.focusDistance * jumper.vx / settings.maxVx;
       }
       if (jumper.lastDir > 0) {
-        if (focus_x < fx) {
+        if (focus_x < targetFocus_x) {
           float cameraEdge_x = settings.cameraWindow_w / 2 - dx;
           if (focus_x < cameraEdge_x) {
             focus_x = cameraEdge_x;
           }
           focus_x += settings.focusingSpeed;
-          if (focus_x > fx) {
-            focus_x = fx;
+          if (focus_x > targetFocus_x) {
+            focus_x = targetFocus_x;
           }
-        } else if (focus_x > fx) {
+        } else if (focus_x > targetFocus_x) {
           focus_x -= 1;
-          if (focus_x < fx) {
-            focus_x = fx;
+          if (focus_x < targetFocus_x) {
+            focus_x = targetFocus_x;
           }
         }
       } else if (jumper.lastDir < 0) {
-        if (focus_x > fx) {
+        if (focus_x > targetFocus_x) {
           float cameraEdge_x = -settings.cameraWindow_w / 2 - dx;
           if (focus_x > cameraEdge_x) {
             focus_x = cameraEdge_x;
           }
           focus_x -= settings.focusingSpeed;
-          if (focus_x < fx) {
-            focus_x = fx;
+          if (focus_x < targetFocus_x) {
+            focus_x = targetFocus_x;
           }
-        } else if (focus_x < fx) {
+        } else if (focus_x < targetFocus_x) {
           focus_x += 1;
-          if (focus_x > fx) {
-            focus_x = fx;
+          if (focus_x > targetFocus_x) {
+            focus_x = targetFocus_x;
           }
         }
       }
@@ -144,8 +145,8 @@ class Camera {
     int cx = (int)x - window_hw;
     int cy = (int)y - window_hh;
     if (settings.parallaxScrolling) {
-      float rx = (x - window_hw) / (level.w - window_w);
-      float ry = (y - window_hh) / (level.h - window_h);
+      float rx = (float)cx / (level.w - window_w);
+      float ry = (float)cy / (level.h - window_h);
       bgx = (int)(rx * (float)(1536 - window_w));
       bgy = (int)(ry * (float)(704 - window_h)) + 450;
     } else {
@@ -155,25 +156,7 @@ class Camera {
     copy(level.bgImg, bgx, bgy, window_w, window_h, 0, 0, window_w, window_h);
     copy(levelImg, cx, cy, window_w, window_h, 0, 0, window_w, window_h);
 
-    if (settings.showTrail) {
-      pushStyle();
-      if (!settings.showAfterimage) {
-        noStroke();
-        fill(255, 0, 0);
-        for (int i=0; i<trailLen; i++) {
-          ellipse(trail[i].x + Jumper.w / 2 - cx, trail[i].y + Jumper.h / 2 - cy, 5, 5);
-        }
-      } else {
-        tint(255, 128);
-        for (int i=0; i<trailLen; i++) {
-          int idx = (trailHead + 1 + i) % trailLen;
-          if (idx % 4 == 0) {
-            jumper.draw(trail[idx].image, trail[idx].x - cx, trail[idx].y - cy);
-          }
-        }
-      }
-      popStyle();
-    }
+    if (settings.showTrail) drawTrail(cx, cy);
     PImage img = jumper.draw(cx, cy);
     if (!gPause || gStepForward) {
       trail[trailHead].x = jumper.x;
@@ -183,63 +166,59 @@ class Camera {
       if (trailHead >= trailLen) trailHead = 0;
     }
 
-    if (settings.showCameraMarker) {
-      noStroke();
-      fill(255, 0, 0);
-      rect(window_hw -  2, window_hh - 12, 5, 25);
-      rect(window_hw - 12, window_hh -  2, 25, 5);
-      stroke(255);
-      noFill();
-      rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
-      if (settings.forwardFocus || settings.projectedFocus) {
-        float tx = 0;
-        if (settings.forwardFocus) {
-          tx += jumper.lastDir * settings.focusDistance;
-        }
-        if (settings.projectedFocus) {
-          tx += settings.focusDistance * jumper.vx / settings.maxVx;
-        }
-        int fx = (int)(jumper.x + Jumper.w / 2 + tx) - cx;
-        int fy = (int)jumper.y + Jumper.h / 2 - cy;
-        line(fx - 9, fy - 9, fx + 9, fy + 9);
-        line(fx - 9, fy + 9, fx + 9, fy - 9);
-        stroke(255, 255, 0);
-        fx = (int)(jumper.x + Jumper.w / 2 + focus_x) - cx;
-        fy = (int)jumper.y + Jumper.h / 2 - cy;
-        line(fx - 12, fy, fx + 12, fy     );
-        line(fx, fy - 12, fx, fy + 12);
-      }
-    }
+    if (settings.showCameraMarker) drawCameraMarker(cx, cy);
+    if (showTitle) drawTitle();
+    if (settings.showInputStatus) drawInputStatus();
+    if (gPause) drawPauseBar();
 
     noStroke();
     fill(128);
     rect(gConsole.x, gConsole.y, gConsole.w, gConsole.h);
     stroke(255);
     line(gConsole.x, gConsole.y + 166, gConsole.x + gConsole.w, gConsole.y + 166);
+  }
 
-    if (showTitle) {
-      drawTitle();
-    }
-
-    if (settings.showInputStatus) {
-      drawInputStatus();
-    }
-
-    if (gPause) {
-      pushStyle();
-      pushMatrix();
-      translate(window_hw, window_hh - 50);
-      textFont(onScreenFont);
-      textSize(16);
-      float w = textWidth("PAUSE");
+  void drawTrail(int cx, int cy) {
+    pushStyle();
+    if (!settings.showAfterimage) {
       noStroke();
-      fill(0);
-      rect(-w / 2 - 50, -10, w + 100, 20);
-      fill(255);
-      text("PAUSE", -w / 2, 7);
-      popStyle();
-      popMatrix();
+      fill(255, 0, 0);
+      for (int i=0; i<trailLen; i++) {
+        ellipse(trail[i].x + Jumper.w / 2 - cx, trail[i].y + Jumper.h / 2 - cy, 5, 5);
+      }
+    } else {
+      tint(255, 128);
+      for (int i=0; i<trailLen; i++) {
+        int idx = (trailHead + 1 + i) % trailLen;
+        if (idx % 4 == 0) {
+          jumper.draw(trail[idx].image, trail[idx].x - cx, trail[idx].y - cy);
+        }
+      }
     }
+    popStyle();
+  }
+
+  void drawCameraMarker(int cx, int cy) {
+    pushStyle();
+    noStroke();
+    fill(255, 0, 0);
+    rect(window_hw -  2, window_hh - 12, 5, 25);
+    rect(window_hw - 12, window_hh -  2, 25, 5);
+    stroke(255);
+    noFill();
+    rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
+    if (settings.forwardFocus || settings.projectedFocus) {
+      int fx = (int)(jumper.x + Jumper.w / 2 + targetFocus_x) - cx;
+      int fy = (int)jumper.y + Jumper.h / 2 - cy;
+      line(fx - 9, fy - 9, fx + 9, fy + 9);
+      line(fx - 9, fy + 9, fx + 9, fy - 9);
+      stroke(255, 255, 0);
+      fx = (int)(jumper.x + Jumper.w / 2 + focus_x) - cx;
+      fy = (int)jumper.y + Jumper.h / 2 - cy;
+      line(fx - 12, fy, fx + 12, fy     );
+      line(fx, fy - 12, fx, fy + 12);
+    }
+    popStyle();
   }
 
   void drawInputStatus() {
@@ -291,8 +270,24 @@ class Camera {
       fill(255, remaining);
       text("Version " + gVersionString, (window_w - titleImg.width) / 2 + titleImg.width, 50 + titleImg.height);
     } else {
-      showTitle =false;
+      showTitle = false;
     }
+    popStyle();
+  }
+
+  void drawPauseBar() {
+    pushMatrix();
+    pushStyle();
+    translate(window_hw, window_hh - 50);
+    textFont(onScreenFont);
+    textSize(16);
+    float w = textWidth("PAUSE");
+    noStroke();
+    fill(0);
+    rect(-w / 2 - 50, -10, w + 100, 20);
+    fill(255);
+    text("PAUSE", -w / 2, 7);
+    popMatrix();
     popStyle();
   }
 }
