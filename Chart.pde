@@ -1,9 +1,19 @@
 class ChartCanvas extends Canvas {
   int x, y;
   PGraphics pg;
-  HashMap<String, float[]> serieses;
-  ArrayList<String> keyList;
+  ArrayList<Series> serieses;
+  int seriesesNum;
   Settings settings;
+
+  class Series {
+    String label;
+    float[] data;
+
+    Series(String label) {
+      this.label = label;
+      data = new float[3];
+    }
+  }
 
   ChartCanvas(Settings settings, int x, int y, int w, int h) {
     this.x = x;
@@ -13,19 +23,11 @@ class ChartCanvas extends Canvas {
     pg.beginDraw();
     pg.background(255);
     pg.endDraw();
-    serieses = new HashMap<String, float[]>();
-    keyList = new ArrayList<String>();
-  }
-
-  void setup(PGraphics destPg) {
-  }
-
-  void update(PApplet destPg) {
+    serieses = new ArrayList<Series>();
+    seriesesNum = 0;
   }
 
   void draw(PGraphics destPg) {
-    int seriesNum = serieses.size();
-
     destPg.pushMatrix();
     destPg.pushStyle();
     destPg.translate(x, y);
@@ -34,11 +36,10 @@ class ChartCanvas extends Canvas {
     destPg.colorMode(HSB, 360, 100, 100);
     destPg.textSize(10);
     destPg.textAlign(LEFT, CENTER);
-    for (int i=0; i<seriesNum; i++) {
+    for (int i=0; i<seriesesNum; i++) {
       destPg.fill(0, 0, 100);
-      String label = keyList.get(i);
-      destPg.text(label, 200, i * 20);
-      destPg.fill(360 * i / seriesNum, 100, 100);
+      destPg.text(serieses.get(i).label, 200, i * 20);
+      destPg.fill(360 * i / seriesesNum, 100, 100);
       destPg.noStroke();
       destPg.rect(150, i * 20 - 1, 40, 3);
     }
@@ -46,16 +47,15 @@ class ChartCanvas extends Canvas {
     destPg.popMatrix();
   }
 
-  void addSeries(String label) {
-    float[] series = new float[3];
-    serieses.put(label, series);
-    keyList.add(label);
+  int addSeries(String label) {
+    Series s = new Series(label);
+    serieses.add(seriesesNum, s);
+    seriesesNum++;
+    return seriesesNum - 1;
   }
 
-  void updateSeries(String label, float value) {
-    float[] series = serieses.get(label);
-    if (series == null) return;
-
+  void updateSeries(int idx, float value) {
+    float[] series = serieses.get(idx).data;
     series[2] = series[1];
     series[1] = series[0];
     series[0] = value;
@@ -68,7 +68,6 @@ class ChartCanvas extends Canvas {
   }
 
   void updateChart() {
-    int seriesNum = serieses.size();
     pg.beginDraw();
     pg.pushStyle();
     pg.copy(1, 0, pg.width - 1, pg.height, 0, 0, pg.width - 1, pg.height);
@@ -78,20 +77,18 @@ class ChartCanvas extends Canvas {
     pg.rect(pg.width - 1, 0, 1, pg.height);
     pg.colorMode(HSB, 360, 100, 100);
     if (!settings.showVelocityChart) {
-      for (int i=0; i<seriesNum; i++) {
-        pg.stroke(360 * i / seriesNum, 100, 100);
-        String label = keyList.get(i);
-        float[] series = serieses.get(label);
+      for (int i=0; i<seriesesNum; i++) {
+        pg.stroke(360 * i / seriesesNum, 100, 100);
+        float[] series = serieses.get(i).data;
         pg.line(pg.width - 2, (pg.height - 1) * (1 - series[1]), pg.width - 1, (pg.height - 1) * (1 - series[0]));
       }
     } else {
       float pg_hh = pg.height / 2;
       pg.stroke(0, 0, 75);
       pg.line(pg.width - 2, pg_hh, pg.width - 1, pg_hh);
-      for (int i=0; i<seriesNum; i++) {
-        pg.stroke(360 * i / seriesNum, 100, 100);
-        String label = keyList.get(i);
-        float[] series = serieses.get(label);
+      for (int i=0; i<seriesesNum; i++) {
+        pg.stroke(360 * i / seriesesNum, 100, 100);
+        float[] series = serieses.get(i).data;
         float d1 = pg_hh - (series[1] - series[2]) * 10 * (pg.height - 1);
         float d2 = pg_hh - (series[0] - series[1]) * 10 * (pg.height - 1);
         pg.line(pg.width - 2, d1, pg.width - 1, d2);

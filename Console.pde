@@ -19,6 +19,10 @@ class Console {
   static final int widgetMargin_y = 6;
   NumIndicator numIndicator;
   ChartCanvas chart;
+  int chartJumperXIdx;
+  int chartJumperYIdx;
+  int chartCameraXIdx;
+  int chartCameraYIdx;
   String currentTab = "global";
   CColor scrollableListItemColor = new CColor().setBackground(color(32, 64, 192));
 
@@ -263,10 +267,10 @@ class Console {
     // Chart tab
     setTab("Chart");
     chart = new ChartCanvas(settings, x + 10, y + 175, w - 20, 300);
-    chart.addSeries("Jumper X");
-    chart.addSeries("Jumper Y");
-    chart.addSeries("Camera X");
-    chart.addSeries("Camera Y");
+    chartJumperXIdx = chart.addSeries("Jumper X");
+    chartJumperYIdx = chart.addSeries("Jumper Y");
+    chartCameraXIdx = chart.addSeries("Camera X");
+    chartCameraYIdx = chart.addSeries("Camera Y");
     chart.pre();
     ctlr.getTab("Chart").addCanvas(chart);
     nextWidgetPosition_y = y + 480;
@@ -349,10 +353,10 @@ class Console {
     ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"TRUE":"FALSE");
     ((Textlabel)widgets.get("PropellingValue")).setText(jumper.propelling?"TRUE":"FALSE");
     ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
-    chart.updateSeries("Jumper X", (jumper.x + Jumper.w / 2) / level.w);
-    chart.updateSeries("Jumper Y", 1.0 - (jumper.y + Jumper.h / 2) / level.h);
-    chart.updateSeries("Camera X", camera.x / level.w);
-    chart.updateSeries("Camera Y", 1.0 - camera.y / level.h);
+    chart.updateSeries(chartJumperXIdx, (jumper.x + Jumper.w / 2) / level.w);
+    chart.updateSeries(chartJumperYIdx, 1.0 - (jumper.y + Jumper.h / 2) / level.h);
+    chart.updateSeries(chartCameraXIdx, camera.x / level.w);
+    chart.updateSeries(chartCameraYIdx, 1.0 - camera.y / level.h);
     chart.updateChart();
   }
 
