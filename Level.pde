@@ -65,7 +65,7 @@ class Level {
   }
 
   float obstaclePenaltyL(float x) {
-    int cx = (int)(x + bw) / bw;
+    int cx = ceil(x / bw);
     return cx * bw - x;
   }
 
@@ -75,7 +75,7 @@ class Level {
   }
 
   float obstaclePenaltyU(float y) {
-    int cy = (int)(y + bh) / bh;
+    int cy = ceil(y / bh);
     return cy * bw - y;
   }
 
