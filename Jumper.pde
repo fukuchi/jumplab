@@ -63,20 +63,17 @@ class Jumper {
     images_running_l = new Vector<PImage>();
     images_jumping_r = new Vector<PImage>();
     images_jumping_l = new Vector<PImage>();
+
     runningMotionMax = 8;
     for (int i=0; i<runningMotionMax+1; i++) {
       String filename = String.format("stickman-%d.png", i);
       images_running_r.add(loadImage(filename));
       images_running_l.add(hflipImage(images_running_r.get(i)));
     }
-
     jumpMotionMax = 4;
     for (int i=0; i<jumpMotionMax; i++) {
       String filename = String.format("stickman-jump-%d.png", jumpMotionMax - i);
       images_jumping_r.add(loadImage(filename));
-    }
-    jumpMotionMax = images_jumping_r.size();
-    for (int i = 0; i < jumpMotionMax; i++) {
       images_jumping_l.add(hflipImage(images_jumping_r.get(i)));
     }
   }
