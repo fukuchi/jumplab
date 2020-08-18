@@ -5,15 +5,15 @@ class NumIndicator {
 
   PImage[] glyphs;
   NumIndicator() {
-    glyphs = new PImage[14];
+    glyphs = new PImage[15];
     PImage img = loadImage("numglyphs.png");
     img.loadPixels();
-    for (int i=0; i<14; i++) {
+    for (int i=0; i<15; i++) {
       glyphs[i] = createImage(glyph_w, glyph_h, RGB);
       glyphs[i].loadPixels();
       for (int y=0; y<glyph_h; y++) {
         for (int x=0; x<glyph_w; x++) {
-          glyphs[i].pixels[y*glyph_w+x] = img.pixels[y*glyph_w*14+i*glyph_w+x];
+          glyphs[i].pixels[y * glyph_w + x] = img.pixels[(y * 15 + i) * glyph_w + x];
         }
       }
       glyphs[i].updatePixels();
@@ -23,14 +23,8 @@ class NumIndicator {
   void text(String str, int x, int y) {
     for (char ch : str.toCharArray()) {
       int idx = 0;
-      if (ch >= '0' && ch <= '9') {
-        idx = ch - '0' + 1;
-      } else if (ch == '-') {
-        idx = 11;
-      } else if (ch == '.') {
-        idx = 12;
-      } else if (ch == ',') {
-        idx = 13;
+      if (ch >= ',' && ch <= '9') {
+        idx = ch - ',' + 1;
       }
       fill(0);
       image(glyphs[idx], x, y);
