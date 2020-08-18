@@ -141,51 +141,37 @@ class Console {
     appendHalfwidthWidget("allowAerialTurn", ctlr.addToggle("Allow aerial turn"));
     appendHalfwidthWidget();
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
-      .setSize(80, 20)
       .setRange(1, 20));
     appendHalfwidthWidget("maxVy", ctlr.addSlider("Max Vy")
-      .setSize(80, 20)
       .setRange(1, 80));
     appendFullwidthWidget("jumpVelocity", ctlr.addSlider("Jump Velocity")
-      .setSize(150, 20)
       .setRange(1, 30));
     appendFullwidthWidget("jumpVelocityBonus", ctlr.addSlider("Jump Velocity Bonus")
-      .setSize(150, 20)
       .setRange(0, 0.5));
     appendFullwidthWidget("jumpAnticipationFrames", ctlr.addSlider("Jump Anticipation Frames")
-      .setSize(150, 20)
       .setRange(0, 14)
       .setNumberOfTickMarks(15)
       .showTickMarks(false));
     appendFullwidthWidget("vxAdjustmentAtTakeoff", ctlr.addSlider("VX Adjustment at Takeoff")
-      .setSize(150, 20)
       .setRange(-1.0, 1.0)
       .setSliderMode(Slider.FLEXIBLE));
     appendFullwidthWidget("maxPropellingFrames", ctlr.addSlider("Maximum Propelling Duration")
-      .setSize(150, 20)
       .setRange(0, 100)
       .setNumberOfTickMarks(101)
       .showTickMarks(false));
     appendFullwidthWidget("gravity", ctlr.addSlider("Gravity (rising)")
-      .setSize(150, 20)
       .setRange(0, 2));
     appendFullwidthWidget("gravityFalling", ctlr.addSlider("Gravity (falling)")
-      .setSize(150, 20)
       .setRange(0.01, 2));
     appendFullwidthWidget("verticalSpeedSustainLevel", ctlr.addSlider("Jump Speed Sustain Level")
-      .setSize(150, 20)
       .setRange(0, 1));
     appendFullwidthWidget("axNormal", ctlr.addSlider("X Accel (normal)")
-      .setSize(150, 20)
       .setRange(0, 3));
     appendFullwidthWidget("axBrake", ctlr.addSlider("X Accel (braking)")
-      .setSize(150, 20)
       .setRange(0, 3));
     appendFullwidthWidget("axJumping", ctlr.addSlider("X Accel (jumping)")
-      .setSize(150, 20)
       .setRange(0, 3));
     appendFullwidthWidget("collisionTolerance", ctlr.addSlider("Collision Tolerance")
-      .setSize(150, 20)
       .setRange(0, 24)
       .setNumberOfTickMarks(25)
       .showTickMarks(false));
@@ -201,28 +187,20 @@ class Console {
     appendHalfwidthWidget("platformSnapping", ctlr.addToggle("Platform snapping"));
     appendHalfwidthWidget("projectedFocus", ctlr.addToggle("Projected focus"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
-      .setSize(150, 20)
       .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraEasingNormal_y", ctlr.addSlider("Camera Y Easing Coef (normal)")
-      .setSize(150, 20)
       .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraEasingGrounding_y", ctlr.addSlider("Camera Y Easing Coef (grounding)")
-      .setSize(150, 20)
       .setRange(0.01, 0.5));
     appendFullwidthWidget("cameraWindow_w", ctlr.addSlider("Camera Window Width")
-      .setSize(150, 20)
       .setRange(0, 400));
     appendFullwidthWidget("cameraWindow_h", ctlr.addSlider("Camera Window Height")
-      .setSize(150, 20)
       .setRange(0, 400));
     appendFullwidthWidget("focusDistance", ctlr.addSlider("Focus Distance")
-      .setSize(150, 20)
       .setRange(0, 400));
     appendFullwidthWidget("focusingSpeed", ctlr.addSlider("Focusing Speed")
-      .setSize(150, 20)
       .setRange(0, 30));
     appendFullwidthWidget("bgScrollRatio", ctlr.addSlider("BG Scroll Speed")
-      .setSize(150, 20)
       .setRange(0, 1));
 
     // Settings of joystick
@@ -324,6 +302,9 @@ class Console {
         nextWidgetPosition_y += lastWidget.getHeight() + widgetMargin_y;
       }
     }
+    if (widget instanceof Slider) {
+      widget.setSize(150, 20);
+    }
     widget.setPosition(x + 10, nextWidgetPosition_y);
     widget.moveTo(currentTab);
     if (name != null) widgets.put(name, widget);
@@ -332,6 +313,9 @@ class Console {
   }
 
   void appendHalfwidthWidget(String name, Controller widget) {
+    if (widget instanceof Slider) {
+      widget.setSize(80, 20);
+    }
     if (!halfFilled) {
       widget.setPosition(x + 10, nextWidgetPosition_y);
       halfFilled = true;
