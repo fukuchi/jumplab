@@ -40,6 +40,7 @@ static class Settings {
   float cameraWindow_w = 0; // Width of the camera window.
   float focusDistance = 100; // Distance to the focal point.
   float focusingSpeed = 5; // Velocity of the focal point movement.
+  float bgScrollRatio = 0.5; // Determine the scroll speed of the BG layer.
 
   // Misc. parameters
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.

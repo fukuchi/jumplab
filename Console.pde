@@ -221,6 +221,9 @@ class Console {
     appendFullwidthWidget("focusingSpeed", ctlr.addSlider("Focusing Speed")
       .setSize(150, 20)
       .setRange(0, 30));
+    appendFullwidthWidget("bgScrollRatio", ctlr.addSlider("BG Scroll Speed")
+      .setSize(150, 20)
+      .setRange(0, 1));
 
     // Settings of joystick
     setTab("Joystick");
