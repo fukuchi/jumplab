@@ -1,6 +1,16 @@
 JumpLab NEWS - Overview of changes
 ==================================
 
+Version 1.1.0 (2020.8.xx)
+-------------------------
+* New camera feature:
+  - BG scrolling speed
+    - Parallax scrolling is now encompassed by this.
+* New UI features:
+  - The joystick buttons are now configurable.
+  - User settings files are now versioned.
+* Some minor bug fixes and code cleanups.
+
 Version 1.0.0 (2020.8.11)
 -------------------------
 * New UI features:
