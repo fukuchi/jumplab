@@ -7,6 +7,7 @@
       "axBrake": 1,
       "axJumping": 0.1,
       "axNormal": 0.2,
+      "bgScrollRatio": 0.5,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -26,7 +27,6 @@
       "maxPropellingFrames": 0,
       "maxVx": 8,
       "maxVy": 30,
-      "parallaxScrolling": true,
       "platformSnapping": false,
       "projectedFocus": false,
       "stopAndFall": false,
@@ -36,7 +36,7 @@
     "last modified": "2020-08-13T09:39:35.562+09:00",
     "modifiable": false,
     "name": "*default*",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -46,6 +46,7 @@
       "axBrake": 3,
       "axJumping": 3,
       "axNormal": 3,
+      "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -65,7 +66,6 @@
       "maxPropellingFrames": 1,
       "maxVx": 5.5125,
       "maxVy": 7.9125,
-      "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": false,
       "stopAndFall": false,
@@ -75,7 +75,7 @@
     "last modified": "2020-08-13T09:39:38.412+09:00",
     "modifiable": false,
     "name": "Chelnov",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -85,6 +85,7 @@
       "axBrake": 1,
       "axJumping": 0.24,
       "axNormal": 0.9,
+      "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -104,7 +105,6 @@
       "maxPropellingFrames": 0,
       "maxVx": 2.42,
       "maxVy": 20,
-      "parallaxScrolling": false,
       "platformSnapping": true,
       "projectedFocus": false,
       "stopAndFall": true,
@@ -114,7 +114,7 @@
     "last modified": "2020-08-13T09:39:41.746+09:00",
     "modifiable": false,
     "name": "Ghosts'n Goblins",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -124,6 +124,7 @@
       "axBrake": 0.2,
       "axJumping": 0.1,
       "axNormal": 0.1,
+      "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -143,7 +144,6 @@
       "maxPropellingFrames": 100,
       "maxVx": 4.5,
       "maxVy": 13,
-      "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": true,
       "stopAndFall": false,
@@ -153,7 +153,7 @@
     "last modified": "2020-08-13T09:39:44.297+09:00",
     "modifiable": false,
     "name": "Major Havoc",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -163,6 +163,7 @@
       "axBrake": 1,
       "axJumping": 1,
       "axNormal": 1,
+      "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -182,7 +183,6 @@
       "maxPropellingFrames": 0,
       "maxVx": 2.66,
       "maxVy": 30,
-      "parallaxScrolling": false,
       "platformSnapping": false,
       "projectedFocus": false,
       "stopAndFall": false,
@@ -192,7 +192,7 @@
     "last modified": "2020-08-13T09:39:46.914+09:00",
     "modifiable": false,
     "name": "Metal Slug",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -202,6 +202,7 @@
       "axBrake": 1.7,
       "axJumping": 1.7,
       "axNormal": 1.7,
+      "bgScrollRatio": 0.5,
       "cameraEasingGrounding_y": 0.2,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -221,7 +222,6 @@
       "maxPropellingFrames": 40,
       "maxVx": 4,
       "maxVy": 22,
-      "parallaxScrolling": true,
       "platformSnapping": false,
       "projectedFocus": false,
       "stopAndFall": false,
@@ -231,7 +231,7 @@
     "last modified": "2020-08-13T09:39:50.747+09:00",
     "modifiable": false,
     "name": "Metroid",
-    "version": "1.1"
+    "version": "1.2"
   },
   {
     "data": {
@@ -241,6 +241,7 @@
       "axBrake": 0.66,
       "axJumping": 0.18,
       "axNormal": 0.2,
+      "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.1,
       "cameraEasingNormal_x": 0.1,
       "cameraEasingNormal_y": 0.1,
@@ -260,7 +261,6 @@
       "maxPropellingFrames": 0,
       "maxVx": 8,
       "maxVy": 20.75,
-      "parallaxScrolling": false,
       "platformSnapping": true,
       "projectedFocus": false,
       "stopAndFall": false,
@@ -270,6 +270,6 @@
     "last modified": "2020-08-13T09:39:55.083+09:00",
     "modifiable": false,
     "name": "Super Mario Bros.",
-    "version": "1.1"
+    "version": "1.2"
   }
 ]
