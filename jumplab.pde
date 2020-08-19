@@ -24,7 +24,7 @@ Level gLevel;
 Camera gCamera;
 Console gConsole;
 Joystick gJoystick;
-PresetManager gPresets;
+StyleManager gStyles;
 
 static final String gVersionString = "1.0.0";
 
@@ -49,9 +49,9 @@ void settings() {
 }
 
 void setup() {
-  gPresets = new PresetManager();
-  if (!gPresets.load(userSettingsFilename)) {
-    if (!gPresets.load(defaultSettingsFilename)) {
+  gStyles = new StyleManager();
+  if (!gStyles.load(userSettingsFilename)) {
+    if (!gStyles.load(defaultSettingsFilename)) {
       System.err.println("The installed package seems to be broken. Check the files under the installed directory.");
       exit();
     }
@@ -62,7 +62,7 @@ void setup() {
   gMasao = new Jumper(gSettings, gLevel);
   gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);
   gCamera.reset(gMasao.x, gMasao.y);
-  gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gPresets, gSettings);
+  gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gStyles, gSettings);
   frameRate(60);
 
   background(128);

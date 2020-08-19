@@ -11,7 +11,7 @@ class Console {
   HashMap<Integer, String> id2parameter;
   HashMap<String, int[]> indicators;
   HashMap<String, Integer> buttonFunctionSelectorsMap;
-  PresetManager presets;
+  StyleManager styles;
   Settings settings;
   boolean halfFilled = false;
   Controller lastWidget;
@@ -26,12 +26,12 @@ class Console {
   String currentTab = "global";
   CColor scrollableListItemColor = new CColor().setBackground(color(32, 64, 192));
 
-  Console(PApplet parent, int x, int y, int w, int h, PresetManager presets, Settings settings) {
+  Console(PApplet parent, int x, int y, int w, int h, StyleManager styles, Settings settings) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
-    this.presets = presets;
+    this.styles = styles;
     this.settings = settings;
 
     ctlr = new ControlP5(parent);
@@ -101,17 +101,17 @@ class Console {
 
     ctlr.addTextlabel("Preset Label")
       .setPosition(x + 10, y + 95)
-      .setText("PRESET STYLES")
+      .setText("STYLES")
       .moveTo("global");
-    ScrollableList slist = ctlr.addScrollableList("Preset Styles")
+    ScrollableList slist = ctlr.addScrollableList("Styles List")
       .setBackgroundColor(color(192))
-      .setPosition(x + 90, y + 90)
+      .setPosition(x + 60, y + 90)
       .setSize(150, 100)
       .setBarHeight(20)
       .setItemHeight(15)
-      .setItems(presets.keyList())
+      .setItems(styles.keyList())
       .moveTo("global")
-      .plugTo(this, "presetSelected");
+      .plugTo(this, "styleSelected");
     slist.getValueLabel().toUpperCase(false);
     slist.getCaptionLabel().toUpperCase(false);
     setItemsColor(slist, scrollableListItemColor);
@@ -282,7 +282,7 @@ class Console {
       id++;
     }
 
-    ctlr.get(ScrollableList.class, "Preset Styles").bringToFront().setValue(0);
+    ctlr.get(ScrollableList.class, "Styles List").bringToFront().setValue(0);
     setControllerValues();
 
     ctlr.addCallback(new CallbackListener() {
@@ -436,13 +436,13 @@ class Console {
         if (name == "Save") {
           String styleName = ctlr.get(Textfield.class, "style name").getText();
           if (styleName.isEmpty()) styleName = "Untitled";
-          presets.upsert(styleName, settings);
-          presets.save(userSettingsFilename);
-          List<String> presetNames = presets.keyList();
-          int idx = presetNames.indexOf(styleName);
+          styles.upsert(styleName, settings);
+          styles.save(userSettingsFilename);
+          List<String> styleNames = styles.keyList();
+          int idx = styleNames.indexOf(styleName);
           if (idx < 0) idx = 0; // if not found, choose the default.
-          ScrollableList slist = ctlr.get(ScrollableList.class, "Preset Styles");
-          slist.setItems(presetNames).setValue(idx);
+          ScrollableList slist = ctlr.get(ScrollableList.class, "Styles List");
+          slist.setItems(styleNames).setValue(idx);
           setItemsColor(slist, scrollableListItemColor);
         }
       }
@@ -451,7 +451,7 @@ class Console {
       if (name == "style name") {
         if (event.getAction() == ControlP5.ACTION_LEAVE) {
           String styleName = ((Textfield)widget).getText();
-          changeSaveButtonStatus(presets.isModifiable(styleName));
+          changeSaveButtonStatus(styles.isModifiable(styleName));
         }
       }
     } else if (widget instanceof ScrollableList) {
@@ -464,17 +464,17 @@ class Console {
     }
   }
 
-  void presetSelected(int value) {
-    String key = presets.keyList().get(value);
+  void styleSelected(int value) {
+    String key = styles.keyList().get(value);
     Textfield styleName = ctlr.get(Textfield.class, "style name");
     styleName.setValue(key);
-    settings.load(presets.get(key));
+    settings.load(styles.get(key));
     setControllerValues();
-    changeSaveButtonStatus(presets.isModifiable(key));
+    changeSaveButtonStatus(styles.isModifiable(key));
   }
 
   void styleNameChanged(String str) {
-    changeSaveButtonStatus(presets.isModifiable(str));
+    changeSaveButtonStatus(styles.isModifiable(str));
   }
 
   void changeSaveButtonStatus(boolean modifiable) {
@@ -587,7 +587,7 @@ class Console {
   }
 
   void shiftStyle(int dir) {
-    ScrollableList slist = ctlr.get(ScrollableList.class, "Preset Styles");
+    ScrollableList slist = ctlr.get(ScrollableList.class, "Styles List");
     int slistItemsNum = slist.getItems().size();
     int newValue = ((int)slist.getValue() + dir + slistItemsNum) % slistItemsNum;
     slist.setValue(newValue);

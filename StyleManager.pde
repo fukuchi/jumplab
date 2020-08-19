@@ -1,15 +1,15 @@
 import java.util.Collections;
 import java.util.Comparator;
 
-class PresetManager {
-  HashMap <String, Preset> presets;
+class StyleManager {
+  HashMap <String, Style> styles;
 
-  PresetManager() {
-    presets = new HashMap<String, Preset>();
+  StyleManager() {
+    styles = new HashMap<String, Style>();
   }
 
   boolean load(String filename) {
-    JSONArray presetsJson;
+    JSONArray stylesJson;
 
     /* Processing 3.5.4 does not return null if the file is not found
      and throws NullPointerException. As a workaround, we check the
@@ -22,7 +22,7 @@ class PresetManager {
     println("loading '" + filename + "'...");
 
     try {
-      presetsJson = new JSONArray(reader);
+      stylesJson = new JSONArray(reader);
       reader.close();
     }
     catch (IOException e) {
@@ -35,38 +35,38 @@ class PresetManager {
       return false;
     }
 
-    for (int i=0; i<presetsJson.size(); i++) {
-      JSONObject presetJson = presetsJson.getJSONObject(i);
-      Preset preset = new Preset(presetJson);
-      presets.put(preset.name, preset);
+    for (int i=0; i<stylesJson.size(); i++) {
+      JSONObject styleJson = stylesJson.getJSONObject(i);
+      Style style = new Style(styleJson);
+      styles.put(style.name, style);
     }
 
     return true;
   }
 
-  Preset get(String name) {
-    return presets.get(name);
+  Style get(String name) {
+    return styles.get(name);
   }
 
   boolean upsert(String name, Settings settings) {
-    Preset preset = get(name);
-    if (preset == null) {
-      preset = new Preset(name);
-      presets.put(name, preset);
+    Style style = get(name);
+    if (style == null) {
+      style = new Style(name);
+      styles.put(name, style);
     }
-    return preset.update(settings);
+    return style.update(settings);
   }
 
   void save(String filename) {
-    JSONArray presetsJson = new JSONArray();
-    for (Preset preset : presets.values()) {
-      presetsJson.append(preset.toJson());
+    JSONArray stylesJson = new JSONArray();
+    for (Style style : styles.values()) {
+      stylesJson.append(style.toJson());
     }
-    saveJSONArray(presetsJson, "data/" + filename);
+    saveJSONArray(stylesJson, "data/" + filename);
   }
 
   List<String> keyList() {
-    ArrayList<String> keys = new ArrayList<String>(presets.keySet());
+    ArrayList<String> keys = new ArrayList<String>(styles.keySet());
     Collections.sort(keys, new Comparator<String>() {
       @Override public int compare(String s1, String s2) {
         int res = s1.compareToIgnoreCase(s2);
@@ -78,9 +78,9 @@ class PresetManager {
   }
 
   boolean isModifiable(String name) {
-    Preset preset = presets.get(name);
-    if (preset != null) {
-      return preset.isModifiable();
+    Style style = styles.get(name);
+    if (style != null) {
+      return style.isModifiable();
     }
     return true;
   }

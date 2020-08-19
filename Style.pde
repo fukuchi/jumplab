@@ -1,14 +1,14 @@
 import java.util.Set;
 import java.time.OffsetDateTime;
 
-class Preset {
+class Style {
   static final String styleVersion = "1.1";
   private String name;
   private boolean modifiable;
   private HashMap<String, Object> data;
   private OffsetDateTime lastModified;
 
-  Preset(JSONObject json) {
+  Style(JSONObject json) {
     name = json.getString("name");
     modifiable = json.getBoolean("modifiable", true);
     String lastModifiedStr = json.getString("last modified", "2020-08-01T00:00:00.000+09:00");
@@ -26,7 +26,7 @@ class Preset {
     }
   }
 
-  Preset(String name) {
+  Style(String name) {
     this.name = name;
     modifiable = true;
   }

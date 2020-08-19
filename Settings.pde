@@ -70,15 +70,15 @@ static class Settings {
     // Nothing to do at this momemnt. Just a placeholder.
   }
 
-  void load(Preset preset) {
-    for (String key : preset.keySet()) {
+  void load(Style style) {
+    for (String key : style.keySet()) {
       try {
         Field variable = this.getClass().getDeclaredField(key);
-        Object value = preset.get(key);
+        Object value = style.get(key);
         variable.set(this, value);
       }
       catch (ReflectiveOperationException e) {
-        System.err.println("Failed to get " + key + " of " + preset.getName() + ".");
+        System.err.println("Failed to get " + key + " of " + style.getName() + ".");
       }
     }
   }
