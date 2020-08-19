@@ -180,10 +180,9 @@ class Console {
     setTab("Camera");
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showCameraMarker", ctlr.addToggle("Camera marker"));
-    appendHalfwidthWidget();
     appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
-    appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));
+    appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("platformSnapping", ctlr.addToggle("Platform snapping"));
     appendHalfwidthWidget("projectedFocus", ctlr.addToggle("Projected focus"));
     appendFullwidthWidget("cameraEasingNormal_x", ctlr.addSlider("Camera X Easing Coef (normal)")
