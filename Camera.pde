@@ -144,15 +144,11 @@ class Camera {
     int bgx, bgy;
     int cx = (int)x - window_hw;
     int cy = (int)y - window_hh;
-    if (settings.parallaxScrolling) {
-      float rx = (float)cx / (level.w - window_w);
-      float ry = (float)cy / (level.h - window_h);
-      bgx = (int)((level.bgImg.width  - window_w) * (0.5 + settings.bgScrollRatio * (rx - 0.5)));
-      bgy = (int)((level.bgImg.height - window_h) * (0.7 + settings.bgScrollRatio * (ry - 0.7)));
-    } else {
-      bgx = cx;
-      bgy = cy;
-    }
+    float rx = (float)cx / (level.w - window_w);
+    float ry = (float)cy / (level.h - window_h);
+    bgx = (int)((level.bgImg.width  - window_w) * (0.5 + settings.bgScrollRatio * (rx - 0.5)));
+    bgy = (int)((level.bgImg.height - window_h) * (0.7 + settings.bgScrollRatio * (ry - 0.7)));
+
     copy(level.bgImg, bgx, bgy, window_w, window_h, 0, 0, window_w, window_h);
     copy(levelImg, cx, cy, window_w, window_h, 0, 0, window_w, window_h);
 
