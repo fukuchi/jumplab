@@ -95,8 +95,8 @@ class Jumper {
     x += vx;
     y += vy;
 
-    hDL = hitDL();
-    hDR = hitDR();
+    hDL = hitDL(0);
+    hDR = hitDR(0);
 
     if (!onObstacle && (hDL || hDR)) {
       float ny = y - level.obstaclePenaltyD(y);
@@ -122,7 +122,7 @@ class Jumper {
     }
 
     hUL = hitUL();
-    hDL = hitDL();
+    hDL = hitDL(0);
     if (hUL || hDL) {
       float penalty = level.obstaclePenaltyL(x);
       if (hUL && !hDL) {
@@ -142,7 +142,7 @@ class Jumper {
     }
 
     hUR = hitUR();
-    hDR = hitDR();
+    hDR = hitDR(0);
     if (hUR || hDR) {
       float penalty = level.obstaclePenaltyR(x + w);
       if (hUR && !hDR) {
@@ -255,11 +255,11 @@ class Jumper {
   boolean hitUR() {
     return level.isThereObstacle(ceil(x + w - 1), (int)y);
   }
-  boolean hitDL() {
-    return level.isThereObstacle((int)x, ceil(y + h - 1));
+  boolean hitDL(int d) {
+    return level.isThereObstacle((int)x - d, ceil(y + h - 1));
   }
-  boolean hitDR() {
-    return level.isThereObstacle(ceil(x + w - 1), ceil(y + h - 1));
+  boolean hitDR(int d) {
+    return level.isThereObstacle(ceil(x + w - 1) + d, ceil(y + h - 1));
   }
   boolean hitBL() {
     return level.isThereObstacle((int)x, ceil(y + h));
@@ -282,6 +282,14 @@ class Jumper {
         jumpDir = lastDir;
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
         ay = settings.gravity;
+      }
+    } else {
+      if (lastDir < 0 && hitDL(1) && inputStatus[0] || lastDir > 0 && hitDR(1) && inputStatus[1]) {
+        jumpDir = -lastDir;
+        jumpMotion = round(settings.jumpAnticipationFrames) + 1;
+        ay = settings.gravity;
+        vx = -settings.maxVx * lastDir;
+        vy = 0;
       }
     }
   }
