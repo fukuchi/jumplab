@@ -180,7 +180,7 @@ class Console {
     setTab("Camera");
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showCameraMarker", ctlr.addToggle("Camera marker"));
-    appendHalfwidthWidget("parallaxScrolling", ctlr.addToggle("Parallax scrolling"));
+    appendHalfwidthWidget();
     appendHalfwidthWidget("cameraEasing_x", ctlr.addToggle("Camera easing X"));
     appendHalfwidthWidget("cameraEasing_y", ctlr.addToggle("Camera easing Y"));
     appendHalfwidthWidget("forwardFocus", ctlr.addToggle("Forward focus"));

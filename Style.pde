@@ -2,7 +2,7 @@ import java.util.Set;
 import java.time.OffsetDateTime;
 
 class Style {
-  static final String styleVersion = "1.1";
+  static final String styleVersion = "1.2";
   private String name;
   private boolean modifiable;
   private HashMap<String, Object> data;
@@ -11,11 +11,23 @@ class Style {
   Style(JSONObject json) {
     name = json.getString("name");
     modifiable = json.getBoolean("modifiable", true);
+    ComparableVersion version = new ComparableVersion(json.getString("version"));
     String lastModifiedStr = json.getString("last modified", "2020-08-01T00:00:00.000+09:00");
     lastModified = OffsetDateTime.parse(lastModifiedStr);
     data = new HashMap<String, Object>();
-
     JSONObject jsonData = json.getJSONObject("data");
+
+    if (version.compareTo("1.2") < 0) {
+      boolean parallaxScrolling = jsonData.getBoolean("parallaxScrolling", true);
+      if (parallaxScrolling) {
+        jsonData.setFloat("bgScrollRatio", 0.5);
+        jsonData.put("parallaxScrolling", null);
+      } else {
+        jsonData.setFloat("bgScrollRatio", 1.0);
+        jsonData.put("parallaxScrolling", null);
+      }
+    }
+
     for (Object key : jsonData.keys()) {
       String variableName = (String)key;
       if (Settings.booleanVariables.contains(variableName)) {

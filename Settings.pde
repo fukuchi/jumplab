@@ -27,7 +27,6 @@ static class Settings {
 
   // Camera parameters
   boolean showCameraMarker = false; // Show the center marker or not.
-  boolean parallaxScrolling = true; // Parallax scrolling or not.
   boolean cameraEasing_x = false; // Ease the horizon camera motion or not.
   boolean cameraEasing_y = true; // Ease the vertical camera motion or not.
   boolean forwardFocus = false; //  Shift the focus to the front of the jumper to enable wide forward view.
