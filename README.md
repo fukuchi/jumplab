@@ -30,7 +30,7 @@ Please visit <https://fukuchi.org/works/jumplab/> for further information.
 
 JumpLab is released under the terms of the GNU GPL 3.0.
 
-JumpLab: an experiment software for the analysis of 'jump' for platformer game
+JumpLab: a testbed for studying jump motion and scrolling algorithms of videogames
 
 Copyright (C) 2020 Kentaro Fukuchi
 
