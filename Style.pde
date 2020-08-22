@@ -2,16 +2,16 @@ import java.util.Set;
 import java.time.OffsetDateTime;
 
 class Style {
-  static final String styleVersion = "1.2";
   private String name;
   private boolean modifiable;
+  private ComparableVersion version;
   private HashMap<String, Object> data;
   private OffsetDateTime lastModified;
 
   Style(JSONObject json) {
     name = json.getString("name");
     modifiable = json.getBoolean("modifiable", true);
-    ComparableVersion version = new ComparableVersion(json.getString("version", "1.0"));
+    version = new ComparableVersion(json.getString("version", "1.0"));
     String lastModifiedStr = json.getString("last modified", "2020-08-01T00:00:00.000+09:00");
     lastModified = OffsetDateTime.parse(lastModifiedStr);
     data = new HashMap<String, Object>();
@@ -70,6 +70,7 @@ class Style {
     if (modifiable) {
       data = settings.toHashMap();
       updateLastModified();
+      version = new ComparableVersion(Settings.styleVersion);
       return true;
     }
     return false;
@@ -80,7 +81,7 @@ class Style {
     json.setString("name", name);
     json.setBoolean("modifiable", modifiable);
     json.setString("last modified", lastModified.toString());
-    json.setString("version", styleVersion);
+    json.setString("version", version.toString());
 
     JSONObject jsonData = new JSONObject();
     for (Entry<String, Object> entry : data.entrySet()) {
