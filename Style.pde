@@ -11,11 +11,14 @@ class Style {
   Style(JSONObject json) {
     name = json.getString("name");
     modifiable = json.getBoolean("modifiable", true);
-    ComparableVersion version = new ComparableVersion(json.getString("version"));
+    ComparableVersion version = new ComparableVersion(json.getString("version", "1.0"));
     String lastModifiedStr = json.getString("last modified", "2020-08-01T00:00:00.000+09:00");
     lastModified = OffsetDateTime.parse(lastModifiedStr);
     data = new HashMap<String, Object>();
     JSONObject jsonData = json.getJSONObject("data");
+    if (jsonData == null) {
+      jsonData = new JSONObject();
+    }
 
     if (version.compareTo("1.2") < 0) {
       boolean parallaxScrolling = jsonData.getBoolean("parallaxScrolling", true);
