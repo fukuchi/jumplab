@@ -283,7 +283,7 @@ class Jumper {
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
         ay = settings.gravity;
       }
-    } else {
+    } else if (settings.allowWallJump) {
       if (lastDir < 0 && hitDL(1) && inputStatus[0] || lastDir > 0 && hitDR(1) && inputStatus[1]) {
         jumpDir = -lastDir;
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
