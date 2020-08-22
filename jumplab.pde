@@ -84,9 +84,15 @@ void draw() {
 }
 
 void keyPressed() {
-  gMasao.keyPressed();
+  boolean eventReceived;
+  
+  eventReceived = gMasao.keyPressed();
+  if(!eventReceived) gConsole.keyPressed();
 }
 
 void keyReleased() {
-  gMasao.keyReleased();
+  boolean eventReceived;
+  
+  eventReceived = gMasao.keyReleased();
+  if(!eventReceived) gConsole.keyReleased();
 }

@@ -595,4 +595,19 @@ class Console {
   String buttonFunctionListName(int i) {
     return "Button " + i + " feature";
   }
+
+  boolean keyPressed() {
+    if (key == 'p') {
+      togglePause();
+      return true;
+    } else if (key == '.') {
+      pressStepForward();
+    }
+
+    return false;
+  }
+
+  boolean keyReleased() {
+    return false;
+  }
 }
