@@ -7,6 +7,7 @@ Version 1.1.0 (2020.8.xx)
   - BG scrolling speed
     - Parallax scrolling is now encompassed by this.
 * New UI features:
+  - 'Pause' and 'step-forward' have been added.
   - The joystick buttons are now configurable.
   - User settings files are now versioned.
 * Some minor bug fixes and code cleanups.
