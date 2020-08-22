@@ -29,6 +29,8 @@ class Style {
         jsonData.setFloat("bgScrollRatio", 1.0);
         jsonData.put("parallaxScrolling", null);
       }
+    } else if (version.compareTo("1.2.1") < 0) {
+      jsonData.setBoolean("allowWallJump", false);
     }
 
     for (Object key : jsonData.keys()) {

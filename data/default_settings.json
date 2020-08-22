@@ -4,6 +4,7 @@
       "allowAerialJump": true,
       "allowAerialTurn": false,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 1,
       "axJumping": 0.1,
       "axNormal": 0.2,
@@ -33,16 +34,17 @@
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-13T09:39:35.562+09:00",
-    "modifiable": false,
+    "last modified": "2020-08-23T00:39:44.152+09:00",
+    "modifiable": true,
     "name": "*default*",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": false,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 3,
       "axJumping": 3,
       "axNormal": 3,
@@ -72,16 +74,17 @@
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-13T09:39:38.412+09:00",
+    "last modified": "2020-08-23T00:39:46.551+09:00",
     "modifiable": false,
     "name": "Chelnov",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": true,
       "allowAerialWalk": false,
+      "allowWallJump": false,
       "axBrake": 1,
       "axJumping": 0.24,
       "axNormal": 0.9,
@@ -111,16 +114,17 @@
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": -0.85
     },
-    "last modified": "2020-08-13T09:39:41.746+09:00",
+    "last modified": "2020-08-23T00:39:49.185+09:00",
     "modifiable": false,
     "name": "Ghosts'n Goblins",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": true,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 0.2,
       "axJumping": 0.1,
       "axNormal": 0.1,
@@ -150,16 +154,17 @@
       "verticalSpeedSustainLevel": 0.7,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-13T09:39:44.297+09:00",
+    "last modified": "2020-08-23T00:39:53.468+09:00",
     "modifiable": false,
     "name": "Major Havoc",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": false,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 1,
       "axJumping": 1,
       "axNormal": 1,
@@ -189,16 +194,17 @@
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0.62
     },
-    "last modified": "2020-08-13T09:39:46.914+09:00",
+    "last modified": "2020-08-23T00:39:57.134+09:00",
     "modifiable": false,
     "name": "Metal Slug",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": true,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 1.7,
       "axJumping": 1.7,
       "axNormal": 1.7,
@@ -228,16 +234,17 @@
       "verticalSpeedSustainLevel": 0,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-13T09:39:50.747+09:00",
+    "last modified": "2020-08-23T00:40:02.468+09:00",
     "modifiable": false,
     "name": "Metroid",
-    "version": "1.2"
+    "version": "1.2.1"
   },
   {
     "data": {
       "allowAerialJump": true,
       "allowAerialTurn": false,
       "allowAerialWalk": true,
+      "allowWallJump": false,
       "axBrake": 0.66,
       "axJumping": 0.18,
       "axNormal": 0.2,
@@ -267,9 +274,9 @@
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-13T09:39:55.083+09:00",
+    "last modified": "2020-08-23T00:40:04.835+09:00",
     "modifiable": false,
     "name": "Super Mario Bros.",
-    "version": "1.2"
+    "version": "1.2.1"
   }
 ]
