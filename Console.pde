@@ -40,7 +40,8 @@ class Console {
     indicators = new HashMap<String, int[]>();
     buttonFunctionSelectorsMap = new HashMap<String, Integer>();
 
-    ctlr.getTab("default").setLabel("Jump");
+    ctlr.getTab("default").setLabel("Jump1");
+    ctlr.addTab("Jump2");
     ctlr.addTab("Camera");
     ctlr.addTab("Joystick");
     ctlr.addTab("Chart");
@@ -139,7 +140,7 @@ class Console {
     appendHalfwidthWidget("allowAerialJump", ctlr.addToggle("Allow aerial jump"));
     appendHalfwidthWidget("allowAerialWalk", ctlr.addToggle("Allow aerial walk"));
     appendHalfwidthWidget("allowAerialTurn", ctlr.addToggle("Allow aerial turn"));
-    appendHalfwidthWidget("allowWallJump", ctlr.addToggle("Allow wall jump"));
+    appendHalfwidthWidget();
     appendHalfwidthWidget("maxVx", ctlr.addSlider("Max Vx")
       .setRange(1, 20));
     appendHalfwidthWidget("maxVy", ctlr.addSlider("Max Vy")
@@ -175,6 +176,14 @@ class Console {
       .setRange(0, 24)
       .setNumberOfTickMarks(25)
       .showTickMarks(false));
+
+    setTab("Jump2");
+    nextWidgetPosition_y = y + 175;
+    appendHalfwidthWidget("allowWallJump", ctlr.addToggle("Allow wall jump"));
+    appendHalfwidthWidget("allowWallSlide", ctlr.addToggle("Allow wall slide"));
+    appendFullwidthWidget("wallJumpSpeedRatio", ctlr.addSlider("Wall jump speed ratio")
+      .setRange(0, 1));
+
 
     // Settings of Camera motion
     setTab("Camera");

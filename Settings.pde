@@ -12,6 +12,7 @@ static class Settings {
   boolean allowAerialTurn = false; // Allow aerial turn or not. (Only affects the visual appearance)
   boolean stopAndFall = false; // The horizontal motion is halted when the jumper goes off the foothold.
   boolean allowWallJump = false; // Allow wall jump or not.
+  boolean allowWallSlide = false; // Allow wall slide or not.
   float maxVx = 8; // Maximum horizontal velocity of the jumper.
   float maxVy = 30; // Maximum vertical velocity of the jumper. Limits only the falling motion.
   float jumpVelocity = 13; // Initial vertical velocity of a jump motion.
@@ -26,6 +27,7 @@ static class Settings {
   float axBrake = 1.0; // Horizontal acceleration when braking.
   float axJumping = 0.1; // Horizontal acceleration when jumping.
   float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
+  float wallJumpSpeedRatio = 1.0; // The velocity raito of the jumping speed of the wall jump to the maxVx.
 
   // Camera parameters
   boolean showCameraMarker = false; // Show the center marker or not.

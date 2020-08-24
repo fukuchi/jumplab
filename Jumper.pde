@@ -228,6 +228,11 @@ class Jumper {
           }
         }
       }
+      if (settings.allowWallSlide) {
+        if (lastDir < 0 && hitDL(1) && inputStatus[0] || lastDir > 0 && hitDR(1) && inputStatus[1]) {
+          if (vy >= settings.maxVy * 0.2) vy = settings.maxVy * 0.2;
+        }
+      }
     }
   }
 
@@ -288,7 +293,7 @@ class Jumper {
         jumpDir = -lastDir;
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
         ay = settings.gravity;
-        vx = -settings.maxVx * lastDir;
+        vx = -settings.maxVx * lastDir * settings.wallJumpSpeedRatio;
         vy = 0;
       }
     }
