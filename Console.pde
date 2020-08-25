@@ -348,8 +348,8 @@ class Console {
     ((Textlabel)widgets.get("JumpingValue")).setText(jumper.jumping?"TRUE":"FALSE");
     ((Textlabel)widgets.get("PropellingValue")).setText(jumper.propelling?"TRUE":"FALSE");
     ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
-    chart.updateSeries(chartJumperXIdx, (jumper.x + Jumper.w / 2) / level.w);
-    chart.updateSeries(chartJumperYIdx, 1.0 - (jumper.y + Jumper.h / 2) / level.h);
+    chart.updateSeries(chartJumperXIdx, jumper.center_x() / level.w);
+    chart.updateSeries(chartJumperYIdx, 1.0 - jumper.center_y() / level.h);
     chart.updateSeries(chartCameraXIdx, camera.x / level.w);
     chart.updateSeries(chartCameraYIdx, 1.0 - camera.y / level.h);
     chart.updateChart();
@@ -464,7 +464,7 @@ class Console {
       }
     } else if (widget instanceof ScrollableList) {
       String name = event.getController().getName();
-      if (name.matches("Button ([0-9]*) feature")) {
+      if (name.matches(buttonFunctionListName("([0-9]*)"))) {
         if (event.getAction() == ControlP5.ACTION_BROADCAST) {
           assignButtonFunction(name, (ScrollableList)widget, (int)event.getController().getValue());
         }
@@ -603,6 +603,10 @@ class Console {
 
   String buttonFunctionListName(int i) {
     return "Button " + i + " feature";
+  }
+
+  String buttonFunctionListName(String regexp) {
+    return "Button " + regexp + " feature";
   }
 
   boolean keyPressed() {

@@ -61,7 +61,7 @@ void setup() {
   gLevel = new Level("level1.csv", "tiles.png", "bg.png");
   gMasao = new Jumper(gSettings, gLevel);
   gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);
-  gCamera.reset(gMasao.x, gMasao.y);
+  gCamera.reset(gMasao.center_x(), gMasao.center_y());
   gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gStyles, gSettings);
   frameRate(60);
 

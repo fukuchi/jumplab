@@ -46,8 +46,8 @@ class Camera {
   }
 
   void reset(float x, float y) {
-    this.x = constrain(x + Jumper.w / 2, window_hw, level.w - window_hw);
-    this.y = constrain(y + Jumper.h / 2, window_hh, level.h - window_hh);
+    this.x = constrain(x, window_hw, level.w - window_hw);
+    this.y = constrain(y, window_hh, level.h - window_hh);
     px = this.x;
     py = this.y;
     focus_x = 0;
@@ -57,8 +57,8 @@ class Camera {
     float tx = x; // target position
     float ty = y;
 
-    float dx = jumper.x + Jumper.w / 2 - x;
-    float dy = jumper.y + Jumper.h / 2 - y;
+    float dx = jumper.center_x() - x;
+    float dy = jumper.center_y() - y;
     if (settings.forwardFocus || settings.projectedFocus) {
       targetFocus_x = 0;
       if (settings.forwardFocus) {
@@ -204,13 +204,13 @@ class Camera {
     noFill();
     rect(window_hw - settings.cameraWindow_w / 2, window_hh - settings.cameraWindow_h / 2, settings.cameraWindow_w, settings.cameraWindow_h);
     if (settings.forwardFocus || settings.projectedFocus) {
-      int fx = (int)(jumper.x + Jumper.w / 2 + targetFocus_x) - cx;
-      int fy = (int)jumper.y + Jumper.h / 2 - cy;
+      int fx = (int)(jumper.center_x() + targetFocus_x) - cx;
+      int fy = (int)jumper.center_y() - cy;
       line(fx - 9, fy - 9, fx + 9, fy + 9);
       line(fx - 9, fy + 9, fx + 9, fy - 9);
       stroke(255, 255, 0);
-      fx = (int)(jumper.x + Jumper.w / 2 + focus_x) - cx;
-      fy = (int)jumper.y + Jumper.h / 2 - cy;
+      fx = (int)(jumper.center_x() + focus_x) - cx;
+      fy = (int)jumper.center_y() - cy;
       line(fx - 12, fy, fx + 12, fy     );
       line(fx, fy - 12, fx, fy + 12);
     }

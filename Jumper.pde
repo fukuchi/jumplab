@@ -78,6 +78,14 @@ class Jumper {
     }
   }
 
+  float center_x() {
+    return x + Jumper.w / 2;
+  }
+
+  float center_y() {
+    return y + Jumper.h / 2;
+  }
+
   void update() {
     boolean hDL, hDR, hUL, hUR;
 
