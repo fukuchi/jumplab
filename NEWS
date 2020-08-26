@@ -1,6 +1,15 @@
 JumpLab NEWS - Overview of changes
 ==================================
 
+Version 1.1.1 (2020.8.27)
+-------------------------
+* New jump feature:
+  - Wall jump
+* New UI feature:
+  - New 'JUMP2' tab
+* Fixed a bug when no joystick configuration file was found.
+* Some minor bug fixes and code cleanups.
+
 Version 1.1.0 (2020.8.22)
 -------------------------
 * New camera feature:

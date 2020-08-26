@@ -26,7 +26,7 @@ Console gConsole;
 Joystick gJoystick;
 StyleManager gStyles;
 
-static final String gVersionString = "1.1.0";
+static final String gVersionString = "1.1.1";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
