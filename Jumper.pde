@@ -6,10 +6,12 @@ class Jumper {
   float vx, vy;
   float pvx, pvy;
   float ay;
+  float maxVx;
   int dir;
   int lastDir;
   int jumpDir;
   boolean jumping;
+  boolean dashing;
   boolean standing;
   boolean propelling;
   boolean onObstacle;
@@ -23,7 +25,7 @@ class Jumper {
   int[] keyInput;
   int[] joyInput;
   boolean[] inputStatus;
-  static final int inputTypes = 3;
+  static final int inputTypes = 4; // left, right, jump, dash
 
   Vector<PImage> images_running_r;
   Vector<PImage> images_running_l;
@@ -89,6 +91,8 @@ class Jumper {
 
   void update() {
     boolean hDL, hDR, hUL, hUR;
+
+    maxVx = dashing?settings.maxVxDashing:settings.maxVx;
 
     pvx = vx;
     pvy = vy;
@@ -180,14 +184,18 @@ class Jumper {
     } else if (Math.signum(vx) != dir) {
       ax = settings.axBrake;
     } else {
-      ax = settings.axNormal;
+      if (dashing) {
+        ax = settings.axNormalDashing;
+      } else {
+        ax = settings.axNormal;
+      }
     }
     if (dir != 0) {
       vx += ax * dir;
       if (settings.vxAdjustmentAtTakeoff > 0 && jumping) {
-        vx = constrain(vx, -settings.maxVx * (1 + settings.vxAdjustmentAtTakeoff), settings.maxVx * (1 + settings.vxAdjustmentAtTakeoff));
+        vx = constrain(vx, -maxVx * (1 + settings.vxAdjustmentAtTakeoff), maxVx * (1 + settings.vxAdjustmentAtTakeoff));
       } else {
-        vx = constrain(vx, -settings.maxVx, settings.maxVx);
+        vx = constrain(vx, -maxVx, maxVx);
       }
     } else {
       vx -= ax * Math.signum(vx);
@@ -304,7 +312,7 @@ class Jumper {
         jumpDir = -lastDir;
         jumpMotion = 1;
         ay = settings.gravity;
-        vx = -settings.maxVx * lastDir * settings.wallJumpSpeedRatio;
+        vx = -maxVx * lastDir * settings.wallJumpSpeedRatio;
         vy = 0;
       }
     }
@@ -316,6 +324,14 @@ class Jumper {
       if (vy < 0) vy *= settings.verticalSpeedSustainLevel;
       propelling = false;
     }
+  }
+
+  void dashStart() {
+    dashing = true;
+  }
+
+  void dashEnd() {
+    dashing = false;
   }
 
   void draw(PImage img, float dx, float dy) {
@@ -358,6 +374,8 @@ class Jumper {
       } else if (keyCode == RIGHT) {
         keyInput[1] = 1;
         return true;
+      } else if (keyCode == SHIFT) {
+        keyInput[3] = 1;
       }
     } else if (key == ' ') {
       keyInput[2] = 1;
@@ -374,6 +392,8 @@ class Jumper {
       } else if (keyCode == RIGHT) {
         keyInput[1] = -1;
         return true;
+      } else if (keyCode == SHIFT) {
+        keyInput[3] = -1;
       }
     } else if (key == ' ') {
       keyInput[2] = -1;
@@ -394,6 +414,11 @@ class Jumper {
       jump();
     } else if (input[2] < 0) {
       jumpCanceled();
+    }
+    if (input[3] > 0) {
+      dashStart();
+    } else if (input[3] < 0) {
+      dashEnd();
     }
     for (int i=0; i<inputTypes; i++) {
       if (input[i] > 0) inputStatus[i] = true;

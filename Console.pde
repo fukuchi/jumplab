@@ -183,7 +183,10 @@ class Console {
     appendHalfwidthWidget("allowWallSlide", ctlr.addToggle("Allow wall slide"));
     appendFullwidthWidget("wallJumpSpeedRatio", ctlr.addSlider("Wall jump speed ratio")
       .setRange(0, 1));
-
+    appendHalfwidthWidget("maxVxDashing", ctlr.addSlider("Max Vx Dashing")
+      .setRange(1, 20));
+    appendFullwidthWidget("axNormalDashing", ctlr.addSlider("X Accel (normal, dashing)")
+      .setRange(0, 3));
 
     // Settings of Camera motion
     setTab("Camera");

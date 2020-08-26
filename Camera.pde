@@ -220,7 +220,7 @@ class Camera {
   void drawInputStatus() {
     pushMatrix();
     pushStyle();
-    translate(window_hw - 120, 40);
+    translate(window_hw - 170, 40);
     stroke(0);
     strokeWeight(3);
     if (jumper.inputStatus[0]) {
@@ -243,6 +243,12 @@ class Camera {
       fill(64, 0, 0);
     }
     ellipse(40, 40, 70, 70);
+    if (jumper.inputStatus[3]) {
+      fill(255, 64, 64);
+    } else {
+      fill(64, 0, 0);
+    }
+    ellipse(120, 40, 70, 70);
     popMatrix();
     popStyle();
   }

@@ -206,12 +206,16 @@ class Joystick {
         }
       }
     }
-    if (prevButtonPressed[ButtonFunction.JUMP.ordinal()]) {
-      res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?0:-1;
-    } else {
-      res[2] = buttonPressed[ButtonFunction.JUMP.ordinal()]?1:0;
+    for (int i=ButtonFunction.JUMP.ordinal(); i<=ButtonFunction.DASH.ordinal(); i++) {
+      int s;
+      if (prevButtonPressed[i]) {
+        s = buttonPressed[i]?0:-1;
+      } else {
+        s = buttonPressed[i]?1:0;
+      }
+      res[i - ButtonFunction.JUMP.ordinal() + 2] = s;
     }
-    for (int i=ButtonFunction.JUMP.ordinal() + 1; i<ButtonFunction.size; i++) {
+    for (int i=ButtonFunction.TOGGLE_TRAIL.ordinal(); i<ButtonFunction.size; i++) {
       if (buttonPressed[i] && !prevButtonPressed[i]) {
         gConsole.buttonFunctionActivated(ButtonFunction.getEnumByOrdinal(i));
       }
@@ -235,7 +239,7 @@ class Joystick {
         }
       }
     }
-    for (int i=ButtonFunction.JUMP.ordinal() + 1; i<ButtonFunction.size; i++) {
+    for (int i=ButtonFunction.TOGGLE_TRAIL.ordinal(); i<ButtonFunction.size; i++) {
       if (ButtonFunction.isEnabledWhilePausing(i) && buttonPressed[i] && !prevButtonPressed[i]) {
         gConsole.buttonFunctionActivated(ButtonFunction.getEnumByOrdinal(i));
       }
