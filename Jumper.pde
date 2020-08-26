@@ -296,10 +296,12 @@ class Jumper {
         jumpMotion = round(settings.jumpAnticipationFrames) + 1;
         ay = settings.gravity;
       }
-    } else if (settings.allowWallJump) {
+    }
+    if (!onObstacle && settings.allowWallJump) {
       if (lastDir < 0 && hitDL(1) && inputStatus[0] || lastDir > 0 && hitDR(1) && inputStatus[1]) {
+        jumping = true;
         jumpDir = -lastDir;
-        jumpMotion = round(settings.jumpAnticipationFrames) + 1;
+        jumpMotion = 1;
         ay = settings.gravity;
         vx = -settings.maxVx * lastDir * settings.wallJumpSpeedRatio;
         vy = 0;
