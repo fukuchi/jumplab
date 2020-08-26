@@ -325,7 +325,7 @@ class Jumper {
     PImage img;
 
     if (jumping) {
-      int p = jumpMotion==0?0:(int)(jumpMotion * (jumpMotionMax - 1) / (settings.jumpAnticipationFrames + 1) + 1);
+      int p = (jumpMotion == 0)?0: (int)(jumpMotion * (jumpMotionMax - 1) / (settings.jumpAnticipationFrames + 1) + 1);
       int dir = settings.allowAerialTurn?lastDir:jumpDir;
       if (dir < 0) {
         img = images_jumping_l.get(p);
@@ -387,14 +387,14 @@ class Jumper {
     } else if (input[0] < 0 && dir == -1 || input[1] < 0 && dir == 1) {
       move(0);
     }
-    if (input[2]>0) {
+    if (input[2] > 0) {
       jump();
     } else if (input[2] < 0) {
       jumpCanceled();
     }
     for (int i=0; i<3; i++) {
-      if (input[i]>0) inputStatus[i] = true;
-      if (input[i]<0) inputStatus[i] = false;
+      if (input[i] > 0) inputStatus[i] = true;
+      if (input[i] < 0) inputStatus[i] = false;
       input[i] = 0;
     }
   }
