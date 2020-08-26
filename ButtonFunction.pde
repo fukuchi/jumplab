@@ -1,7 +1,7 @@
 import java.util.LinkedHashMap;
 
 enum ButtonFunction {
-  NONE("None"), JUMP("Jump"), TOGGLE_TRAIL("Toggle show Trail"), TOGGLE_CAMERA("Toggle show Camera Marker"), 
+  NONE("None"), JUMP("Jump"), TOGGLE_TRAIL("Toggle show Trail"), TOGGLE_CAMERA("Toggle show Camera Marker"),
     NEXT_STYLE("Next style"), PREV_STYLE("Previous style"), PAUSE("Pause"), STEP_FORWARD("Step forward");
 
   private final String label;

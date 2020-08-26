@@ -35,10 +35,10 @@ class ComparableVersion implements Comparable<ComparableVersion> {
     return res;
   }
 
-  int compareTo(ComparableVersion other) {    
+  int compareTo(ComparableVersion other) {
     return compareTo(other, 0);
   }
-  
+
   int compareTo(String other) {
     return compareTo(new ComparableVersion(other));
   }
