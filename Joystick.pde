@@ -52,6 +52,7 @@ class Joystick {
 
   boolean loadConfig() {
     JSONObject configJson;
+    buttonAssignmentsMap = new HashMap<String, ButtonFunction[]>();
 
     /* Processing 3.5.4 does not return null if the file is not found
      and throws NullPointerException. As a workaround, we check the
@@ -93,7 +94,6 @@ class Joystick {
   }
 
   void loadJoystickConfigs(JSONObject jsonObject) {
-    buttonAssignmentsMap = new HashMap<String, ButtonFunction[]>();
     JSONArray configsJson = jsonObject.getJSONArray("configs");
     if (configsJson == null) return;
 
