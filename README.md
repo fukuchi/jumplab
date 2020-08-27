@@ -22,7 +22,6 @@ Please visit <https://fukuchi.org/works/jumplab/> for further information.
   - Sound effects
   - Level selector / level editor
   - Double jump
-  - Wall jump
   - Vertical forward focus
   - Terminology check
 
