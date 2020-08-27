@@ -152,6 +152,12 @@ class Joystick {
     buttonsUpdate(res);
   }
 
+  void updateDuringPause() {
+    if (currentDevice == null) return;
+    currentDevice.update();
+    buttonsUpdateWhilePausing();
+  }
+
   void axesUpdate(int[] res) {
     if (gPause && !gStepForward) return;
     int axisX = 0;
@@ -168,14 +174,12 @@ class Joystick {
     } else {
       if (prevAxisX < 0) {
         res[0] = -1;
-      }
-      if (prevAxisX > 0) {
+      } else if (prevAxisX > 0) {
         res[1] = -1;
       }
       if (axisX < 0) {
         res[0] = 1;
-      }
-      if (axisX > 0) {
+      } else if (axisX > 0) {
         res[1] = 1;
       }
     }

@@ -26,18 +26,18 @@ Console gConsole;
 Joystick gJoystick;
 StyleManager gStyles;
 
+boolean gPause;
+boolean gStepForward;
+
 static final String gVersionString = "1.1.1";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
 static final int console_w = 300;
 
-static String userSettingsFilename = "user_settings.json";
-static String defaultSettingsFilename = "default_settings.json";
-static String joystickConfigFilename = "joystick_config.json";
-
-static boolean gPause;
-static boolean gStepForward;
+static final String userSettingsFilename = "user_settings.json";
+static final String defaultSettingsFilename = "default_settings.json";
+static final String joystickConfigFilename = "joystick_config.json";
 
 void settings() {
   println("JumpLab version " + gVersionString);
@@ -76,8 +76,7 @@ void draw() {
     gConsole.statusUpdate(gMasao, gLevel, gCamera);
     gStepForward = false;
   } else {
-    int res[] = new int[4];
-    gJoystick.update(res);
+    gJoystick.updateDuringPause();
   }
   gCamera.draw();
   gConsole.drawStatus(gMasao);

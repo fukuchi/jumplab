@@ -23,6 +23,7 @@ class Jumper {
   int[] keyInput;
   int[] joyInput;
   boolean[] inputStatus;
+  static final int inputTypes = 3;
 
   Vector<PImage> images_running_r;
   Vector<PImage> images_running_l;
@@ -51,9 +52,9 @@ class Jumper {
     jumpDir = 0;
     pattern = 0;
     ay = settings.gravityFalling;
-    keyInput = new int[3];
-    joyInput = new int[3];
-    inputStatus = new boolean[3];
+    keyInput = new int[inputTypes];
+    joyInput = new int[inputTypes];
+    inputStatus = new boolean[inputTypes];
 
     initializeImages();
   }
@@ -394,7 +395,7 @@ class Jumper {
     } else if (input[2] < 0) {
       jumpCanceled();
     }
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<inputTypes; i++) {
       if (input[i] > 0) inputStatus[i] = true;
       if (input[i] < 0) inputStatus[i] = false;
       input[i] = 0;
