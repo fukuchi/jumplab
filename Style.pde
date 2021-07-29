@@ -31,6 +31,8 @@ class Style {
       }
     } else if (version.compareTo("1.2.1") < 0) {
       jsonData.setBoolean("allowWallJump", false);
+    } else if (version.compareTo("1.2.2") < 0) {
+      jsonData.setString("selectedCharacter", "3h");
     }
 
     for (Object key : jsonData.keys()) {
@@ -39,6 +41,8 @@ class Style {
         data.put(variableName, jsonData.getBoolean(variableName));
       } else if (Settings.floatVariables.contains(variableName)) {
         data.put(variableName, jsonData.getFloat(variableName));
+      } else if (Settings.listVariables.contains(variableName)) {
+        data.put(variableName, jsonData.getString(variableName));
       }
     }
   }

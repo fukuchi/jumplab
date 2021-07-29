@@ -3,6 +3,7 @@ import controlP5.Controller;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 class Console {
   int x, y, w, h;
@@ -43,6 +44,7 @@ class Console {
     ctlr.getTab("default").setLabel("Jump1");
     ctlr.addTab("Jump2");
     ctlr.addTab("Camera");
+    ctlr.addTab("Character");
     ctlr.addTab("Joystick");
     ctlr.addTab("Chart");
     ctlr.addTab("Misc");
@@ -213,6 +215,21 @@ class Console {
       .setRange(0, 30));
     appendFullwidthWidget("bgScrollRatio", ctlr.addSlider("BG Scroll Speed")
       .setRange(0, 1));
+
+    // Settings of character
+    setTab("Character");
+    nextWidgetPosition_y = y + 175;
+    appendFullwidthWidget(null, ctlr.addTextlabel("Select Character")
+      .setText("SELECT CHARACTER:"));
+    ScrollableList characterList = ctlr.addScrollableList("Character List")
+      .setBackgroundColor(color(192))
+      .setSize(280, 100)
+      .setBarHeight(20)
+      .setItemHeight(15)
+      .setItems(gMasao.proportionLabels)
+      .setValue(1)
+      .plugTo(this, "characterSelected");
+    appendFullwidthWidget("selectedCharacter", characterList);
 
     // Settings of joystick
     setTab("Joystick");
@@ -414,6 +431,24 @@ class Console {
         }
       }
     }
+    for (String name : Settings.listVariables) {
+      ScrollableList slist = (ScrollableList)widgets.get(name);
+      if (slist != null) {
+        try {
+          Field f = Class.forName("jumplab$Settings").getDeclaredField(name);
+          String s = (String)f.get(settings);
+          int idx = Arrays.asList(gMasao.proportionLabels).indexOf(s);
+          if (idx >= 0) {
+            slist.setValue(idx);
+          } else {
+            System.err.println("Invalid character name is found: " + s);
+          }
+        }
+        catch (ReflectiveOperationException e) {
+          System.err.println("Failed to set " + name + ".");
+        }
+      }
+    }
   }
 
   void parameterChange(CallbackEvent event) {
@@ -495,6 +530,10 @@ class Console {
     } else {
       lockWidget(saveButton);
     }
+  }
+
+  void characterSelected(int value) {
+    gMasao.setImages(value);
   }
 
   void joystickSelected(int value) {
