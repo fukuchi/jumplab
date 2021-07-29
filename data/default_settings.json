@@ -30,14 +30,15 @@
       "maxVy": 30,
       "platformSnapping": false,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
-    "last modified": "2020-08-23T00:39:44.152+09:00",
+    "last modified": "2021-07-29T15:54:34.257+09:00",
     "modifiable": true,
     "name": "*default*",
-    "version": "1.2.1"
+    "version": "1.2.2"
   },
   {
     "data": {
@@ -70,6 +71,7 @@
       "maxVy": 7.9125,
       "platformSnapping": false,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
@@ -110,6 +112,7 @@
       "maxVy": 20,
       "platformSnapping": true,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": true,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": -0.85
@@ -150,6 +153,7 @@
       "maxVy": 13,
       "platformSnapping": false,
       "projectedFocus": true,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 0.7,
       "vxAdjustmentAtTakeoff": 0
@@ -190,6 +194,7 @@
       "maxVy": 30,
       "platformSnapping": false,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0.62
@@ -230,6 +235,7 @@
       "maxVy": 22,
       "platformSnapping": false,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 0,
       "vxAdjustmentAtTakeoff": 0
@@ -270,6 +276,7 @@
       "maxVy": 20.75,
       "platformSnapping": true,
       "projectedFocus": false,
+      "selectedCharacter": "3h",
       "stopAndFall": false,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0

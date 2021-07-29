@@ -4,7 +4,7 @@
  * Web: https://fukuchi.org/works/jumplab/
  * Repository: https://github.com/fukuchi/jumplab/
  *
- * Copyright (C) 2020 Kentaro Fukuchi <kentaro@fukuchi.org>
+ * Copyright (C) 2020, 2021 Kentaro Fukuchi <kentaro@fukuchi.org>
  *
  * This program is free software: you can redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -29,7 +29,7 @@ StyleManager gStyles;
 boolean gPause;
 boolean gStepForward;
 
-static final String gVersionString = "1.1.1";
+static final String gVersionString = "1.2.0";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;

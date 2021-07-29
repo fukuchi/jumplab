@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 static class Settings {
-  static final String styleVersion = "1.2.1";
+  static final String styleVersion = "1.2.2";
   // Jump parameters
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
@@ -45,6 +45,9 @@ static class Settings {
   float focusingSpeed = 5; // Velocity of the focal point movement.
   float bgScrollRatio = 0.5; // Determine the scroll speed of the BG layer.
 
+  // Character parameters
+  String selectedCharacter = "3H"; // Name of the selected character.
+
   // Misc. parameters
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
   boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
@@ -52,6 +55,7 @@ static class Settings {
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;
+  static ArrayList<String> listVariables = new ArrayList<String>(Arrays.asList("selectedCharacter"));
   static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart", "showInputStatus");
 
   static {
@@ -103,6 +107,16 @@ static class Settings {
       try {
         Field variable = this.getClass().getDeclaredField(variableName);
         map.put(variableName, variable.getFloat(this));
+      }
+      catch (ReflectiveOperationException e) {
+        System.err.println("Failed to get " + variableName + " from the current settings.");
+      }
+    }
+    for (String variableName : listVariables) {
+      if (ignoredVariables.contains(variableName)) continue;
+      try {
+        Field variable = this.getClass().getDeclaredField(variableName);
+        map.put(variableName, (String)variable.get(this));
       }
       catch (ReflectiveOperationException e) {
         System.err.println("Failed to get " + variableName + " from the current settings.");

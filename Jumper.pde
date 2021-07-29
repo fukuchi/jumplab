@@ -25,6 +25,13 @@ class Jumper {
   boolean[] inputStatus;
   static final int inputTypes = 3;
 
+  Vector<Vector<PImage>> stock_images_running_l;
+  Vector<Vector<PImage>> stock_images_running_r;
+  Vector<Vector<PImage>> stock_images_jumping_l;
+  Vector<Vector<PImage>> stock_images_jumping_r;
+  final String[] proportionLabels = {"1h", "3h", "8h"};
+
+  int character;
   Vector<PImage> images_running_r;
   Vector<PImage> images_running_l;
   Vector<PImage> images_jumping_r;
@@ -57,26 +64,47 @@ class Jumper {
     inputStatus = new boolean[inputTypes];
 
     initializeImages();
+    setImages(1);
   }
 
   void initializeImages() {
-    images_running_r = new Vector<PImage>();
-    images_running_l = new Vector<PImage>();
-    images_jumping_r = new Vector<PImage>();
-    images_jumping_l = new Vector<PImage>();
+    stock_images_running_r = new Vector<Vector<PImage>>();
+    stock_images_running_l = new Vector<Vector<PImage>>();
+    stock_images_jumping_r = new Vector<Vector<PImage>>();
+    stock_images_jumping_l = new Vector<Vector<PImage>>();
 
-    runningMotionMax = 8;
-    for (int i=0; i<runningMotionMax+1; i++) {
-      String filename = String.format("stickman-%d.png", i);
-      images_running_r.add(loadImage(filename));
-      images_running_l.add(hflipImage(images_running_r.get(i)));
+    for (String label : proportionLabels) {
+      images_running_r = new Vector<PImage>();
+      images_running_l = new Vector<PImage>();
+      images_jumping_r = new Vector<PImage>();
+      images_jumping_l = new Vector<PImage>();
+
+      runningMotionMax = 8;
+      for (int i=0; i<runningMotionMax+1; i++) {
+        String filename = String.format("%s/stickman-%d.png", label, i);
+        images_running_r.add(loadImage(filename));
+        images_running_l.add(hflipImage(images_running_r.get(i)));
+      }
+      jumpMotionMax = 4;
+      for (int i=0; i<jumpMotionMax; i++) {
+        String filename = String.format("%s/stickman-jump-%d.png", label, jumpMotionMax - i);
+        images_jumping_r.add(loadImage(filename));
+        images_jumping_l.add(hflipImage(images_jumping_r.get(i)));
+      }
+
+      stock_images_running_r.add(images_running_r);
+      stock_images_running_l.add(images_running_l);
+      stock_images_jumping_r.add(images_jumping_r);
+      stock_images_jumping_l.add(images_jumping_l);
     }
-    jumpMotionMax = 4;
-    for (int i=0; i<jumpMotionMax; i++) {
-      String filename = String.format("stickman-jump-%d.png", jumpMotionMax - i);
-      images_jumping_r.add(loadImage(filename));
-      images_jumping_l.add(hflipImage(images_jumping_r.get(i)));
-    }
+  }
+
+  void setImages(int num) {
+    settings.selectedCharacter = proportionLabels[num];
+    images_running_r = stock_images_running_r.get(num);
+    images_running_l = stock_images_running_l.get(num);
+    images_jumping_r = stock_images_jumping_r.get(num);
+    images_jumping_l = stock_images_jumping_l.get(num);
   }
 
   float center_x() {
