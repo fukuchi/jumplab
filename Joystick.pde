@@ -102,7 +102,12 @@ class Joystick {
       JSONArray buttonAssignmentsJson = configJson.getJSONArray("buttons");
       ArrayList<ButtonFunction> assignments = new ArrayList<ButtonFunction>();
       for (int j=0; j<buttonAssignmentsJson.size(); j++) {
-        assignments.add(ButtonFunction.valueOf(buttonAssignmentsJson.getString(j)));
+        try {
+          assignments.add(ButtonFunction.valueOf(buttonAssignmentsJson.getString(j)));
+        }
+        catch (IllegalArgumentException e) {
+          System.err.println("Warning: unsupported button function was found ('" + buttonAssignmentsJson.getString(j) + "')");
+        }
       }
       buttonAssignmentsMap.put(configJson.getString("name"), assignments.toArray(new ButtonFunction[0]));
     }
