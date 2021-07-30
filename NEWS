@@ -4,8 +4,8 @@ JumpLab NEWS - Overview of changes
 Version 1.2.0 (2021.8.XX)
 -------------------------
 * New 'Character' feature has been added:
-  - Now you can choose from three different type of characters with different
-    proportions.
+  - Now you can choose from three different type of characters with different proportions.
+  - New characters '1h' and '8h' have been contributed by Masayoshi Itoh.
 
 Version 1.1.1 (2020.8.27)
 -------------------------
