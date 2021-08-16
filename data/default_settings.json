@@ -34,6 +34,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
@@ -77,6 +78,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },
@@ -120,6 +122,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": true,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": -0.85
     },
@@ -163,6 +166,7 @@
       "projectedFocus": true,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 0.7,
       "vxAdjustmentAtTakeoff": 0
     },
@@ -206,6 +210,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0.62
     },
@@ -249,6 +254,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 0,
       "verticalSpeedSustainLevel": 0,
       "vxAdjustmentAtTakeoff": 0
     },
@@ -266,7 +272,7 @@
       "axBrake": 0.66,
       "axJumping": 0.18,
       "axNormal": 0.2,
-      "axNormalDashing": 0.3,
+      "axNormalDashing": 0.4,
       "bgScrollRatio": 1,
       "cameraEasingGrounding_y": 0.1,
       "cameraEasingNormal_x": 0.1,
@@ -292,6 +298,7 @@
       "projectedFocus": false,
       "selectedCharacter": "3h",
       "stopAndFall": false,
+      "vCollisionTolerance" : 6,
       "verticalSpeedSustainLevel": 1,
       "vxAdjustmentAtTakeoff": 0
     },

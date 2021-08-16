@@ -27,6 +27,7 @@ static class Settings {
   float axBrake = 1.0; // Horizontal acceleration when braking.
   float axJumping = 0.1; // Horizontal acceleration when jumping.
   float collisionTolerance = 8; // Tolerance to automatically avoid blocks when jumping (in pixels).
+  float vCollisionTolerance = 0; // Vertical tolerance to automatically avoid block when falling (in pixels).
   float wallJumpSpeedRatio = 1.0; // The velocity raito of the jumping speed of the wall jump to the maxVx.
   float maxVxDashing = 12; // Maximum horizontal velocity of the jumper while dashing.
   float axNormalDashing = 0.4; // Horizontal acceleration in normal state while dashing.

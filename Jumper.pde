@@ -141,12 +141,19 @@ class Jumper {
 
     if (!onObstacle && (hDL || hDR)) {
       float ny = y - level.obstaclePenaltyD(y);
-      if (vy > 0 && py <= ny) {
+      if (vy > 0) {
         if ((hDL && !hitUL()) || (hDR && !hitUR())) {
-          y = ny;
-          jumping = false;
-          onObstacle = true;
-          vy = 0;
+          if (py <= ny) {
+            y = ny;
+            jumping = false;
+            onObstacle = true;
+            vy = 0;
+          } else {
+            float dy = level.obstaclePenaltyD(y);
+            if (dy < settings.vCollisionTolerance) {
+              y -= dy;
+            }
+          }
         }
       }
     } else if (!hitBL() && !hitBR()) {

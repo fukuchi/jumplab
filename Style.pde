@@ -33,6 +33,7 @@ class Style {
       jsonData.setBoolean("allowWallJump", false);
     } else if (version.compareTo("1.2.2") < 0) {
       jsonData.setString("selectedCharacter", "3h");
+      jsonData.setFloat("vCollisionTolerance", 0);
     }
 
     for (Object key : jsonData.keys()) {

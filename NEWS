@@ -11,6 +11,8 @@ Version 1.2.0 (2021.8.XX)
   - Input status indicator now displays the second button's status.
   - The dash button can now be assigned to a joystick button.
   - Some preset styles have been updated.
+* New jump parameter 'vCollisionTolerance' has been added.
+  - Enables the character to dash over one-block-wide gaps like Super Mario Bros.
 * Some minor bug fixes and code cleanups.
 
 Version 1.1.1 (2020.8.27)
