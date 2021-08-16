@@ -54,9 +54,9 @@ class Level {
   }
 
   int getChip(int x, int y) {
-    int cx = x / bw;
-    int cy = y / bh;
-    if (cx < 0 || cy < 0 || cx >= cw || cy >= ch) return 0;
+    int cx = floor((float)x / bw);
+    int cy = floor((float)y / bh);
+    if (cx < 0 || cy < 0 || cx >= cw || cy >= ch) return 1;
     return map[cy][cx];
   }
 
