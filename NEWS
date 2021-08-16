@@ -6,6 +6,11 @@ Version 1.2.0 (2021.8.XX)
 * New 'Character' feature has been added:
   - Now you can choose from three different type of characters with different proportions.
   - New characters '1h' and '8h' have been contributed by Masayoshi Itoh.
+* Dash button has been added:
+  - New parameters 'maxVxDashing' and 'axNormalDashing' have been added.
+  - Input status indicator now displays the second button's status.
+  - The dash button can now be assigned to a joystick button.
+  - Some preset styles have been updated.
 
 Version 1.1.1 (2020.8.27)
 -------------------------
