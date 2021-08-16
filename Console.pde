@@ -189,6 +189,10 @@ class Console {
       .setRange(1, 20));
     appendFullwidthWidget("axNormalDashing", ctlr.addSlider("X Accel (normal, dashing)")
       .setRange(0, 3));
+    appendFullwidthWidget("vCollisionTolerance", ctlr.addSlider("Vertical Collision Tolerance")
+      .setRange(0, 24)
+      .setNumberOfTickMarks(25)
+      .showTickMarks(false));
 
     // Settings of Camera motion
     setTab("Camera");
