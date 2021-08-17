@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 static class Settings {
-  static final String styleVersion = "1.2.2";
+  static final String styleVersion = "1.3.0";
   // Jump parameters
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
