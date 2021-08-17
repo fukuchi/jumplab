@@ -50,7 +50,7 @@ void settings() {
 
 void setup() {
   gStyles = new StyleManager();
-  if(!gStyles.loadDefaultSettings(defaultSettingsFilename)) {
+  if (!gStyles.loadDefaultSettings(defaultSettingsFilename)) {
     System.err.println("The installed package seems to be broken. Check the files under the installed directory.");
     exit();
   }
