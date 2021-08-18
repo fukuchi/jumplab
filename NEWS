@@ -1,7 +1,7 @@
 JumpLab NEWS - Overview of changes
 ==================================
 
-Version 1.3.0 (2021.8.XX)
+Version 1.3.0 (2021.8.19)
 -------------------------
 * The format of the setting files (default, user) has been changed:
   - Unmodifiable styles are now loaded from the default setting file and not stored in the user
@@ -14,7 +14,7 @@ Any changes to the '*default*' style stored in the user setting file will be dis
 this update. Sorry for your inconvenience, but this change is inevitable for further development.
 
 
-Version 1.2.0 (2021.8.XX)
+Version 1.2.0 (2021.8.19)
 -------------------------
 * New 'Character' feature has been added:
   - Now you can choose from three different type of characters with different proportions.

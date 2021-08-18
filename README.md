@@ -18,7 +18,6 @@ Please visit <https://fukuchi.org/works/jumplab/> for further information.
 
 ## TODO
 
-  - Dash button
   - Sound effects
   - Level selector / level editor
   - Double jump
