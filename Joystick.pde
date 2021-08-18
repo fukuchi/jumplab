@@ -3,7 +3,7 @@ import org.gamecontrolplus.*;
 import java.util.Map.Entry;
 
 class Joystick {
-  static final String joystickConfigVersion = "1.1";
+  static final String joystickConfigVersion = "1.2";
   static final int MaxButtonNum = 12; // 12 would be enough for the most joysticks
   ArrayList<ControlDevice> devices;
   ControlDevice currentDevice;
