@@ -12,10 +12,6 @@ class ComparableVersion implements Comparable<ComparableVersion> {
     }
   }
 
-  int maxLevel() {
-    return numbers.length;
-  }
-
   int number(int level) {
     if (level >= numbers.length) {
       return -1;
