@@ -51,7 +51,7 @@ void settings() {
 void setup() {
   gStyles = new StyleManager();
   if (!gStyles.loadDefaultSettings(defaultSettingsFilename)) {
-    System.err.println("The installed package seems to be broken. Check the files under the installed directory.");
+    System.err.println("Failed to load the default style settings. The installed package seems to be broken. Check the files under the installed directory.");
     exit();
   }
   gStyles.loadUserSettings(userSettingsFilename);

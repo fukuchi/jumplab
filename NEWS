@@ -7,10 +7,10 @@ Version 1.3.0 (2021.8.XX)
   - Unmodifiable styles are now loaded from the default setting file and not stored in the user
     setting file. This allows the preset values of the newly added parameters to be read from
 	the default setting file.
-  - '\*default\*' style has become unmodifiable.
+  - '*default*' style has become unmodifiable.
 
 Release Note:
-Any changes to the '\*default\*' style stored in the user setting file will be discarded by
+Any changes to the '*default*' style stored in the user setting file will be discarded by
 this update. Sorry for your inconvenience, but this change is inevitable for further development.
 
 
