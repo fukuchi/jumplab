@@ -29,7 +29,7 @@ StyleManager gStyles;
 boolean gPause;
 boolean gStepForward;
 
-static final String gVersionString = "1.2.0";
+static final String gVersionString = "1.3.0";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
@@ -50,12 +50,12 @@ void settings() {
 
 void setup() {
   gStyles = new StyleManager();
-  if (!gStyles.load(userSettingsFilename)) {
-    if (!gStyles.load(defaultSettingsFilename)) {
-      System.err.println("The installed package seems to be broken. Check the files under the installed directory.");
-      exit();
-    }
+  if (!gStyles.loadDefaultSettings(defaultSettingsFilename)) {
+    System.err.println("Failed to load the default style settings. The installed package seems to be broken. Check the files under the installed directory.");
+    exit();
   }
+  gStyles.loadUserSettings(userSettingsFilename);
+
   gSettings = new Settings();
   gJoystick = new Joystick(this, joystickConfigFilename);
   gLevel = new Level("level1.csv", "tiles.png", "bg.png");

@@ -8,7 +8,15 @@ class StyleManager {
     styles = new HashMap<String, Style>();
   }
 
-  boolean load(String filename) {
+  boolean loadDefaultSettings(String filename) {
+    return load(filename, true);
+  }
+
+  boolean loadUserSettings(String filename) {
+    return load(filename, false);
+  }
+
+  private boolean load(String filename, boolean isDefaultSettings) {
     JSONArray stylesJson;
 
     /* Processing 3.5.4 does not return null if the file is not found
@@ -38,7 +46,9 @@ class StyleManager {
     for (int i=0; i<stylesJson.size(); i++) {
       JSONObject styleJson = stylesJson.getJSONObject(i);
       Style style = new Style(styleJson);
-      styles.put(style.name, style);
+      if (isDefaultSettings || style.isModifiable()) {
+        styles.put(style.name, style);
+      }
     }
 
     return true;
@@ -60,7 +70,9 @@ class StyleManager {
   void save(String filename) {
     JSONArray stylesJson = new JSONArray();
     for (Style style : styles.values()) {
-      stylesJson.append(style.toJson());
+      if (style.isModifiable() && !style.getName().equals("*default*")) {
+        stylesJson.append(style.toJson());
+      }
     }
     saveJSONArray(stylesJson, "data/" + filename);
   }
