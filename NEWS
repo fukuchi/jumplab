@@ -17,7 +17,8 @@ this update. Sorry for your inconvenience, but this change is inevitable for fur
 Version 1.2.0 (2021.8.19)
 -------------------------
 * New 'Character' feature has been added:
-  - Now you can choose from three different type of characters with different proportions.
+  - Now you can choose the player character from three different types of characters with
+    different proportions.
   - New characters '1h' and '8h' have been contributed by Masayoshi Itoh.
 * Dash button has been added:
   - New parameters 'maxVxDashing' and 'axNormalDashing' have been added.
