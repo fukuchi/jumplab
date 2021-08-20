@@ -29,9 +29,11 @@ class Style {
         jsonData.setFloat("bgScrollRatio", 1.0);
         jsonData.put("parallaxScrolling", null);
       }
-    } else if (version.compareTo("1.2.1") < 0) {
+    }
+    if (version.compareTo("1.2.1") < 0) {
       jsonData.setBoolean("allowWallJump", false);
-    } else if (version.compareTo("1.2.2") < 0) {
+    }
+    if (version.compareTo("1.2.2") < 0) {
       jsonData.setString("selectedCharacter", "3h");
       jsonData.setFloat("vCollisionTolerance", 0);
     }
