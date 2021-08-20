@@ -397,6 +397,13 @@ class Jumper {
       }
     }
     this.draw(img, x - cx, y - cy);
+    if (settings.showBoundingBox) {
+      pushStyle();
+      noFill();
+      stroke(255, 0, 0);
+      rect(x - cx, y - cy, w - 1, h - 1);
+      popStyle();
+    }
 
     return img;
   }

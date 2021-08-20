@@ -55,11 +55,12 @@ static class Settings {
   boolean showVelocityChart = false; // Show velocity chart in the chart canvas.
   boolean showAfterimage = false; // Show afterimage instead of red dots when 'showTrail' is true.
   boolean showInputStatus = false; // Show the input status.
+  boolean showBoundingBox = false; // Show the bounding box of the player character.
 
   static ArrayList<String> booleanVariables;
   static ArrayList<String> floatVariables;
   static ArrayList<String> listVariables = new ArrayList<String>(Arrays.asList("selectedCharacter"));
-  static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart", "showInputStatus");
+  static List<String> ignoredVariables = Arrays.asList("showTrail", "showAfterimage", "showCameraMarker", "showVelocityChart", "showInputStatus", "showBoundingBox");
 
   static {
     booleanVariables = new ArrayList<String>();

@@ -296,6 +296,7 @@ class Console {
     nextWidgetPosition_y = y + 175;
     appendHalfwidthWidget("showAfterimage", ctlr.addToggle("Show afterimage"));
     appendHalfwidthWidget("showInputStatus", ctlr.addToggle("Show input status"));
+    appendHalfwidthWidget("showBoundingBox", ctlr.addToggle("Show bounding box"));
 
     for (Entry<String, Controller> entry : widgets.entrySet()) {
       Controller widget = entry.getValue();
