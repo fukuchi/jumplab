@@ -175,22 +175,25 @@ class Camera {
   }
 
   void drawTrail(int cx, int cy) {
+    pushMatrix();
+    translate(-cx, -cy);
     pushStyle();
     if (!settings.showAfterimage) {
-      noStroke();
-      fill(255, 0, 0);
       for (int i=0; i<trailLen; i++) {
-        ellipse(trail[i].x + Jumper.w / 2 - cx, trail[i].y + Jumper.h / 2 - cy, 5, 5);
+        noStroke();
+        fill(255, 0, 0);
+        ellipse(trail[i].x + Jumper.w / 2, trail[i].y + Jumper.h / 2, 5, 5);
       }
     } else {
       tint(255, 128);
       for (int i=0; i<trailLen; i++) {
         int idx = (trailHead + 1 + i) % trailLen;
         if (idx % 4 == 0) {
-          jumper.draw(trail[idx].image, trail[idx].x - cx, trail[idx].y - cy);
+          jumper.draw(trail[idx].image, trail[idx].x, trail[idx].y);
         }
       }
     }
+    popMatrix();
     popStyle();
   }
 
@@ -211,7 +214,7 @@ class Camera {
       stroke(255, 255, 0);
       fx = (int)(jumper.center_x() + focus_x) - cx;
       fy = (int)jumper.center_y() - cy;
-      line(fx - 12, fy, fx + 12, fy     );
+      line(fx - 12, fy, fx + 12, fy);
       line(fx, fy - 12, fx, fy + 12);
     }
     popStyle();
