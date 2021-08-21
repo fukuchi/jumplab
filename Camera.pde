@@ -78,7 +78,7 @@ class Camera {
             focus_x = targetFocus_x;
           }
         } else if (focus_x > targetFocus_x) {
-          focus_x -= 1;
+          focus_x -= settings.focusResettingSpeed;
           if (focus_x < targetFocus_x) {
             focus_x = targetFocus_x;
           }
@@ -94,7 +94,7 @@ class Camera {
             focus_x = targetFocus_x;
           }
         } else if (focus_x < targetFocus_x) {
-          focus_x += 1;
+          focus_x += settings.focusResettingSpeed;
           if (focus_x > targetFocus_x) {
             focus_x = targetFocus_x;
           }
