@@ -32,6 +32,8 @@ class Style {
     }
     if (version.compareTo("1.2.1") < 0) {
       jsonData.setBoolean("allowWallJump", false);
+      jsonData.setBoolean("allowWallSlide", false);
+      jsonData.setFloat("wallJumpSpeedRatio", 1.0);
     }
     if (version.compareTo("1.2.2") < 0) {
       jsonData.setString("selectedCharacter", "3h");
