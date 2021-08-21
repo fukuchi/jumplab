@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 static class Settings {
-  static final String styleVersion = "1.3.0";
+  static final String styleVersion = "1.3.1";
   // Jump parameters
   boolean showTrail = false; // Show the trail or not.
   boolean allowAerialJump = true; // Allow aerial jump or not.
@@ -46,6 +46,7 @@ static class Settings {
   float cameraWindow_w = 0; // Width of the camera window.
   float focusDistance = 100; // Distance to the focal point.
   float focusingSpeed = 5; // Velocity of the focal point movement.
+  float focusResettingSpeed = 1; // Velocity of the focal point resetting movement.
   float bgScrollRatio = 0.5; // Determine the scroll speed of the BG layer.
 
   // Character parameters

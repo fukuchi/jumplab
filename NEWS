@@ -3,10 +3,17 @@ JumpLab NEWS - Overview of changes
 
 Version 1.3.1 (2021.8.XX)
 -------------------------
+
 * 'Show bounding box' toggle has been added to 'Misc' tab.
+* Camera parameter improves:
+  - New parameter 'focusResettingSpeed' has been added.
+  - The upper limit of the 'focusingSpeed' has been changed to 10.
+* Some minor bug fixes and code cleanups.
+
 
 Version 1.3.0 (2021.8.19)
 -------------------------
+
 * The format of the setting files (default, user) has been changed:
   - Unmodifiable styles are now loaded from the default setting file and not stored in the user
     setting file. This allows the preset values of the newly added parameters to be read from
@@ -20,6 +27,7 @@ this update. Sorry for your inconvenience, but this change is inevitable for fur
 
 Version 1.2.0 (2021.8.19)
 -------------------------
+
 * New 'Character' feature has been added:
   - Now you can choose the player character from three different types of characters with
     different proportions.
@@ -36,6 +44,7 @@ Version 1.2.0 (2021.8.19)
 
 Version 1.1.1 (2020.8.27)
 -------------------------
+
 * New jump feature:
   - Wall jump
 * New UI feature:
@@ -46,6 +55,7 @@ Version 1.1.1 (2020.8.27)
 
 Version 1.1.0 (2020.8.22)
 -------------------------
+
 * New camera feature:
   - BG scrolling speed
     - Parallax scrolling is now encompassed by this.
@@ -58,6 +68,7 @@ Version 1.1.0 (2020.8.22)
 
 Version 1.0.0 (2020.8.11)
 -------------------------
+
 * New UI features:
   - New 'Misc' tab
   - Afterimage mode

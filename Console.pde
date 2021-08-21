@@ -216,7 +216,9 @@ class Console {
     appendFullwidthWidget("focusDistance", ctlr.addSlider("Focus Distance")
       .setRange(0, 400));
     appendFullwidthWidget("focusingSpeed", ctlr.addSlider("Focusing Speed")
-      .setRange(0, 30));
+      .setRange(0, 10));
+    appendFullwidthWidget("focusResettingSpeed", ctlr.addSlider("Focus Resetting Speed")
+      .setRange(0, 10));
     appendFullwidthWidget("bgScrollRatio", ctlr.addSlider("BG Scroll Speed")
       .setRange(0, 1));
 
