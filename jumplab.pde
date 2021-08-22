@@ -58,7 +58,7 @@ void setup() {
 
   gSettings = new Settings();
   gJoystick = new Joystick(this, joystickConfigFilename);
-  gLevel = new Level("level1.csv", "tiles.png", "bg.png");
+  gLevel = new Level("level1.csv", "tiles.png", "bg.png", "bg-sky.png");
   gMasao = new Jumper(gSettings, gLevel);
   gCamera = new Camera(gMasao, gLevel, gSettings, gameScreen_w, gameScreen_h);
   gCamera.reset(gMasao.center_x(), gMasao.center_y());

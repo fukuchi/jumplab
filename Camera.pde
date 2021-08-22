@@ -140,16 +140,43 @@ class Camera {
     }
   }
 
-  void draw() {
-    int bgx, bgy;
-    int cx = (int)x - window_hw;
-    int cy = (int)y - window_hh;
-    float rx = (float)cx / (level.w - window_w);
-    float ry = (float)cy / (level.h - window_h);
-    bgx = (int)((level.bgImg.width  - window_w) * (0.5 + settings.bgScrollRatio * (rx - 0.5)));
-    bgy = (int)((level.bgImg.height - window_h) * (0.7 + settings.bgScrollRatio * (ry - 0.7)));
+  void drawBG(int cx, int cy) {
+    PImage bg;
 
-    copy(level.bgImg, bgx, bgy, window_w, window_h, 0, 0, window_w, window_h);
+    cx = (int)(((float)cx - level.bgImg.width * 0.5) * settings.bgScrollRatio + level.bgImg.width * 0.5);
+    cy = (int)(((float)cy - (level.h - window_h)) * settings.bgScrollRatio + (level.h - window_h));
+
+    int bgx = cx % level.bgImg.width;
+    int bgy = (level.bgImg.height - (level.h - cy) % level.bgImg.height) % level.bgImg.height;
+    int bgTile_y = (level.h - cy - 1) / level.bgImg.height;
+
+    int dw1 = level.bgImg.width - bgx;
+    int dw2 = window_w - dw1;
+    int dh1 = level.bgImg.height - bgy;
+    int dh2 = window_h - dh1;
+
+    dw1 = min(dw1, window_w);
+    dh1 = min(dh1, window_h);
+
+    bg = (bgTile_y > 0) ? level.bgSkyImg : level.bgImg;
+    copy(bg, bgx, bgy, dw1, dh1, 0, 0, dw1, dh1);
+    if (dw2 > 0) {
+      copy(bg, 0, bgy, dw2, dh1, dw1, 0, dw2, dh1);
+    }
+    if (dh2 > 0) {
+      bg = (bgTile_y > 1) ? level.bgSkyImg : level.bgImg;
+      copy(bg, bgx, 0, dw1, dh2, 0, dh1, dw1, dh2);
+      if (dw2 > 0) {
+        copy(bg, 0, 0, dw2, dh2, dw1, dh1, dw2, dh2);
+      }
+    }
+  }
+
+  void draw() {
+    int cx = ((int)x - window_hw);
+    int cy = ((int)y - window_hh);
+
+    drawBG(cx, cy);
     copy(levelImg, cx, cy, window_w, window_h, 0, 0, window_w, window_h);
 
     if (settings.showTrail) drawTrail(cx, cy);
