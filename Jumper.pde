@@ -31,7 +31,7 @@ class Jumper {
   Vector<Vector<PImage>> stock_images_running_r;
   Vector<Vector<PImage>> stock_images_jumping_l;
   Vector<Vector<PImage>> stock_images_jumping_r;
-  final String[] proportionLabels = {"1h", "3h", "8h"};
+  final String[] proportionLabels = {"1h", "3h", "8h", "tofu"};
 
   int character;
   Vector<PImage> images_running_r;
