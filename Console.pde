@@ -225,8 +225,9 @@ class Console {
     // Settings of character
     setTab("Character");
     nextWidgetPosition_y = y + 175;
-    appendFullwidthWidget(null, ctlr.addTextlabel("Select Character")
-      .setText("SELECT CHARACTER:"));
+    Textlabel label = ctlr.addTextlabel("Select Character", "SELECT CHARACTER:");
+    label.getValueLabel().align(ControlP5.LEFT, ControlP5.BOTTOM);
+    appendFullwidthWidget(null, label);
     ScrollableList characterList = ctlr.addScrollableList("Character List")
       .setBackgroundColor(color(192))
       .setSize(280, 100)
@@ -257,7 +258,7 @@ class Console {
     setItemsColor(joylist, scrollableListItemColor);
 
     for (int i=Joystick.MaxButtonNum-1; i>=0; i--) {
-      Textlabel label = ctlr.addTextlabel("Button_" + i);
+      label = ctlr.addTextlabel("Button_" + i);
       label.setText("Button " + i)
         .setPosition(x + 10, y + 235 + i * 25)
         .moveTo("Joystick");
@@ -299,6 +300,12 @@ class Console {
     appendHalfwidthWidget("showAfterimage", ctlr.addToggle("Show afterimage"));
     appendHalfwidthWidget("showInputStatus", ctlr.addToggle("Show input status"));
     appendHalfwidthWidget("showBoundingBox", ctlr.addToggle("Show bounding box"));
+    appendHalfwidthWidget();
+
+    label = ctlr.addTextlabel("Level", "LEVEL");
+    label.getValueLabel().align(ControlP5.LEFT, ControlP5.BOTTOM);
+    appendFullwidthWidget(null, label);
+    appendHalfwidthWidget("reloadLevel", ctlr.addButton("Reload Level"));
 
     for (Entry<String, Controller> entry : widgets.entrySet()) {
       Controller widget = entry.getValue();
@@ -497,6 +504,9 @@ class Console {
           ScrollableList slist = ctlr.get(ScrollableList.class, "Styles List");
           slist.setItems(styleNames).setValue(idx);
           setItemsColor(slist, scrollableListItemColor);
+        } else if (name == "Reload Level") {
+          gLevel.loadLevel();
+          gCamera.updateLevelImage();
         }
       }
     } else if (widget instanceof Textfield) {

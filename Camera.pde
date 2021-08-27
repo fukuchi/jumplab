@@ -33,7 +33,7 @@ class Camera {
     window_hw = w / 2;
     window_hh = h / 2;
 
-    levelImg = level.createLevelImage();
+    updateLevelImage();
     titleImg = loadImage("title.png");
     titleTimer = -1;
 
@@ -43,6 +43,10 @@ class Camera {
     }
 
     onScreenFont = createFont("Lucida Sans", 16);
+  }
+
+  void updateLevelImage() {
+    levelImg = level.createLevelImage();
   }
 
   void reset(float x, float y) {
