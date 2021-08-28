@@ -1,13 +1,20 @@
 JumpLab NEWS - Overview of changes
 ==================================
 
-Version 1.3.1 (2021.8.XX)
+Version 1.4.0 (2021.8.XX)
 -------------------------
 
 * 'Show bounding box' toggle has been added to 'Misc' tab.
 * Camera parameter improves:
   - New parameter 'focusResettingSpeed' has been added.
   - The upper limit of the 'focusingSpeed' has been changed to 10.
+* New character 'tofu' has been added.
+* Background image has been made tileable.
+  - Now the size of the level can be larger than 48x22.
+* 'Reload level' button has been added.
+  - You can edit the level data (CSV file) in another application and reload the modified data
+    at runtime.
+* Now the level data can be reloaded during the runtime.
 * Some minor bug fixes and code cleanups.
 
 
