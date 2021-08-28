@@ -44,7 +44,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "*default*",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -81,7 +81,7 @@
       "maxVy": 7.9125,
       "platformSnapping": false,
       "projectedFocus": false,
-      "selectedCharacter": "3h",
+      "selectedCharacter": "8h",
       "stopAndFall": false,
       "vCollisionTolerance": 0,
       "verticalSpeedSustainLevel": 1,
@@ -91,7 +91,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Chelnov",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -138,7 +138,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Ghosts'n Goblins",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -185,7 +185,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Major Havoc",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -232,7 +232,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Metal Slug",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -269,7 +269,7 @@
       "maxVy": 22,
       "platformSnapping": false,
       "projectedFocus": false,
-      "selectedCharacter": "3h",
+      "selectedCharacter": "8h",
       "stopAndFall": false,
       "vCollisionTolerance": 0,
       "verticalSpeedSustainLevel": 0,
@@ -279,7 +279,7 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Metroid",
-    "version": "1.3.1"
+    "version": "1.4.0"
   },
   {
     "data": {
@@ -326,6 +326,6 @@
     "last modified": "2021-08-21T00:00:00.000+09:00",
     "modifiable": false,
     "name": "Super Mario Bros.",
-    "version": "1.3.1"
+    "version": "1.4.0"
   }
 ]

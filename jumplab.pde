@@ -29,7 +29,7 @@ StyleManager gStyles;
 boolean gPause;
 boolean gStepForward;
 
-static final String gVersionString = "1.3.0";
+static final String gVersionString = "1.4.0";
 
 static final int gameScreen_w = 800;
 static final int gameScreen_h = 600;
