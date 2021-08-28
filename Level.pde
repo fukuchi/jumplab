@@ -5,10 +5,10 @@ class Level {
   int bh = 48;
   int sx, sy; // initial position of the player character
   int[][] map;
-  PImage bgImg;
+  PImage bgImg, bgSkyImg;
   PImage tileImg;
 
-  Level(String mapFile, String blockImgFile, String bgFile) {
+  Level(String mapFile, String blockImgFile, String bgFile, String bgSkyFile) {
     sx = sy = 1;
     Table mapdata = loadTable(mapFile);
     cw = mapdata.getColumnCount();
@@ -29,6 +29,7 @@ class Level {
 
     tileImg = loadImage(blockImgFile);
     bgImg = loadImage(bgFile);
+    bgSkyImg = loadImage(bgSkyFile);
 
     w = bw * cw;
     h = bh * ch;
