@@ -7,13 +7,24 @@ class Level {
   int[][] map;
   PImage bgImg, bgSkyImg;
   PImage tileImg;
+  String mapFile;
 
   Level(String mapFile, String blockImgFile, String bgFile, String bgSkyFile) {
+    tileImg = loadImage(blockImgFile);
+    bgImg = loadImage(bgFile);
+    bgSkyImg = loadImage(bgSkyFile);
+
+    this.mapFile = mapFile;
+    loadLevel();
+  }
+
+  void loadLevel() {
     sx = sy = 1;
     Table mapdata = loadTable(mapFile);
     cw = mapdata.getColumnCount();
     ch = mapdata.getRowCount();
     map = new int[ch][cw];
+
     for (int y=0; y<ch; y++) {
       TableRow row = mapdata.getRow(y);
       for (int x=0; x<cw; x++) {
@@ -26,11 +37,6 @@ class Level {
         }
       }
     }
-
-    tileImg = loadImage(blockImgFile);
-    bgImg = loadImage(bgFile);
-    bgSkyImg = loadImage(bgSkyFile);
-
     w = bw * cw;
     h = bh * ch;
 
