@@ -90,4 +90,9 @@ class Level {
     int cy = (int)y / bh;
     return y - cy * bw;
   }
+
+  boolean withinLevel(int x, int y) {
+    if(x >= 0 && y >= 0 && x < w && y < h) return true;
+    return false;
+  }
 }
