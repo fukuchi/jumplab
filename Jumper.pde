@@ -73,6 +73,36 @@ class Jumper {
     pvx = pvy = 0;
   }
 
+  void adjustPosition() {
+    int cx = (int)center_x();
+    int cy = (int)center_y();
+    if (!level.isThereObstacle(cx, cy)) return;
+    if (findSpaceAndAdjustPosition(cx, cy, 0, -h)) return; // upward
+    if (findSpaceAndAdjustPosition(cx, cy, w, 0)) return; // right
+    if (findSpaceAndAdjustPosition(cx, cy, -w, 0)) return; // left
+
+    resetPositionAndVelocity();
+  }
+
+  boolean findSpaceAndAdjustPosition(int cx, int cy, int dx, int dy) {
+    int tx = cx;
+    int ty = cy;
+
+    while (level.withinLevel(tx, ty)) {
+      tx += dx;
+      ty += dy;
+      if (!level.isThereObstacle(tx, ty)) {
+        x += (tx - cx);
+        y += (ty - cy);
+        px = x;
+        py = y;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   void initializeImages() {
     stock_images_running_r = new Vector<Vector<PImage>>();
     stock_images_running_l = new Vector<Vector<PImage>>();

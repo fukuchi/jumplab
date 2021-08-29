@@ -514,7 +514,7 @@ class Console {
         } else if (name == "Reload Level") {
           gLevel.loadLevel();
           gCamera.updateLevelImage();
-          gMasao.resetPositionAndVelocity();
+          gMasao.adjustPosition();
         }
       }
     } else if (widget instanceof Textfield) {
