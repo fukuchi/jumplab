@@ -18,6 +18,9 @@
  * If not, see https://www.gnu.org/licenses/.
  */
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 Settings gSettings;
 Jumper gMasao;
 Level gLevel;
@@ -38,6 +41,9 @@ static final int console_w = 300;
 static final String userSettingsFilename = "user_settings.json";
 static final String defaultSettingsFilename = "default_settings.json";
 static final String joystickConfigFilename = "joystick_config.json";
+
+static boolean takeScreenshot = false;
+static DateTimeFormatter dateTimeFormatter;
 
 void settings() {
   println("JumpLab version " + gVersionString);
@@ -65,6 +71,8 @@ void setup() {
   gConsole = new Console(this, gameScreen_w, 0, console_w, gameScreen_h, gStyles, gSettings);
   frameRate(60);
 
+  dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH-mm-ss-SSS");
+
   background(128);
   println("Initialization completed.");
 }
@@ -79,7 +87,15 @@ void draw() {
     gJoystick.updateDuringPause();
   }
   gCamera.draw();
-  gConsole.drawStatus(gMasao);
+  gConsole.draw(gMasao);
+
+  if (takeScreenshot) {
+    String filename = String.format("screenshot_%s.png", LocalDateTime.now().format(dateTimeFormatter));
+
+    save(filename);
+
+    takeScreenshot = false;
+  }
 }
 
 void keyPressed() {
@@ -87,6 +103,9 @@ void keyPressed() {
 
   eventReceived = gMasao.keyPressed();
   if (!eventReceived) gConsole.keyPressed();
+  if (key == 's') {
+    takeScreenshot = true;
+  }
 }
 
 void keyReleased() {
