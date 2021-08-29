@@ -46,12 +46,7 @@ class Jumper {
     this.settings = settings;
     this.level = level;
 
-    x = (float)level.sx;
-    y = (float)level.sy;
-    px = x;
-    py = y;
-    vx = vy = 0;
-    pvx = pvy = 0;
+    resetPositionAndVelocity();
     jumping = false;
     propelling = false;
     onObstacle = false;
@@ -67,6 +62,15 @@ class Jumper {
 
     initializeImages();
     setImages(1);
+  }
+
+  void resetPositionAndVelocity() {
+    x = (float)level.sx;
+    y = (float)level.sy;
+    px = x;
+    py = y;
+    vx = vy = 0;
+    pvx = pvy = 0;
   }
 
   void initializeImages() {
