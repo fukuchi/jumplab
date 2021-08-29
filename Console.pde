@@ -335,6 +335,8 @@ class Console {
     );
 
     numIndicator = new NumIndicator();
+
+    ctlr.setAutoDraw(false);
   }
 
   void appendFullwidthWidget(String name, Controller widget) {
@@ -387,6 +389,11 @@ class Console {
     chart.updateSeries(chartCameraXIdx, camera.x / level.w);
     chart.updateSeries(chartCameraYIdx, 1.0 - camera.y / level.h);
     chart.updateChart();
+  }
+
+  void draw(Jumper jumper) {
+    ctlr.draw();
+    drawStatus(jumper);
   }
 
   void drawStatus(Jumper jumper) {
