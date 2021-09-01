@@ -64,7 +64,7 @@ class Camera {
     float dx = jumper.center_x() - x;
     float dy = jumper.center_y() - y;
 
-    float cameraEdge_x = (settings.cameraWindow_w / 2 - dx) * jumper.lastDir;
+    float cameraEdge_x = settings.cameraWindow_w / 2 * jumper.lastDir - dx;
 
     if (settings.forwardFocus || settings.projectedFocus) {
       targetFocus_x = 0;
