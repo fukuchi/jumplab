@@ -63,6 +63,9 @@ class Camera {
 
     float dx = jumper.center_x() - x;
     float dy = jumper.center_y() - y;
+
+    float cameraEdge_x = (settings.cameraWindow_w / 2 - dx) * jumper.lastDir;
+
     if (settings.forwardFocus || settings.projectedFocus) {
       targetFocus_x = 0;
       if (settings.forwardFocus) {
@@ -73,7 +76,6 @@ class Camera {
       }
       if (jumper.lastDir > 0) {
         if (focus_x < targetFocus_x) {
-          float cameraEdge_x = settings.cameraWindow_w / 2 - dx;
           if (focus_x < cameraEdge_x) {
             focus_x = cameraEdge_x;
           }
@@ -89,7 +91,6 @@ class Camera {
         }
       } else if (jumper.lastDir < 0) {
         if (focus_x > targetFocus_x) {
-          float cameraEdge_x = -settings.cameraWindow_w / 2 - dx;
           if (focus_x > cameraEdge_x) {
             focus_x = cameraEdge_x;
           }
@@ -106,15 +107,13 @@ class Camera {
       }
       dx += focus_x;
     }
-    if (dx < -settings.cameraWindow_w / 2) {
-      tx += dx + settings.cameraWindow_w / 2;
-    } else if (dx > settings.cameraWindow_w / 2) {
-      tx += dx - settings.cameraWindow_w / 2;
+    float overflow_x = abs(dx) - settings.cameraWindow_w / 2;
+    float overflow_y = abs(dy) - settings.cameraWindow_h / 2;
+    if (overflow_x > 0) {
+      tx += overflow_x * Math.signum(dx);
     }
-    if (dy < -settings.cameraWindow_h / 2) {
-      ty += dy + settings.cameraWindow_h / 2;
-    } else if (dy > settings.cameraWindow_h / 2) {
-      ty += dy - settings.cameraWindow_h / 2;
+    if (overflow_y > 0) {
+      ty += overflow_y * Math.signum(dy);
     }
 
     if (!settings.cameraEasing_x) {
