@@ -10,8 +10,7 @@ class Camera {
   boolean showTitle = true;
   int titleTimer;
 
-  float x, y;
-  float px, py; // previous position
+  PVector center, prevCenter;
   float focus_x;
   float targetFocus_x;
   int window_w, window_h;
@@ -28,10 +27,14 @@ class Camera {
     this.jumper = jumper;
     this.level = level;
     this.settings = settings;
+
     window_w = w;
     window_h = h;
     window_hw = w / 2;
     window_hh = h / 2;
+
+    center = new PVector(0, 0);
+    prevCenter = new PVector(0, 0);
 
     updateLevelImage();
     titleImg = loadImage("title.png");
@@ -50,19 +53,18 @@ class Camera {
   }
 
   void reset(float x, float y) {
-    this.x = constrain(x, window_hw, level.w - window_hw);
-    this.y = constrain(y, window_hh, level.h - window_hh);
-    px = this.x;
-    py = this.y;
+    center.x = constrain(x, window_hw, level.w - window_hw);
+    center.y = constrain(y, window_hh, level.h - window_hh);
+    prevCenter.set(center);
     focus_x = 0;
   }
 
   void update() {
-    float tx = x; // target position
-    float ty = y;
+    float tx = center.x; // target position
+    float ty = center.y;
 
-    float dx = jumper.center_x() - x;
-    float dy = jumper.center_y() - y;
+    float dx = jumper.center_x() - center.x;
+    float dy = jumper.center_y() - center.y;
 
     float cameraEdge_x = settings.cameraWindow_w / 2 * jumper.lastDir - dx;
 
@@ -117,29 +119,29 @@ class Camera {
     }
 
     if (!settings.cameraEasing_x) {
-      px = x;
-      x = tx;
+      prevCenter.x = center.x;
+      center.x = tx;
     } else {
-      float vx = x - px;
-      px = x;
-      x += vx * (0.5 - settings.cameraEasingNormal_x) + (tx - x) * settings.cameraEasingNormal_x;
+      float vx = center.x - prevCenter.x;
+      prevCenter.x = center.x;
+      center.x += vx * (0.5 - settings.cameraEasingNormal_x) + (tx - center.x) * settings.cameraEasingNormal_x;
     }
-    x = constrain(x, window_hw, level.w - window_hw);
+    center.x = constrain(center.x, window_hw, level.w - window_hw);
 
     if (!settings.platformSnapping || !jumper.jumping) {
       if (!settings.cameraEasing_y) {
-        py = y;
-        y = ty;
+        prevCenter.y = center.y;
+        center.y = ty;
       } else {
-        float vy = y - py;
-        py = y;
+        float vy = center.y - prevCenter.y;
+        prevCenter.y = center.y;
         if (!jumper.onObstacle) {
-          y += vy * (0.5 - settings.cameraEasingNormal_y) + (ty - y) * settings.cameraEasingNormal_y;
+          center.y += vy * (0.5 - settings.cameraEasingNormal_y) + (ty - center.y) * settings.cameraEasingNormal_y;
         } else {
-          y += vy * (0.5 - settings.cameraEasingGrounding_y) + (ty - y) * settings.cameraEasingGrounding_y;
+          center.y += vy * (0.5 - settings.cameraEasingGrounding_y) + (ty - center.y) * settings.cameraEasingGrounding_y;
         }
       }
-      y = constrain(y, window_hh, level.h - window_hh);
+      center.y = constrain(center.y, window_hh, level.h - window_hh);
     }
   }
 
@@ -176,8 +178,8 @@ class Camera {
   }
 
   void draw() {
-    int cx = ((int)x - window_hw);
-    int cy = ((int)y - window_hh);
+    int cx = ((int)center.x - window_hw);
+    int cy = ((int)center.y - window_hh);
 
     drawBG(cx, cy);
     copy(levelImg, cx, cy, window_w, window_h, 0, 0, window_w, window_h);
