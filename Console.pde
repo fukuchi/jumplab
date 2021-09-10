@@ -386,8 +386,8 @@ class Console {
     ((Textlabel)widgets.get("OnObstacleValue")).setText(jumper.onObstacle?"TRUE":"FALSE");
     chart.updateSeries(chartJumperXIdx, jumper.center_x() / level.w);
     chart.updateSeries(chartJumperYIdx, 1.0 - jumper.center_y() / level.h);
-    chart.updateSeries(chartCameraXIdx, camera.x / level.w);
-    chart.updateSeries(chartCameraYIdx, 1.0 - camera.y / level.h);
+    chart.updateSeries(chartCameraXIdx, camera.center.x / level.w);
+    chart.updateSeries(chartCameraYIdx, 1.0 - camera.center.y / level.h);
     chart.updateChart();
   }
 
